@@ -17,10 +17,10 @@ import com.cam.camsgame.Scenes.Hud;
 public class PlayScreen implements Screen {
     private CamsGame game;
     private OrthographicCamera gamecam;
-    private FitViewport gameport; //https://www.youtube.com/watch?v=D7u5B2Oh9r0
+    private FitViewport gameport; //https://www.youtube.com/watch?v=D7u5B2Oh9r0 <-- maintaining aspect ratios
     private Hud hud;
 
-    private TmxMapLoader mapLoader;
+    private TmxMapLoader mapLoader; //https://www.youtube.com/watch?v=P8jgD-V5jG8 <-- how the map is loaded
     private TiledMap tlMap;
     private OrthogonalTiledMapRenderer tlRender;
 

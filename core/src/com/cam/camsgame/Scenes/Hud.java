@@ -41,6 +41,7 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
+        //Set the labels for each
         lcountupLabel = new Label(String.format("%05d", nTime), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lLevelLabel = new Label(String.format("%03d", nLevel), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lMoneyLabel = new Label(String.format("%06d", nMoney), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
@@ -48,14 +49,16 @@ public class Hud {
         lMoney = new Label("Money", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lTime = new Label("Time", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
 
+        //Give each label 1/3 of the width of the table
         table.add(lTime).expandX().padTop(5);
         table.add(lMoney).expandX().padTop(5);
         table.add(lLevel).expandX().padTop(5);
+        //add a row underneath the first row and give each label 1/3 of the width of the table
         table.row();
         table.add(lcountupLabel).expandX();
         table.add(lMoneyLabel).expandX();
         table.add(lLevelLabel).expandX();
-
+        //Add the table to the stage after it's been created
         stage.addActor(table);
     }
 }
