@@ -18,7 +18,8 @@ public class Hud {
     public Stage stage;
     private Viewport vpHud;
 
-    private Integer nTime;
+    private Float fTime;
+    private Integer nWorldTime;
     private Integer nLevel;
     private Integer nMoney;
 
@@ -30,9 +31,9 @@ public class Hud {
     Label lLevel;
 
     public Hud(SpriteBatch spriteBatch){
-        nTime = 0;
         nMoney = 0;
         nLevel = 0;
+        nWorldTime = 0;
 
         vpHud = new FitViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(vpHud, spriteBatch);
@@ -42,7 +43,7 @@ public class Hud {
         table.setFillParent(true);
 
         //Set the labels for each
-        lcountupLabel = new Label(String.format("%05d", nTime), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        lcountupLabel = new Label(String.format("%05d", fTime), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lLevelLabel = new Label(String.format("%03d", nLevel), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lMoneyLabel = new Label(String.format("%06d", nMoney), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lLevel = new Label("Level", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
@@ -60,6 +61,11 @@ public class Hud {
         table.add(lLevelLabel).expandX();
         //Add the table to the stage after it's been created
         stage.addActor(table);
+    }
+    public void update(float dt){
+        fTime += dt;
+        nWorldTime++;
+        lcountupLabel.setText(String.format("%05d", nWorldTime));
     }
 }
 //https://www.youtube.com/watch?v=7idwNW5a8Qs for the labels and table
