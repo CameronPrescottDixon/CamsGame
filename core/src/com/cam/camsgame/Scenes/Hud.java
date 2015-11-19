@@ -18,10 +18,8 @@ public class Hud {
     public Stage stage;
     private Viewport vpHud;
 
-    private Float fTime;
-    private Integer nWorldTime;
-    private Integer nLevel;
-    private Integer nMoney;
+    private float fTime;
+    private int nWorldTime,nMoney,nLevel;
 
     Label lcountupLabel;
     Label lMoneyLabel;
@@ -43,7 +41,7 @@ public class Hud {
         table.setFillParent(true);
 
         //Set the labels for each
-        lcountupLabel = new Label(String.format("%05d", fTime), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        lcountupLabel = new Label(String.format("%05d", nWorldTime), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lLevelLabel = new Label(String.format("%03d", nLevel), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lMoneyLabel = new Label(String.format("%06d", nMoney), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lLevel = new Label("Level", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
