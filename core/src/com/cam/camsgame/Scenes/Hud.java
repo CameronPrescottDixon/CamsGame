@@ -28,7 +28,7 @@ public class Hud {
     Label lblTime;
     Label lblRound;
 
-    public Hud(SpriteBatch spriteBatch){
+    public Hud(SpriteBatch spriteBatch){ //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
         nMoney = 500;
         nLevel = 1;
         nWorldTime = 0;
@@ -37,7 +37,7 @@ public class Hud {
         stage = new Stage(vpHud, spriteBatch);
 
         Table table = new Table();
-        table.top();
+        table.top(); // Sets table to the top of the screen
         table.setFillParent(true);
 
         //Set the labels for each
@@ -60,7 +60,7 @@ public class Hud {
         //Add the table to the stage after it's been created
         stage.addActor(table);
     }
-    public void update(float dt){
+    public void updateTime(float dt){ //updates time
         fTime += dt;
         if(fTime >=1){//This makes the time only go up every second
             nWorldTime++;
@@ -68,11 +68,11 @@ public class Hud {
             fTime = 0;
         }
     }
-    public void addMoney(int money){
+    public void addMoney(int money){//adds money
         nMoney+=money;
         lblMoneyAmount.setText(String.format("%03d", nMoney));
     }
-    public void subtMoney(int money){
+    public void subtMoney(int money){//subtracts money
         nMoney-=money;
         lblMoneyAmount.setText(String.format("%03d", nMoney));
     }

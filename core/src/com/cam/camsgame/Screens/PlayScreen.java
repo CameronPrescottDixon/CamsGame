@@ -23,6 +23,8 @@ import com.cam.camsgame.Scenes.Hud;
  */
 public class PlayScreen implements Screen {
     private CamsGame game;
+
+    //Camera stuff
     private OrthographicCamera gamecam;
     private FitViewport gameport; //https://www.youtube.com/watch?v=D7u5B2Oh9r0 <-- maintaining aspect ratios
 
@@ -34,9 +36,11 @@ public class PlayScreen implements Screen {
     private TiledMap tlMap;
     private OrthogonalTiledMapRenderer tlRender;
 
+    //Ants + test money for hud
     private Ants ant;
     private int nMoney=1;
 
+    //Music
     private Music music;
 
     public PlayScreen(CamsGame game){
@@ -50,6 +54,7 @@ public class PlayScreen implements Screen {
         hud = new Hud(game.batch);
         hud.subtMoney(nMoney);
 
+        //Loads tiled map
         mapLoader = new TmxMapLoader();
 
         //Load tiled map
@@ -63,10 +68,10 @@ public class PlayScreen implements Screen {
         //Set the gamecams position to half of the width and height of the map (the center of the map)
         gamecam.position.set(gameport.getWorldWidth()/2, gameport.getWorldHeight()/2, 0);
 
-        music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class);
-        music.setLooping(true);
-        music.play();
-
+        //Get music
+        music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class); //This song is good
+        music.setLooping(true);//Loop it
+        music.play();//play it
     }
 
     @Override
@@ -78,15 +83,15 @@ public class PlayScreen implements Screen {
         gamecam.update();
         //Only renders what the gamecam can see
         tlRender.setView(gamecam);
-        hud.update(dt);
-        if(dt < 10){
+        hud.updateTime(dt);
+        if(dt < 10){ //Check to see if the velocity can be set in the ant function
             ant.nVelY=1;
         }
     }
     @Override
     public void render(float dt) {
         //Calls update to instantly update to the map
-        update(dt);
+        update(dt); // Sends deltaTime to the update function to be sent to other methods that require it
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // renders the map
@@ -96,7 +101,7 @@ public class PlayScreen implements Screen {
         //Draws the hud to the screen
         hud.stage.draw();
         //Draw ant
-        tlRender.getBatch().begin();
+        tlRender.getBatch().begin(); //Draw the ant to the screen
         ant.draw(tlRender.getBatch());
         tlRender.getBatch().end();
 
