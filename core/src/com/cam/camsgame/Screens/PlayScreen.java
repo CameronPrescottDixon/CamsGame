@@ -2,6 +2,7 @@ package com.cam.camsgame.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,8 +35,9 @@ public class PlayScreen implements Screen {
     private OrthogonalTiledMapRenderer tlRender;
 
     private Ants ant;
-
     private int nMoney=1;
+
+    private Music music;
 
     public PlayScreen(CamsGame game){
         this.game = game;
@@ -56,10 +58,14 @@ public class PlayScreen implements Screen {
 
         //Ants
         ant = new Ants(new Sprite(new Texture("ant.png")));
-        ant.setPosition(ant.getWidth(),ant.getHeight()-30);
+        ant.setPosition(ant.getWidth(), ant.getHeight() - 30);
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)
         gamecam.position.set(gameport.getWorldWidth()/2, gameport.getWorldHeight()/2, 0);
+
+        music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class);
+        music.setLooping(true);
+        music.play();
 
     }
 
@@ -74,7 +80,7 @@ public class PlayScreen implements Screen {
         tlRender.setView(gamecam);
         hud.update(dt);
         if(dt < 10){
-            ant.nVelY=0;
+            ant.nVelY=1;
         }
     }
     @Override
