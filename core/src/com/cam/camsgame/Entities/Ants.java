@@ -1,4 +1,4 @@
-package com.cam.camsgame;
+package com.cam.camsgame.Entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * Created by Cameron on 2015-11-11.
  */
 public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
-    public Integer nVelY=0, nVelX=3;
+    public int nVelY=0, nVelX=1;
 
     public Ants(Sprite spAnt){
         super(spAnt);

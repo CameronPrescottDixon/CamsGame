@@ -9,8 +9,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.cam.camsgame.Ants;
+import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.CamsGame;
 import com.cam.camsgame.Scenes.Hud;
 
@@ -32,6 +35,8 @@ public class PlayScreen implements Screen {
 
     private Ants ant;
 
+    private int nMoney=1;
+
     public PlayScreen(CamsGame game){
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -41,6 +46,7 @@ public class PlayScreen implements Screen {
 
         //Create the hud
         hud = new Hud(game.batch);
+        hud.subtMoney(nMoney);
 
         mapLoader = new TmxMapLoader();
 
@@ -67,8 +73,8 @@ public class PlayScreen implements Screen {
         //Only renders what the gamecam can see
         tlRender.setView(gamecam);
         hud.update(dt);
-    }
 
+    }
     @Override
     public void render(float dt) {
         //Calls update to instantly update to the map
@@ -81,7 +87,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //Draws the hud to the screen
         hud.stage.draw();
-        //ants
+        //Draw ant
         tlRender.getBatch().begin();
         ant.draw(tlRender.getBatch());
         tlRender.getBatch().end();
