@@ -55,8 +55,8 @@ public class PlayScreen implements Screen {
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
-        ant = new Ants(new Sprite(new Texture("OP.jpg")));
-        ant.setPosition(ant.getWidth(), ant.getHeight()-20);
+        ant = new Ants(new Sprite(new Texture("ant.png")));
+        ant.setPosition(ant.getWidth(),ant.getHeight()-30);
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)
         gamecam.position.set(gameport.getWorldWidth()/2, gameport.getWorldHeight()/2, 0);
@@ -73,7 +73,9 @@ public class PlayScreen implements Screen {
         //Only renders what the gamecam can see
         tlRender.setView(gamecam);
         hud.update(dt);
-
+        if(dt < 10){
+            ant.nVelY=0;
+        }
     }
     @Override
     public void render(float dt) {
