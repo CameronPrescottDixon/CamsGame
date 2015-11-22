@@ -1,6 +1,7 @@
 package com.cam.camsgame.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cam.camsgame.Entities.Ants;
@@ -43,6 +45,8 @@ public class PlayScreen implements Screen {
     //Music
     private Music music;
 
+    private Vector3 vtouchPos;
+
     public PlayScreen(CamsGame game){
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -58,7 +62,7 @@ public class PlayScreen implements Screen {
         mapLoader = new TmxMapLoader();
 
         //Load tiled map
-        tlMap = mapLoader.load("Maps/Map.tmx");
+        tlMap = mapLoader.load("Maps/FirstMap.tmx");
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
@@ -71,7 +75,11 @@ public class PlayScreen implements Screen {
         //Get music
         music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class); //This song is good
         music.setLooping(true);//Loop it
+        //Makes the music volume lower so it's not destroying the users ears
+        music.setVolume(music.getVolume()*1/10);
         music.play();//play it
+
+        vtouchPos = new Vector3();//fixes the errors with flipping the y co-ords on the x-axis
     }
 
     @Override
@@ -84,9 +92,6 @@ public class PlayScreen implements Screen {
         //Only renders what the gamecam can see
         tlRender.setView(gamecam);
         hud.updateTime(dt);
-        if(dt < 10){ //Check to see if the velocity can be set in the ant function
-            ant.nVelY=1;
-        }
     }
     @Override
     public void render(float dt) {
@@ -104,7 +109,12 @@ public class PlayScreen implements Screen {
         tlRender.getBatch().begin(); //Draw the ant to the screen
         ant.draw(tlRender.getBatch());
         tlRender.getBatch().end();
-
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            vtouchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            //Basically this translates the co-ords I got by the input into world space throught the vector3 position set by input...
+            gamecam.unproject(vtouchPos);//http://gamedev.stackexchange.com/questions/60787/libgdx-drawing-sprites-when-moving-orthographic-camera fixes the issues with touching + co-ords
+            ant.setPosition((vtouchPos.x - ant.getWidth() / 2), (vtouchPos.y - ant.getHeight()/2));
+        }
     }
 
     @Override

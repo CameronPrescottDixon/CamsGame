@@ -76,5 +76,9 @@ public class Hud {
         nMoney-=money;
         lblMoneyAmount.setText(String.format("%03d", nMoney));
     }
+    public void nextRound(){
+        nLevel++;
+        lblRoundNumber.setText(String.format("%01d", nLevel));
+    }
 }
 //https://www.youtube.com/watch?v=7idwNW5a8Qs for the labels and table
