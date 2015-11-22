@@ -113,7 +113,7 @@ public class PlayScreen implements Screen {
             vtouchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             //Basically this translates the co-ords I got by the input into world space throught the vector3 position set by input...
             gamecam.unproject(vtouchPos);//http://gamedev.stackexchange.com/questions/60787/libgdx-drawing-sprites-when-moving-orthographic-camera fixes the issues with touching + co-ords
-            ant.setPosition((vtouchPos.x - ant.getWidth() / 2), (vtouchPos.y - ant.getHeight()/2));
+            ant.setPosition((vtouchPos.x - ant.getWidth() / 2), (vtouchPos.y - ant.getHeight()/2));// subtracts the width and height /2 so the image is centered on the mouse
         }
     }
 
