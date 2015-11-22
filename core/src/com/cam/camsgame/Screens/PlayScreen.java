@@ -62,7 +62,7 @@ public class PlayScreen implements Screen {
         mapLoader = new TmxMapLoader();
 
         //Load tiled map
-        tlMap = mapLoader.load("Maps/FirstMap.tmx");
+        tlMap = mapLoader.load("Maps/Map.tmx");
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
