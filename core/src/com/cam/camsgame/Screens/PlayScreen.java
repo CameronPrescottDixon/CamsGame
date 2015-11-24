@@ -47,7 +47,7 @@ public class PlayScreen implements Screen {
     //Touch position in relation to world
     private Vector3 vtouchPos;
 
-    //Turrets
+    //Entities
     private SelectTurret turOne;
     private SelectTurret turTwo;
     private SelectTurret turThree;
@@ -77,17 +77,17 @@ public class PlayScreen implements Screen {
         ant = new Ants(new Sprite(new Texture("ant.png")));
         ant.setPosition(ant.getWidth(), ant.getHeight() - 30);
 
-        //Turrets
-        turOne = new SelectTurret(new Sprite(new Texture("Turrets/raidant.png")));
+        //Entities
+        turOne = new SelectTurret(new Sprite(new Texture("Entities/raidant.png")));
         turOne.update(3, 300);
 
-        turTwo = new SelectTurret(new Sprite(new Texture("Turrets/RAIDBIG.png")));
+        turTwo = new SelectTurret(new Sprite(new Texture("Entities/RAIDBIG.png")));
         turTwo.update(1, 400);
 
-        turThree = new SelectTurret(new Sprite(new Texture("Turrets/raidfly.png")));
+        turThree = new SelectTurret(new Sprite(new Texture("Entities/raidfly.png")));
         turThree.update(-1, 600);
 
-        turFour = new SelectTurret(new Sprite(new Texture("Turrets/RAIDMAX.png")));
+        turFour = new SelectTurret(new Sprite(new Texture("Entities/RAIDMAX.png")));
         turFour.update(-3, 900);
 
         spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
