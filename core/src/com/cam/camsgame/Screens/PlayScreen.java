@@ -74,7 +74,7 @@ public class PlayScreen implements Screen {
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
-        ant = new Ants(new Sprite(new Texture("ant.png")));
+        ant = new Ants(new Sprite(new Texture("Entities/ant.png")));
         ant.setPosition(ant.getWidth(), ant.getHeight() - 30);
 
         //Entities
