@@ -54,6 +54,7 @@ public class PlayScreen implements Screen {
     private SelectTurret turFour;
     private int nTurSelected = 0;
     private Sprite spSidePanel;
+    private Sprite spTurSelect;
 
     public PlayScreen(CamsGame game){
         this.game = game;
@@ -81,10 +82,10 @@ public class PlayScreen implements Screen {
         turOne = new SelectTurret(new Sprite(new Texture("Entities/raidant.png")));
         turOne.update(3, 300);
 
-        turTwo = new SelectTurret(new Sprite(new Texture("Entities/RAIDBIG.png")));
+        turTwo = new SelectTurret(new Sprite(new Texture("Entities/raidfly.png")));
         turTwo.update(1, 400);
 
-        turThree = new SelectTurret(new Sprite(new Texture("Entities/raidfly.png")));
+        turThree = new SelectTurret(new Sprite(new Texture("Entities/RAIDBIG.png")));
         turThree.update(-1, 600);
 
         turFour = new SelectTurret(new Sprite(new Texture("Entities/RAIDMAX.png")));
@@ -93,6 +94,10 @@ public class PlayScreen implements Screen {
         spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
         spSidePanel.setPosition(Gdx.graphics.getWidth() - 100, 0);
         spSidePanel.setSize(100,1000);
+
+        spTurSelect = new Sprite(new Texture("red.png"));
+        spTurSelect.setSize(100,120);
+        spTurSelect.setPosition(turOne.getX(), turOne.getY()-10);
 
 
 
@@ -133,9 +138,10 @@ public class PlayScreen implements Screen {
         //Draws the hud to the screen
         hud.stage.draw();
         //Draw ant
-        tlRender.getBatch().begin(); //Draw the ant to the screen
+        tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
         ant.draw(tlRender.getBatch());
         spSidePanel.draw(tlRender.getBatch());
+        spTurSelect.draw(tlRender.getBatch());
         turOne.draw(tlRender.getBatch());
         turTwo.draw(tlRender.getBatch());
         turThree.draw(tlRender.getBatch());
@@ -145,29 +151,32 @@ public class PlayScreen implements Screen {
             vtouchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             //Basically this translates the co-ords I got by the input into world space throught the vector3 position set by input...
             gamecam.unproject(vtouchPos);//http://gamedev.stackexchange.com/questions/60787/libgdx-drawing-sprites-when-moving-orthographic-camera fixes the issues with touching + co-ords
-            ant.setPosition(vtouchPos.x - ant.getHeight() / 2, vtouchPos.y - ant.getWidth()/2);
-            if (vtouchPos.x >= turOne.getX()) {
+            if (vtouchPos.x >= turOne.getX()) { // looks for in the click is in the turret select portion
                 if (vtouchPos.y >= turOne.getY() && vtouchPos.y < turOne.getY() + turOne.getHeight()) {
                     System.out.println("1, hi");
+                    spTurSelect.setPosition(turOne.getX(), turOne.getY()-10); // -10 because the red box is 120 pixels in height but the turrets are only 100
                     nTurSelected = 1;
                 }
                 if (vtouchPos.y >= turTwo.getY() && vtouchPos.y < turTwo.getY() + turTwo.getHeight()) {
                     System.out.println("2, hi");
+                    spTurSelect.setPosition(turTwo.getX(), turTwo.getY()-10);
                     nTurSelected = 2;
                 }
                 if (vtouchPos.y >= turThree.getY() && vtouchPos.y < turThree.getY() + turThree.getHeight()) {
                     System.out.println("3, hi");
+                    spTurSelect.setPosition(turThree.getX(), turThree.getY()-10);
                     nTurSelected = 3;
                 }
                 if (vtouchPos.y >= turFour.getY() && vtouchPos.y < turFour.getY() + turFour.getHeight()) {
                     System.out.println("4, hi");
+                    spTurSelect.setPosition(turFour.getX(), turFour.getY() - 10);
                     nTurSelected = 4;
                 }
             }
         }
-        if (vtouchPos.x < turOne.getX()) { //draw turrets to screen
-            if (nTurSelected == 1) {
-
+        if (vtouchPos.x < turOne.getX()) { //looks for clicks off of the turret select panel
+            if (nTurSelected == 1) {//only does this stuff if the first turrte is selected.. for this example it's just moving the ant.
+                ant.setPosition(vtouchPos.x - ant.getHeight() / 2, vtouchPos.y - ant.getWidth()/2);
             } else if (nTurSelected == 2) {
 
             } else if (nTurSelected == 3) {
