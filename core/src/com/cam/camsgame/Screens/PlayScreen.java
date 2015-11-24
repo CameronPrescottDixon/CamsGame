@@ -53,6 +53,7 @@ public class PlayScreen implements Screen {
     private SelectTurret turThree;
     private SelectTurret turFour;
     private int nTurSelected = 0;
+    private Sprite spSidePanel;
 
     public PlayScreen(CamsGame game){
         this.game = game;
@@ -88,6 +89,12 @@ public class PlayScreen implements Screen {
 
         turFour = new SelectTurret(new Sprite(new Texture("Turrets/RAIDMAX.png")));
         turFour.update(-3, 900);
+
+        spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
+        spSidePanel.setPosition(Gdx.graphics.getWidth() - 100, 0);
+        spSidePanel.setSize(100,1000);
+
+
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)
         gamecam.position.set(gameport.getWorldWidth()/2, gameport.getWorldHeight()/2, 0);
@@ -128,6 +135,7 @@ public class PlayScreen implements Screen {
         //Draw ant
         tlRender.getBatch().begin(); //Draw the ant to the screen
         ant.draw(tlRender.getBatch());
+        spSidePanel.draw(tlRender.getBatch());
         turOne.draw(tlRender.getBatch());
         turTwo.draw(tlRender.getBatch());
         turThree.draw(tlRender.getBatch());
