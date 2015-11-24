@@ -77,16 +77,16 @@ public class PlayScreen implements Screen {
         ant.setPosition(ant.getWidth(), ant.getHeight() - 30);
 
         //Turrets
-        turOne = new SelectTurret(new Sprite(new Texture("raidant.jpg")));
-        turOne.update(3, 350);
+        turOne = new SelectTurret(new Sprite(new Texture("Turrets/raidant.png")));
+        turOne.update(3, 300);
 
-        turTwo = new SelectTurret(new Sprite(new Texture("RAIDBIG.jpg")));
+        turTwo = new SelectTurret(new Sprite(new Texture("Turrets/RAIDBIG.png")));
         turTwo.update(1, 400);
 
-        turThree = new SelectTurret(new Sprite(new Texture("raidfly.jpg")));
+        turThree = new SelectTurret(new Sprite(new Texture("Turrets/raidfly.png")));
         turThree.update(-1, 600);
 
-        turFour = new SelectTurret(new Sprite(new Texture("RAIDMAX.jpg")));
+        turFour = new SelectTurret(new Sprite(new Texture("Turrets/RAIDMAX.png")));
         turFour.update(-3, 900);
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)
@@ -137,7 +137,7 @@ public class PlayScreen implements Screen {
             vtouchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             //Basically this translates the co-ords I got by the input into world space throught the vector3 position set by input...
             gamecam.unproject(vtouchPos);//http://gamedev.stackexchange.com/questions/60787/libgdx-drawing-sprites-when-moving-orthographic-camera fixes the issues with touching + co-ords
-            ant.setPosition(vtouchPos.x - ant.getHeight()/2, vtouchPos.y - ant.getWidth()/2);
+            ant.setPosition(vtouchPos.x - ant.getHeight() / 2, vtouchPos.y - ant.getWidth()/2);
             if (vtouchPos.x >= turOne.getX()) {
                 if (vtouchPos.y >= turOne.getY() && vtouchPos.y < turOne.getY() + turOne.getHeight()) {
                     System.out.println("1, hi");
