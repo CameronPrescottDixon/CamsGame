@@ -19,7 +19,7 @@ public class Hud {
     private Viewport vpHud;
 
     private float fTime;
-    private int nWorldTime,nMoney,nLevel;
+    public int nWorldTime,nMoney,nLevel;
 
     Label lblCountUpLabel;
     Label lblMoneyAmount;
