@@ -164,51 +164,33 @@ public class PlayScreen implements Screen {
             if (vtouchPos.x >= arspTurrs.get(0).getX()) { // looks for in the click is in the turret select portion of the screen
                 if (vtouchPos.y >= arspTurrs.get(i).getY() && vtouchPos.y < arspTurrs.get(i).getY() + arspTurrs.get(i).getHeight()) {// Using arrays schortened this code by 3/4!!!
                     spTurSelect.setPosition(arspTurrs.get(i).getX(), arspTurrs.get(i).getY() - 10); // -10 because the red box is 120 pixels in height but the turrets are only 100
-                    nTurSelected = i+1;
+                    nTurSelected = i;
                     bTurSelect = true;
                     break;
                 }
             } else if(vtouchPos.x < arspTurrs.get(i).getX()) { //looks for clicks off of the turret select panel
-                if (nTurSelected == 1) {//only does this stuff if the first turrte is selected.. for this example it's just moving the ant.
-                    if(arspTurrs.get(0).nCost <= hud.nMoney){
-                        hud.subtMoney(arspTurrs.get(1).nCost);
-                        arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png"))));
-                        nLastTurret = arspTurret.size()-1;
-                        arspTurret.get(nLastTurret).setSize(50, 50);
-                        arspTurret.get(nLastTurret).setPosition(vtouchPos.x - arspTurret.get(nLastTurret).getWidth() / 2,
-                                vtouchPos.y - arspTurret.get(nLastTurret).getHeight() / 2);
-                    }
-                } else if (nTurSelected == 2) {
-                    if(arspTurrs.get(1).nCost <= hud.nMoney){
-                        hud.subtMoney(arspTurrs.get(1).nCost);
-                        arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png"))));
-                        nLastTurret = arspTurret.size()-1;
-                        arspTurret.get(nLastTurret).setSize(50, 50);
-                        arspTurret.get(nLastTurret).setPosition(vtouchPos.x - arspTurret.get(nLastTurret).getHeight() / 2,
-                                vtouchPos.y - arspTurret.get(nLastTurret).getWidth() / 2);
-                    }
-                } else if (nTurSelected == 3) {
-                    if(arspTurrs.get(2).nCost <= hud.nMoney) {
-                        hud.subtMoney(arspTurrs.get(2).nCost);
-                        arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png"))));
-                        nLastTurret = arspTurret.size()-1;
-                        arspTurret.get(nLastTurret).setSize(50, 50);
-                        arspTurret.get(nLastTurret).setPosition(vtouchPos.x - arspTurret.get(nLastTurret).getHeight() / 2,
-                                vtouchPos.y - arspTurret.get(nLastTurret).getWidth() / 2);
-                    }
-                } else if (nTurSelected == 4) {
-                    if(arspTurrs.get(3).nCost <= hud.nMoney){
-                        hud.subtMoney(arspTurrs.get(3).nCost);
-                        arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png"))));
-                        nLastTurret = arspTurret.size()-1;
-                        arspTurret.get(nLastTurret).setSize(50, 50);
-                        arspTurret.get(nLastTurret).setPosition(vtouchPos.x - arspTurret.get(nLastTurret).getHeight() / 2,
-                                vtouchPos.y - arspTurret.get(nLastTurret).getWidth() / 2);
-                    }
-                }
+                addTurret();
                 bTurSelect = false;
-                nTurSelected = 0;
             }
+        }
+    }
+
+    private void addTurret() {
+        if (arspTurrs.get(nTurSelected).nCost <= hud.nMoney) {
+            hud.subtMoney(arspTurrs.get(1).nCost);
+            if (nTurSelected == 0) {
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png"))));
+            } else if (nTurSelected == 1) {
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png"))));
+            } else if (nTurSelected == 2) {
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png"))));
+            } else if (nTurSelected == 3) {
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png"))));
+            }
+            nLastTurret = arspTurret.size() - 1;
+            arspTurret.get(nLastTurret).setSize(50, 50);
+            arspTurret.get(nLastTurret).setPosition(vtouchPos.x - arspTurret.get(nLastTurret).getWidth() / 2,
+                    vtouchPos.y - arspTurret.get(nLastTurret).getHeight() / 2);
         }
     }
 
@@ -234,6 +216,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
+    tlMap.dispose();tlRender.dispose();
 
     }
 }
