@@ -34,7 +34,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Up") == true) { //makes it go up
                 if (nVelX > 0) {//Checks if it's going right or not
                     rotate(90);
-                } else {
+                } else if(nVelX < 0){
                     rotate(-90);
                 }
                 this.nVelX = 0;
@@ -44,7 +44,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Down") == true) {//Makes it do down
                 if (nVelX > 0) {//Checks if it's going right or not
                     rotate(-90);
-                } else {
+                } else if(nVelX < 0){
                     rotate(90);
                 }
                 nVelX = 0;
@@ -54,7 +54,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Left") == true) {// Makes it go left
                 if (nVelY > 0) {//Checks if it's going up or not
                     rotate(90);
-                } else {
+                } else if(nVelY < 0){
                     rotate(-90);
                 }
                 this.nVelX = -4;
@@ -64,7 +64,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Right") == true) {// Makes it go right
                 if (nVelY > 0) {//Checks if it's going right or not
                     rotate(-90);
-                } else {
+                } else if(nVelY<0){
                     rotate(90);
                 }
                 nVelX = 4;
