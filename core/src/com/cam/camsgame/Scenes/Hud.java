@@ -29,7 +29,7 @@ public class Hud {
     Label lblRound;
 
     public Hud(SpriteBatch spriteBatch){ //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
-        nMoney = 500;
+        nMoney = 50000;
         nLevel = 1;
         nWorldTime = 0;
 

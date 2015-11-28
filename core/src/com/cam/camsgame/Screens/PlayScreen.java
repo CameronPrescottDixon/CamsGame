@@ -138,8 +138,6 @@ public class PlayScreen implements Screen {
     public void render(float dt) {
         //Calls update to instantly update to the map
         update(dt); // Sends deltaTime to the update function to be sent to other methods that require it
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // renders the map
         tlRender.render();
         //Gets whats shown by our huds camera
@@ -165,7 +163,6 @@ public class PlayScreen implements Screen {
         for(int i=0;i<4;i++){
             if (vtouchPos.x >= arspTurrs.get(0).getX()) { // looks for in the click is in the turret select portion of the screen
                 if (vtouchPos.y >= arspTurrs.get(i).getY() && vtouchPos.y < arspTurrs.get(i).getY() + arspTurrs.get(i).getHeight()) {// Using arrays schortened this code by 3/4!!!
-                    System.out.println("1, hi");
                     spTurSelect.setPosition(arspTurrs.get(i).getX(), arspTurrs.get(i).getY() - 10); // -10 because the red box is 120 pixels in height but the turrets are only 100
                     nTurSelected = i+1;
                     bTurSelect = true;
@@ -182,7 +179,7 @@ public class PlayScreen implements Screen {
                                 vtouchPos.y - arspTurret.get(nLastTurret).getHeight() / 2);
                     }
                 } else if (nTurSelected == 2) {
-                    if(arspTurrs.get(3).nCost <= hud.nMoney){
+                    if(arspTurrs.get(1).nCost <= hud.nMoney){
                         hud.subtMoney(arspTurrs.get(1).nCost);
                         arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png"))));
                         nLastTurret = arspTurret.size()-1;
@@ -191,7 +188,7 @@ public class PlayScreen implements Screen {
                                 vtouchPos.y - arspTurret.get(nLastTurret).getWidth() / 2);
                     }
                 } else if (nTurSelected == 3) {
-                    if(arspTurrs.get(3).nCost <= hud.nMoney) {
+                    if(arspTurrs.get(2).nCost <= hud.nMoney) {
                         hud.subtMoney(arspTurrs.get(2).nCost);
                         arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png"))));
                         nLastTurret = arspTurret.size()-1;
