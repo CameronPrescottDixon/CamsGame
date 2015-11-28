@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -77,8 +78,9 @@ public class PlayScreen implements Screen {
 
         //Ants
         arspAnt = new ArrayList<Ants>();
-        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png"))));
-        arspAnt.get(0).setPosition(0,20);
+        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")),(TiledMapTileLayer) tlMap.getLayers().get(0)));
+        arspAnt.get(0).setSize(50,50);
+        arspAnt.get(0).setPosition(0, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight()*3/4);
         nLastTurret = 0;
 
         //Turrets, an array is better for looking and listening for which is clicked
@@ -178,7 +180,7 @@ public class PlayScreen implements Screen {
     private void addTurret() {
         if (arspTurrs.get(nTurSelected).nCost <= hud.nMoney) {
             hud.subtMoney(arspTurrs.get(1).nCost);
-            if (nTurSelected == 0) {
+            if (nTurSelected == 0) {//Adds the turret with the specific image, this also helps reduce total code when it's in a method
                 arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png"))));
             } else if (nTurSelected == 1) {
                 arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png"))));
@@ -216,7 +218,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-    tlMap.dispose();tlRender.dispose();
-
+        tlMap.dispose();
+        tlRender.dispose();
+        hud.dispose();
     }
 }

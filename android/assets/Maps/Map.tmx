@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="20" tileheight="20" nextobjectid="478">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="20" tileheight="20" nextobjectid="490">
  <tileset firstgid="1" name="idk" tilewidth="10" tileheight="10" tilecount="494">
   <image source="tmw_desert_spacing.png" width="265" height="199"/>
  </tileset>
  <tileset firstgid="495" name="cjsolvjiksv" tilewidth="25" tileheight="25" tilecount="70">
   <image source="images.jpg" width="271" height="186"/>
+  <tile id="17">
+   <properties>
+    <property name="Down" value=""/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="Right" value=""/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="Left" value=""/>
+   </properties>
+  </tile>
+  <tile id="47">
+   <properties>
+    <property name="Up" value=""/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="End" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt2DsOABAQAFFxA8Xe/6oKNyDWyE4xpcij8Bm9tXFQHI6npIOVDlY6WEVir63uuw5qOljpYKWDlQ5WlR3EO+uug7KmOnTo0KHjL8eNcy7bcWsuHTp01HD88E9d+c1GTAcrHax0sNLB6qWD8u9pqwmiZLxJ
+   eJztmU0LwyAMhsXLYPRS2Hp0Y0f//w+cBQNhSKfOfNTl8FwKbfMQLfHt6p1bO3llLj88QwNb4m4eajAPXcziEZAHF1Qe0BMqbghqDw5mWL/moQvz0MUsHtE8VIE9zuwyo4d0Ldwe18SSiYPxCcfksSA+Z89SbbVzq8sentmD4uwAPhweVHsKPKJ5mId5iHuEjns4PGJjTY/M6GxmlEetS0+WA5nGUTbD3Q+oqWXewPmMFo9evu1F7n1uHrQeEuuq9L79Gp6le/afln7s9cP5pvV7GBg9jnqv+b+B1Bo2jzqPf800NGIeujAPXTwzUlnyiLxzyw5cs0OJEf/qwQP6IeFBkX9KeLwBc8nB5Q==
   </data>
  </layer>
- <objectgroup name="Left">
-  <object id="469" x="388" y="604"/>
-  <object id="476" x="852" y="145"/>
- </objectgroup>
- <objectgroup name="Right">
-  <object id="471" x="110" y="423"/>
-  <object id="473" x="551" y="721"/>
- </objectgroup>
- <objectgroup name="Up">
-  <object id="468" x="391" y="961"/>
-  <object id="470" x="109" y="600"/>
-  <object id="475" x="851" y="720"/>
-  <object id="477" x="329" y="140"/>
- </objectgroup>
- <objectgroup name="Down">
-  <object id="472" x="551" y="422"/>
+ <objectgroup name="SHOW ME THE MONEY">
+  <object id="478" x="391" y="969"/>
+  <object id="479" x="389" y="607"/>
+  <object id="480" x="109" y="608"/>
+  <object id="486" x="110" y="428"/>
+  <object id="487" x="550" y="431"/>
+  <object id="488" x="549" y="732"/>
+  <object id="489" x="852" y="731"/>
  </objectgroup>
 </map>
