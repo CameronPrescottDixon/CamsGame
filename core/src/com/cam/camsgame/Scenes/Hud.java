@@ -20,7 +20,7 @@ public class Hud implements Disposable{
     private Viewport vpHud;
 
     private float fTime;
-    public int nWorldTime,nMoney,nLevel;
+    public int nWorldTime,nMoney,nLevel,nHP;
 
     Label lblCountUpLabel;
     Label lblMoneyAmount;
@@ -28,9 +28,13 @@ public class Hud implements Disposable{
     Label lblMoney;
     Label lblTime;
     Label lblRound;
+    Label lblHealth;
+    Label lblHP;
+
 
     public Hud(SpriteBatch spriteBatch){ //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
-        nMoney = 50000;
+        nMoney = 3000;
+        nHP = 100;
         nLevel = 1;
         nWorldTime = 0;
 
@@ -43,21 +47,25 @@ public class Hud implements Disposable{
 
         //Set the labels for each
         lblCountUpLabel = new Label(String.format("%02d", nWorldTime), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        lblHP = new Label(String.format("%03d", nHP), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lblRoundNumber = new Label(String.format("%01d", nLevel), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lblMoneyAmount = new Label(String.format("%03d", nMoney), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lblRound = new Label("Round", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lblMoney = new Label("Money", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lblTime = new Label("Time", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        lblHealth = new Label("Health", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
 
         //Give each label 1/3 of the width of the table
         table.add(lblTime).expandX().padTop(5);
         table.add(lblMoney).expandX().padTop(5);
         table.add(lblRound).expandX().padTop(5);
+        table.add(lblHealth).expandX().padTop(5);
         //add a row underneath the first row and give each label 1/3 of the width of the table
         table.row();
         table.add(lblCountUpLabel).expandX();
         table.add(lblMoneyAmount).expandX();
         table.add(lblRoundNumber).expandX();
+        table.add(lblHP).expandX();
         //Add the table to the stage after it's been created
         stage.addActor(table);
     }
@@ -75,13 +83,21 @@ public class Hud implements Disposable{
     }
     public void subtMoney(int money){//subtracts money
         nMoney-=money;
-        lblMoneyAmount.setText(String.format("%03d", nMoney));
+        if(nMoney>0){
+            lblMoneyAmount.setText(String.format("%03d", nMoney));
+
+        }else if(nMoney==0){
+            lblMoneyAmount.setText(String.format("%03d", 0));
+        }
     }
     public void nextRound(){
         nLevel++;
         lblRoundNumber.setText(String.format("%01d", nLevel));
     }
-
+public void loseHP(int nLose){
+    nHP -= nLose;
+    lblHP.setText(String.format("%03d", nHP));
+}
     @Override
     public void dispose() {
         stage.dispose();

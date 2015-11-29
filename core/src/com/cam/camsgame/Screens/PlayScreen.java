@@ -32,7 +32,7 @@ public class PlayScreen implements Screen {
     private StretchViewport gameport; //https://www.youtube.com/watch?v=D7u5B2Oh9r0 <-- maintaining aspect ratios
 
     //Hud
-    private Hud hud;
+    public Hud hud;
 
     //Tiled
     private TmxMapLoader mapLoader; //https://www.youtube.com/watch?v=P8jgD-V5jG8 <-- how the map is loaded
@@ -78,7 +78,7 @@ public class PlayScreen implements Screen {
 
         //Ants
         arspAnt = new ArrayList<Ants>();
-        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")),(TiledMapTileLayer) tlMap.getLayers().get(0), 4));//Sprite|TiledMapLayer|Speed
+        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")),(TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1));//Sprite|TiledMapLayer|Speed|damage
         arspAnt.get(0).setSize(50,50);
         arspAnt.get(0).setPosition(0, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight()*3/4);
         nLastTurret = 0;
@@ -133,7 +133,8 @@ public class PlayScreen implements Screen {
         //Only renders what the gamecam can see
         tlRender.setView(gamecam);
         hud.updateTime(dt);
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) onClick();
+        removeHP();//checks if ants reach the end
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) onClick();//only passes it when theres a click
     }
 
     @Override
@@ -195,6 +196,14 @@ public class PlayScreen implements Screen {
             arspTurret.get(nLastTurret).setSize(50, 50);
             arspTurret.get(nLastTurret).setPosition(vtouchPos.x - arspTurret.get(nLastTurret).getWidth() / 2,
                     vtouchPos.y - arspTurret.get(nLastTurret).getHeight() / 2);
+        }
+    }
+    public void removeHP(){
+        for(int i = 0; i<arspAnt.size();i++){
+            if(arspAnt.get(i).bFinished == true) {
+                hud.loseHP(arspAnt.get(i).nDamage);
+                arspAnt.remove(i);
+            }
         }
     }
 
