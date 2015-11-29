@@ -78,7 +78,7 @@ public class PlayScreen implements Screen {
 
         //Ants
         arspAnt = new ArrayList<Ants>();
-        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")),(TiledMapTileLayer) tlMap.getLayers().get(0)));
+        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")),(TiledMapTileLayer) tlMap.getLayers().get(0), 4));//Sprite|TiledMapLayer|Speed
         arspAnt.get(0).setSize(50,50);
         arspAnt.get(0).setPosition(0, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight()*3/4);
         nLastTurret = 0;

@@ -8,14 +8,16 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
  * Created by Cameron on 2015-11-11.
  */
 public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
-    public int nVelY = 0, nVelX = 1;
+    public int nVelY = 0, nVelX, nSpeed;
 
     private TiledMapTileLayer collisionLayer;
 
-    public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer) {
+    public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed) {
         super(spAnt);
-        this.collisionLayer = collisionLayer;
-        rotate(-90);
+        this.collisionLayer = collisionLayer; //Gets the layer from Playscreen
+        this.nSpeed = nSpeed;//Gets the speed from playscreen since ants can be different
+        nVelX = this.nSpeed;//Sets the initial velocity to the speed or it would never move..
+        rotate(-90);//Sets the initial rotation so the ants don't move sideways
     }
 
     @Override
@@ -25,21 +27,22 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     }
     public void update() {
         float fTileWidth = collisionLayer.getTileWidth(), fTileHeight = collisionLayer.getTileHeight();
-        //Set x
+        //Moves the ant
         setX(getX() + nVelX);
-        //Set y
         setY(getY() + nVelY);
+
+        //Looks for collision for specific cells, it only looks for the cell directly in it's path to increase performance instead of looking for every cell on the map
         if (nVelX > 0 || nVelX < 0) { //Checks if it's moving in the x direction or not so it increases efficienct by no looking for y direction related things
             // ant is moving right code found at https://www.youtube.com/watch?v=DOpqkaX9844&index=4&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb
             if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Up") == true) { //makes it go up
                 if (nVelX > 0) {//Checks if it's going right or not
                     rotate(90);
-                } else if (nVelX < 0) {
+                } else if (nVelX < 0) { // An else statement messes up the code since the velocity would be 0 which is not > 0 but not < 0
                     rotate(-90);
                 }
                 this.nVelX = 0;
-                this.nVelY = 4;
+                this.nVelY = nSpeed;
                 System.out.println("hi, UP");
             } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Down") == true) {//Makes it do down
@@ -49,7 +52,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     rotate(90);
                 }
                 nVelX = 0;
-                nVelY = -4;
+                nVelY = -nSpeed;
                 System.out.println("hi, Down");
             }
         } else if (nVelY < 0 || nVelY > 0) {//Checks if it's moving in the y direction or not so it increases efficienct by no looking for x direction related things
@@ -60,7 +63,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                 } else if (nVelY < 0) {
                     rotate(-90);
                 }
-                this.nVelX = -4;
+                this.nVelX = -nSpeed;
                 this.nVelY = 0;
                 System.out.println("hi, Left");
             } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
@@ -70,7 +73,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                 } else if (nVelY < 0) {
                     rotate(90);
                 }
-                nVelX = 4;
+                nVelX = nSpeed;
                 nVelY = 0;
                 System.out.println("hi, Right");
             } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
@@ -81,7 +84,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         }
     }
     @Override
-    public void rotate(float degrees) {
+    public void rotate(float degrees) { //Simply rotates the ant based on the degree passed when the method is called
         super.rotate(degrees);
     }
 }
