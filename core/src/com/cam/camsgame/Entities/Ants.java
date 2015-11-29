@@ -29,12 +29,13 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         setX(getX() + nVelX);
         //Set y
         setY(getY() + nVelY);
-        // ant is moving right code found at https://www.youtube.com/watch?v=DOpqkaX9844&index=4&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb
+        if (nVelX > 0 || nVelX < 0) { //Checks if it's moving in the x direction or not so it increases efficienct by no looking for y direction related things
+            // ant is moving right code found at https://www.youtube.com/watch?v=DOpqkaX9844&index=4&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb
             if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Up") == true) { //makes it go up
                 if (nVelX > 0) {//Checks if it's going right or not
                     rotate(90);
-                } else if(nVelX < 0){
+                } else if (nVelX < 0) {
                     rotate(-90);
                 }
                 this.nVelX = 0;
@@ -44,17 +45,19 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Down") == true) {//Makes it do down
                 if (nVelX > 0) {//Checks if it's going right or not
                     rotate(-90);
-                } else if(nVelX < 0){
+                } else if (nVelX < 0) {
                     rotate(90);
                 }
                 nVelX = 0;
                 nVelY = -4;
                 System.out.println("hi, Down");
-            } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+            }
+        } else if (nVelY < 0 || nVelY > 0) {//Checks if it's moving in the y direction or not so it increases efficienct by no looking for x direction related things
+            if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Left") == true) {// Makes it go left
                 if (nVelY > 0) {//Checks if it's going up or not
                     rotate(90);
-                } else if(nVelY < 0){
+                } else if (nVelY < 0) {
                     rotate(-90);
                 }
                 this.nVelX = -4;
@@ -64,7 +67,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Right") == true) {// Makes it go right
                 if (nVelY > 0) {//Checks if it's going right or not
                     rotate(-90);
-                } else if(nVelY<0){
+                } else if (nVelY < 0) {
                     rotate(90);
                 }
                 nVelX = 4;
@@ -76,6 +79,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                 nVelX = 0;
             }
         }
+    }
     @Override
     public void rotate(float degrees) {
         super.rotate(degrees);
