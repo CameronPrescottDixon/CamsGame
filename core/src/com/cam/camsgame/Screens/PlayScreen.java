@@ -171,8 +171,10 @@ public class PlayScreen implements Screen {
                     break;
                 }
             } else if(vtouchPos.x < arspTurrs.get(i).getX()) { //looks for clicks off of the turret select panel
-                addTurret();
-                bTurSelect = false;
+                if(bTurSelect == true) {
+                    addTurret();
+                    bTurSelect = false;
+                }
             }
         }
     }
