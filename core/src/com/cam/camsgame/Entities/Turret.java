@@ -18,10 +18,11 @@ public class Turret extends Sprite {
 
     @Override
     public void draw(Batch batch) {
+        update();
         super.draw(batch);
     }
-    public void update(int nBullV, int nRan, int nDam, int nCost){
 
+    public void update(){
     }
     /*public void shoot(ArrayList<Ants> arspAnt, int i){
         arspBullets = new ArrayList<Bullet>();
