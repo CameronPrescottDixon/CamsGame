@@ -11,11 +11,11 @@ import java.util.ArrayList;
  */
 public class Turret extends Sprite {
     public int nBullVel, nRange, nDamage, nCost;
-   // public ArrayList<Bullet> arspBullets;
+    // public ArrayList<Bullet> arspBullets;
     public TiledMapTileLayer collisionLayer;
     public boolean bPlaceable = true;
 
-    public Turret(Sprite spTurret,  TiledMapTileLayer collisionLayer){
+    public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer) {
         super(spTurret);
         this.collisionLayer = collisionLayer; //Gets the layer from Playscreen
     }
@@ -26,27 +26,33 @@ public class Turret extends Sprite {
         update();
     }
 
-    public void update(){
+    public void update() {
         float fTileWidth = collisionLayer.getTileWidth(), fTileHeight = collisionLayer.getTileHeight();
+//Checks for the upwards direction works
+        if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+                (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
+            bPlaceable = false;
+            System.out.println("BLOCKED " + bPlaceable +" 1");
 
-        if (collisionLayer.getCell((int) (getX() / fTileWidth),
-                (int) (getY() / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
-            bPlaceable = false;
-            System.out.println("BLOCKED" + bPlaceable);
+            //Downwards doesnt work
         } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
-            (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
+            (int) ((getY() - getHeight()/2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
-            System.out.println("BLOCKED" + bPlaceable);
-        } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+            System.out.println("BLOCKED" + bPlaceable+" 2");
+
+            //Right works
+        } else if (collisionLayer.getCell((int) ((getX() + getWidth()) / fTileWidth),
         (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
-            System.out.println("BLOCKED" + bPlaceable);
-        } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+            System.out.println("BLOCKED" + bPlaceable +" 3");
+
+            //Left doesnt't work
+        } else if (collisionLayer.getCell((int) ((getX() - getWidth()) / fTileWidth),
         (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
-            System.out.println("BLOCKED" + bPlaceable);
+            System.out.println("BLOCKED" + bPlaceable+ " 4");
         }
-    }
+        }
 
 
 
@@ -55,4 +61,4 @@ public class Turret extends Sprite {
         arspBullets.add(new Bullet(new Sprite(new Texture("Entities/Bullet.png"))));
         arspBullets.get(0).shoot((int)arspAnt.get(i).getX(),(int)arspAnt.get(i).getY(), (int)getX() , (int)getY() , arspAnt.get(i).nVelX, arspAnt.get(i).nVelY);
     }*/
-}
+    }

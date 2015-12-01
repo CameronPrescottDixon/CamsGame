@@ -180,7 +180,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    private void addTurret() {
+    private void addTurret() { //Adds turret when clicked
         if (arspTurrs.get(nTurSelected).nCost <= hud.nMoney) {
             if (nTurSelected == 0) {//Adds the turret with the specific image, this also helps reduce total code when it's in a method
                 arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
@@ -205,7 +205,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void removeAnt() {
+    public void removeAnt() { //Checks to see if the ant hits the end of the road
         for (int i = 0; i < arspAnt.size(); i++) {
             if (arspAnt.get(i).bFinished == true) {
                 hud.loseHP(arspAnt.get(i).nDamage);
@@ -214,7 +214,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public boolean placeableTurret() {
+    public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
         for (int i = 0; i < arspTurret.size() - 1; i++) {;
             if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) {
                 System.out.println("Overlaps");
