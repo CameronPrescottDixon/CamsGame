@@ -7,21 +7,30 @@
   <image source="images.jpg" width="271" height="186"/>
   <tile id="17">
    <properties>
+    <property name="Blocked" value=""/>
     <property name="Down" value=""/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="Blocked" value=""/>
    </properties>
   </tile>
   <tile id="27">
    <properties>
+    <property name="Blocked" value=""/>
     <property name="Right" value=""/>
    </properties>
   </tile>
   <tile id="37">
    <properties>
+    <property name="Blocked" value=""/>
     <property name="Left" value=""/>
    </properties>
   </tile>
   <tile id="47">
    <properties>
+    <property name="Blocked" value=""/>
     <property name="Up" value=""/>
    </properties>
   </tile>
@@ -33,7 +42,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmU0LwyAMhsXLYPRS2Hp0Y0f//w+cBQNhSKfOfNTl8FwKbfMQLfHt6p1bO3llLj88QwNb4m4eajAPXcziEZAHF1Qe0BMqbghqDw5mWL/moQvz0MUsHtE8VIE9zuwyo4d0Ldwe18SSiYPxCcfksSA+Z89SbbVzq8sentmD4uwAPhweVHsKPKJ5mId5iHuEjns4PGJjTY/M6GxmlEetS0+WA5nGUTbD3Q+oqWXewPmMFo9evu1F7n1uHrQeEuuq9L79Gp6le/afln7s9cP5pvV7GBg9jnqv+b+B1Bo2jzqPf800NGIeujAPXTwzUlnyiLxzyw5cs0OJEf/qwQP6IeFBkX9KeLwBc8nB5Q==
+   eJzt2TEPgyAQhmHC0sR0MamODh35/z+wNWFgMFahd/fd5RvexcH6BGIB55zS3Nm79hi4B0K55t2x0gEVHVhtjUMrSYdkrybPjjbv85cOrOjAig6sIjo8WyI6rJ9F2zF9e+bra56zysG1pOTQWO9pOiT2DlaOf87xaI5CB5RDc14tQRxRxmP0vSvpuGoZOQM5O5uxGo/eUBy90fG7/T9H4h1q4SgGjqPfax13W2so47Hva6ZOywbkQP1ucMfhJTqwogMrOrCK6LCwjO43LNYO0g7LeSVx/mnh+ACHIaDt
   </data>
  </layer>
  <objectgroup name="SHOW ME THE MONEY">

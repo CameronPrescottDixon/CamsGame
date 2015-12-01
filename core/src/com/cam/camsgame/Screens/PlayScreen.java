@@ -41,7 +41,7 @@ public class PlayScreen implements Screen {
 
     //Ants + test money for hud
     private ArrayList<Ants> arspAnt;
-    private int nMoney=1;
+    private int nMoney = 1;
 
     //Music
     private Music music;
@@ -51,13 +51,15 @@ public class PlayScreen implements Screen {
 
     //Turrets + side panel
     private ArrayList<Turret> arspTurret;
-    private ArrayList <SelectTurret> arspTurrs;
+    private ArrayList<SelectTurret> arspTurrs;
     private int nTurSelected = 0;
     private Sprite spSidePanel;
     private Sprite spTurSelect;
     private boolean bTurSelect;
+    private boolean bLastisOkay; // Looks for if the last turret is placed is allowed to be placed
+    // where it is, if not remove it only once so it doesn't use much processing power
 
-    public PlayScreen(CamsGame game){
+    public PlayScreen(CamsGame game) {
         this.game = game;
         gamecam = new OrthographicCamera();
 
@@ -77,9 +79,9 @@ public class PlayScreen implements Screen {
 
         //Ants
         arspAnt = new ArrayList<Ants>();
-        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")),(TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1));//Sprite|TiledMapLayer|Speed|damage
-        arspAnt.get(0).setSize(50,50);
-        arspAnt.get(0).setPosition(0, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight()*3/4);
+        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1));//Sprite|TiledMapLayer|Speed|damage
+        arspAnt.get(0).setSize(50, 50);
+        arspAnt.get(0).setPosition(0, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight() * 3 / 4);
 
         //Turrets, an array is better for looking and listening for which is clicked
         arspTurrs = new ArrayList<SelectTurret>();
@@ -102,10 +104,9 @@ public class PlayScreen implements Screen {
 
         //Shows the selected turret by adding this red box behind it
         spTurSelect = new Sprite(new Texture("red.png"));
-        spTurSelect.setSize(100,120);
+        spTurSelect.setSize(100, 120);
         spTurSelect.setPosition(arspTurrs.get(0).getX(), arspTurrs.get(0).getY() - 10);
         bTurSelect = false; //Makes it so the box isnt drawn before a turret is selected
-
 
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)
@@ -126,13 +127,14 @@ public class PlayScreen implements Screen {
 
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         gamecam.update();
         //Only renders what the gamecam can see
         tlRender.setView(gamecam);
         hud.updateTime(dt);
         removeAnt();//checks if ants reach the end
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) onClick();//only passes it when theres a click
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+            onClick();//only passes it when theres a click
     }
 
     @Override
@@ -147,21 +149,21 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         //Draw ant
         tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
-        for(int i = 0;i<arspAnt.size();i++)arspAnt.get(i).draw(tlRender.getBatch());
-        for(int i = 0; i<arspTurret.size();i++)arspTurret.get(i).draw(tlRender.getBatch());
+        for (int i = 0; i < arspAnt.size(); i++) arspAnt.get(i).draw(tlRender.getBatch());
+        for (int i = 0; i < arspTurret.size(); i++) arspTurret.get(i).draw(tlRender.getBatch());
         spSidePanel.draw(tlRender.getBatch());
-        if(bTurSelect != false){//makes it so the red box isnt drawn from the start even if none of the turrets are selected
+        if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
             spTurSelect.draw(tlRender.getBatch());
         }
-        for(int i= 0; i<4;i++)arspTurrs.get(i).draw(tlRender.getBatch());
+        for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
         tlRender.getBatch().end();
     }
 
-    public void onClick(){ //Helps keep render function clean instead of packing all of this into it
+    public void onClick() { //Helps keep render function clean instead of packing all of this into it
         vtouchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         //Basically this translates the co-ords I got by the input into world space throught the vector3 position set by input...
         gamecam.unproject(vtouchPos);//http://gamedev.stackexchange.com/questions/60787/libgdx-drawing-sprites-when-moving-orthographic-camera fixes the issues with touching + co-ords
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             if (vtouchPos.x >= arspTurrs.get(0).getX()) { // looks for in the click is in the turret select portion of the screen
                 if (vtouchPos.y >= arspTurrs.get(i).getY() && vtouchPos.y < arspTurrs.get(i).getY() + arspTurrs.get(i).getHeight()) {// Using arrays schortened this code by 3/4!!!
                     spTurSelect.setPosition(arspTurrs.get(i).getX(), arspTurrs.get(i).getY() - 10); // -10 because the red box is 120 pixels in height but the turrets are only 100
@@ -169,8 +171,8 @@ public class PlayScreen implements Screen {
                     bTurSelect = true;
                     break;
                 }
-            } else if(vtouchPos.x < arspTurrs.get(i).getX()) { //looks for clicks off of the turret select panel
-                if(bTurSelect == true) {
+            } else if (vtouchPos.x < arspTurrs.get(i).getX()) { //looks for clicks off of the turret select panel
+                if (bTurSelect == true) {
                     addTurret();
                     bTurSelect = false;
                 }
@@ -181,37 +183,49 @@ public class PlayScreen implements Screen {
     private void addTurret() {
         if (arspTurrs.get(nTurSelected).nCost <= hud.nMoney) {
             if (nTurSelected == 0) {//Adds the turret with the specific image, this also helps reduce total code when it's in a method
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png"))));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
             } else if (nTurSelected == 1) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png"))));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
             } else if (nTurSelected == 2) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png"))));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
             } else if (nTurSelected == 3) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png"))));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
             }
-            arspTurret.get(arspTurret.size()-1).setSize(50, 50);
-            arspTurret.get(arspTurret.size()-1).setPosition(vtouchPos.x - arspTurret.get(arspTurret.size()-1).getWidth() / 2,
-                    vtouchPos.y - arspTurret.get(arspTurret.size()-1).getHeight() / 2);
-
-            for(int i = 0; i<arspTurret.size()-1; i++) { //Checks for if the turret placed overlaps the others
-                if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) {
-                System.out.println("OVERLAPS");
-                    arspTurret.remove(arspTurret.size()-1);
-                }else{
-                    hud.subtMoney(arspTurrs.get(1).nCost);
-                }
+            arspTurret.get(arspTurret.size() - 1).setSize(50, 50);
+            arspTurret.get(arspTurret.size() - 1).setPosition(vtouchPos.x - arspTurret.get(arspTurret.size() - 1).getWidth() / 2,
+                    vtouchPos.y - arspTurret.get(arspTurret.size() - 1).getHeight() / 2);
+            tlRender.getBatch().begin();
+            arspTurret.get(arspTurret.size()-1).draw(tlRender.getBatch());
+            tlRender.getBatch().end();
+            if (placeableTurret() == true) {
+                hud.subtMoney(arspTurrs.get(nTurSelected).nCost);
+            }else{
+                arspTurret.remove(arspTurret.size()-1);
             }
         }
     }
-    public void removeAnt(){
-        for(int i = 0; i<arspAnt.size();i++){
-            if(arspAnt.get(i).bFinished == true) {
+
+    public void removeAnt() {
+        for (int i = 0; i < arspAnt.size(); i++) {
+            if (arspAnt.get(i).bFinished == true) {
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
             }
         }
     }
 
+    public boolean placeableTurret() {
+        for (int i = 0; i < arspTurret.size() - 1; i++) {;
+            if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) {
+                System.out.println("Overlaps");
+                return false;
+            } else if (arspTurret.get(arspTurret.size()-1).bPlaceable == false) {
+                System.out.println("On map");
+                return false;
+            }
+        }
+        return true;
+    }
     @Override
     public void resize(int width, int height) {
         gameport.update(width, height);

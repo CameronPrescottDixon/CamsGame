@@ -35,7 +35,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         setY(getY() + nVelY);
 
         //Looks for collision for specific cells, it only looks for the cell directly in it's path to increase performance instead of looking for every cell on the map
-        if (nVelX > 0 || nVelX < 0) { //Checks if it's moving in the x direction or not so it increases efficienct by no looking for y direction related things
+        if (nVelX > 0 || nVelX < 0) { //Checks if it's moving in the x direction or not so it increases efficiency by no looking for y direction related things
             // ant is moving right code found at https://www.youtube.com/watch?v=DOpqkaX9844&index=4&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb
             if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                     (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Up") == true) { //makes it go up
