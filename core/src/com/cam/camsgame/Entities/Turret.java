@@ -28,26 +28,26 @@ public class Turret extends Sprite {
 
     public void update() {
         float fTileWidth = collisionLayer.getTileWidth(), fTileHeight = collisionLayer.getTileHeight();
-//Checks for the upwards direction works
-        if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+            //Checks for the upwards direction works
+        if (collisionLayer.getCell((int) ((getX() + getWidth()/2) / fTileWidth),
                 (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
             System.out.println("BLOCKED " + bPlaceable +" 1");
 
-            //Downwards doesnt work
-        } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
-            (int) ((getY() - getHeight()/2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
+            //Downwards somewhat work
+        } else if (collisionLayer.getCell((int) ((getX() + getWidth()/2) / fTileWidth),
+            (int) ((getY() - (getHeight()/2)) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
             System.out.println("BLOCKED" + bPlaceable+" 2");
 
             //Right works
-        } else if (collisionLayer.getCell((int) ((getX() + getWidth()) / fTileWidth),
+        } else if (collisionLayer.getCell((int) ((getX() + getWidth()/2) / fTileWidth),
         (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
             System.out.println("BLOCKED" + bPlaceable +" 3");
 
             //Left doesnt't work
-        } else if (collisionLayer.getCell((int) ((getX() - getWidth()) / fTileWidth),
+        } else if (collisionLayer.getCell((int) (getX() / fTileWidth),
         (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;
             System.out.println("BLOCKED" + bPlaceable+ " 4");
