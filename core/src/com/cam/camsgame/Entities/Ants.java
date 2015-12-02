@@ -14,7 +14,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     public boolean bFinished = false;
     private TiledMapTileLayer collisionLayer;
 
-    public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage) {
+    public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage, int nHP) {
         super(spAnt);
         this.collisionLayer = collisionLayer; //Gets the layer from Playscreen
         this.nSpeed = nSpeed;//Gets the speed from playscreen since ants can be different

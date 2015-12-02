@@ -44,6 +44,7 @@ public class PlayScreen implements Screen {
 
     //Ants + test money for hud
     private ArrayList<Ants> arspAnt;
+    boolean bGameOver;
 
     //Music
     private Music music;
@@ -78,7 +79,7 @@ public class PlayScreen implements Screen {
 
         //Ants
         arspAnt = new ArrayList<Ants>();
-        hud.nextRound();
+        bGameOver = false;
         nextRound();
 
         //Turrets, an array is better for looking and listening for which is clicked
@@ -213,6 +214,10 @@ public class PlayScreen implements Screen {
             if (arspAnt.get(i).bFinished == true) {
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
+                if(hud.nHP == 0){
+                   arspAnt.clear();
+                    bGameOver = true;
+                    }
                 if (arspAnt.size() == 0) {
                     nextRound();
                 }
@@ -235,22 +240,23 @@ public class PlayScreen implements Screen {
     }
 
     public void nextRound() {
-        hud.nextRound();
-        if (hud.nLevel < 10) { // For the first type of ant
-            for(int i = 0; i< hud.nAntOne; i++) {
-                arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1));
-                arspAnt.get(i).setPosition(arspAnt.size() * -100, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight() * 3 / 4);
+        if(bGameOver!= true) {
+            hud.nextRound();
+            if (hud.nLevel < 10) { // For the first type of ant
+                for (int i = 0; i < hud.nAntOne; i++) {
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0),10, 1, 1)); //Sptire|TileCollisionLayer|Speed|Damage|HP
+                    arspAnt.get(i).setPosition(arspAnt.size() * -100, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight() * 3 / 4);
+                }
+            } else if (hud.nLevel >= 5 && hud.nLevel < 15) { //for the second type of ants
+
+            } else if (hud.nLevel >= 10 && hud.nLevel < 20) {
+
+            } else if (hud.nLevel >= 15 && hud.nLevel < 25) {
+
+            } else if (hud.nLevel >= 20) {
+
             }
-        } else if (hud.nLevel >= 5 && hud.nLevel < 15) { //for the second type of ants
-
-        } else if (hud.nLevel >= 10 && hud.nLevel < 20) {
-
-        } else if (hud.nLevel >= 15 && hud.nLevel < 25) {
-
-        } else if (hud.nLevel >= 20) {
-
         }
-
     }
 
     @Override
