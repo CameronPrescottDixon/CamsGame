@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,13 +12,17 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.CamsGame;
 import com.cam.camsgame.Entities.Turret;
 import com.cam.camsgame.Scenes.SelectTurret;
 import com.cam.camsgame.Scenes.Hud;
+
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 /**
  * Created by Cameron on 2015-11-04.
@@ -41,7 +44,6 @@ public class PlayScreen implements Screen {
 
     //Ants + test money for hud
     private ArrayList<Ants> arspAnt;
-    private int nMoney = 1;
 
     //Music
     private Music music;
@@ -56,8 +58,6 @@ public class PlayScreen implements Screen {
     private Sprite spSidePanel;
     private Sprite spTurSelect;
     private boolean bTurSelect;
-    private boolean bLastisOkay; // Looks for if the last turret is placed is allowed to be placed
-    // where it is, if not remove it only once so it doesn't use much processing power
 
     public PlayScreen(CamsGame game) {
         this.game = game;
@@ -68,7 +68,6 @@ public class PlayScreen implements Screen {
 
         //Create the hud
         hud = new Hud(game.batch);
-        hud.subtMoney(nMoney);
 
         //Loads tiled map
         mapLoader = new TmxMapLoader();
@@ -79,9 +78,8 @@ public class PlayScreen implements Screen {
 
         //Ants
         arspAnt = new ArrayList<Ants>();
-        arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1));//Sprite|TiledMapLayer|Speed|damage
-        arspAnt.get(0).setSize(50, 50);
-        arspAnt.get(0).setPosition(0, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight() * 3 / 4);
+        hud.nextRound();
+        nextRound();
 
         //Turrets, an array is better for looking and listening for which is clicked
         arspTurrs = new ArrayList<SelectTurret>();
@@ -137,8 +135,11 @@ public class PlayScreen implements Screen {
             onClick();//only passes it when theres a click
     }
 
+    float elapsedTime;
+
     @Override
     public void render(float dt) {
+        elapsedTime = Gdx.graphics.getDeltaTime();
         //Calls update to instantly update to the map
         update(dt); // Sends deltaTime to the update function to be sent to other methods that require it
         // renders the map
@@ -149,7 +150,9 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         //Draw ant
         tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
-        for (int i = 0; i < arspAnt.size(); i++) arspAnt.get(i).draw(tlRender.getBatch());
+        for (int i = 0; i < arspAnt.size(); i++) {
+            arspAnt.get(i).draw(tlRender.getBatch());
+        }
         for (int i = 0; i < arspTurret.size(); i++) arspTurret.get(i).draw(tlRender.getBatch());
         spSidePanel.draw(tlRender.getBatch());
         if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
@@ -195,12 +198,12 @@ public class PlayScreen implements Screen {
             arspTurret.get(arspTurret.size() - 1).setPosition(vtouchPos.x - arspTurret.get(arspTurret.size() - 1).getWidth() / 2,
                     vtouchPos.y - arspTurret.get(arspTurret.size() - 1).getHeight() / 2);
             tlRender.getBatch().begin();
-            arspTurret.get(arspTurret.size()-1).draw(tlRender.getBatch());
+            arspTurret.get(arspTurret.size() - 1).draw(tlRender.getBatch());
             tlRender.getBatch().end();
             if (placeableTurret() == true) {
                 hud.subtMoney(arspTurrs.get(nTurSelected).nCost);
-            }else{
-                arspTurret.remove(arspTurret.size()-1);
+            } else {
+                arspTurret.remove(arspTurret.size() - 1);
             }
         }
     }
@@ -210,22 +213,46 @@ public class PlayScreen implements Screen {
             if (arspAnt.get(i).bFinished == true) {
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
+                if (arspAnt.size() == 0) {
+                    nextRound();
+                }
             }
         }
     }
 
     public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
-        for (int i = 0; i < arspTurret.size() - 1; i++) {;
+        for (int i = 0; i < arspTurret.size() - 1; i++) {
+            ;
             if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) {
                 System.out.println("Overlaps");
                 return false;
-            } else if (arspTurret.get(arspTurret.size()-1).bPlaceable == false) {
+            } else if (arspTurret.get(arspTurret.size() - 1).bPlaceable == false) {
                 System.out.println("On map");
                 return false;
             }
         }
         return true;
     }
+
+    public void nextRound() {
+        hud.nextRound();
+        if (hud.nLevel < 10) { // For the first type of ant
+            for(int i = 0; i< hud.nAntOne; i++) {
+                arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1));
+                arspAnt.get(i).setPosition(arspAnt.size() * -100, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight() * 3 / 4);
+            }
+        } else if (hud.nLevel >= 5 && hud.nLevel < 15) { //for the second type of ants
+
+        } else if (hud.nLevel >= 10 && hud.nLevel < 20) {
+
+        } else if (hud.nLevel >= 15 && hud.nLevel < 25) {
+
+        } else if (hud.nLevel >= 20) {
+
+        }
+
+    }
+
     @Override
     public void resize(int width, int height) {
         gameport.update(width, height);
@@ -238,7 +265,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resume() {
-
     }
 
     @Override

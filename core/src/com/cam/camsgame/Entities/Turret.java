@@ -46,7 +46,7 @@ public class Turret extends Sprite {
             bPlaceable = false;
             System.out.println("BLOCKED" + bPlaceable +" 3");
 
-            //Left doesnt't work
+            //Left somewhat works
         } else if (collisionLayer.getCell((int) (getX() / fTileWidth),
         (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true && bPlaceable == true) {
             bPlaceable = false;

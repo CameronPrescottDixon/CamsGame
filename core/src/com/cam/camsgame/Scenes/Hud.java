@@ -20,7 +20,7 @@ public class Hud implements Disposable{
     private Viewport vpHud;
 
     private float fTime;
-    public int nWorldTime,nMoney,nLevel,nHP;
+    public int nWorldTime,nMoney,nLevel,nHP, nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive;
 
     Label lblCountUpLabel;
     Label lblMoneyAmount;
@@ -35,7 +35,7 @@ public class Hud implements Disposable{
     public Hud(SpriteBatch spriteBatch){ //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
         nMoney = 3000;
         nHP = 100;
-        nLevel = 1;
+        nLevel = 0;
         nWorldTime = 0;
 
         vpHud = new FitViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, new OrthographicCamera());
@@ -91,6 +91,17 @@ public class Hud implements Disposable{
         }
     }
     public void nextRound(){
+        if(nLevel < 10){ // For the first type of ant
+            nAntOne = 5 * nLevel + 5;
+        }else if(nLevel >= 5 && nLevel < 15){ //for the second type of ants
+            nAntTwo = 2 * nLevel - 5;
+        }else if(nLevel >=10 && nLevel < 20){
+            nAntThree = nLevel;
+        }else if(nLevel >= 15 && nLevel < 25){
+            nAntFour = nLevel - 10;
+        }else if(nLevel >= 20){
+            nAntFive = nLevel -19;
+        }
         nLevel++;
         lblRoundNumber.setText(String.format("%01d", nLevel));
     }
