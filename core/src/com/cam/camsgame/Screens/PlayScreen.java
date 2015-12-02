@@ -227,7 +227,6 @@ public class PlayScreen implements Screen {
 
     public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
         for (int i = 0; i < arspTurret.size() - 1; i++) {
-            ;
             if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) {
                 System.out.println("Overlaps");
                 return false;
@@ -240,21 +239,38 @@ public class PlayScreen implements Screen {
     }
 
     public void nextRound() {
-        if(bGameOver!= true) {
-            hud.nextRound();
-            if (hud.nLevel < 10) { // For the first type of ant
-                for (int i = 0; i < hud.nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0),10, 1, 1)); //Sptire|TileCollisionLayer|Speed|Damage|HP
-                    arspAnt.get(i).setPosition(arspAnt.size() * -100, ((TiledMapTileLayer) tlMap.getLayers().get(0)).getTileHeight() * 3 / 4);
+        hud.nextRound();
+        if (true) {
+            int nLevel = hud.nLevel;
+            int nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive, nPos;
+
+            if (nLevel < 10) { // For the first type of ant
+                nAntOne = 5 * nLevel + 5;
+                System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
+                nPos = 0;
+                for (int i = 0; i < nAntOne; i++) {
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    nPos++;
                 }
-            } else if (hud.nLevel >= 5 && hud.nLevel < 15) { //for the second type of ants
+            }
 
-            } else if (hud.nLevel >= 10 && hud.nLevel < 20) {
-
-            } else if (hud.nLevel >= 15 && hud.nLevel < 25) {
-
-            } else if (hud.nLevel >= 20) {
-
+            if (nLevel >= 5 && nLevel < 15) { //for the second type of ants
+                nAntTwo = 2 * nLevel - 5;
+                System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
+                nPos = 0;
+                for (int i = 0; i < nAntTwo; i++) {
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 1, 2, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    nPos++;
+                }
+            }
+            if (nLevel >= 10 && nLevel < 20) {
+                nAntThree = nLevel;
+            }
+            if (nLevel >= 15 && nLevel < 25) {
+                nAntFour = nLevel - 10;
+            }
+            if (nLevel >= 20) {
+                nAntFive = nLevel - 19;
             }
         }
     }

@@ -20,7 +20,7 @@ public class Hud implements Disposable{
     private Viewport vpHud;
 
     private float fTime;
-    public int nWorldTime,nMoney,nLevel,nHP, nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive;
+    public int nWorldTime,nMoney,nLevel,nHP;
 
     Label lblCountUpLabel;
     Label lblMoneyAmount;
@@ -91,17 +91,6 @@ public class Hud implements Disposable{
         }
     }
     public void nextRound(){
-        if(nLevel < 10){ // For the first type of ant
-            nAntOne = 5 * nLevel + 5;
-        }else if(nLevel >= 5 && nLevel < 15){ //for the second type of ants
-            nAntTwo = 2 * nLevel - 5;
-        }else if(nLevel >=10 && nLevel < 20){
-            nAntThree = nLevel;
-        }else if(nLevel >= 15 && nLevel < 25){
-            nAntFour = nLevel - 10;
-        }else if(nLevel >= 20){
-            nAntFive = nLevel -19;
-        }
         nLevel++;
         lblRoundNumber.setText(String.format("%01d", nLevel));
     }
