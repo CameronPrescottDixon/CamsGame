@@ -35,7 +35,7 @@ public class Hud implements Disposable{
     public Hud(SpriteBatch spriteBatch){ //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
         nMoney = 3000;
         nHP = 100;
-        nLevel = 14;
+        nLevel = 0;
         nWorldTime = 0;
 
         vpHud = new FitViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, new OrthographicCamera());

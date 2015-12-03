@@ -12,17 +12,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.CamsGame;
 import com.cam.camsgame.Entities.Turret;
 import com.cam.camsgame.Scenes.SelectTurret;
 import com.cam.camsgame.Scenes.Hud;
-
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 /**
  * Created by Cameron on 2015-11-04.
@@ -80,7 +76,7 @@ public class PlayScreen implements Screen {
         //Ants
         arspAnt = new ArrayList<Ants>();
         bGameOver = false;
-        nextRound();
+        nextRound(); //Initializes the game, without this the rounds wouldn't start
 
         //Turrets, an array is better for looking and listening for which is clicked
         arspTurrs = new ArrayList<SelectTurret>();
@@ -204,21 +200,21 @@ public class PlayScreen implements Screen {
             if (placeableTurret() == true) {
                 hud.subtMoney(arspTurrs.get(nTurSelected).nCost);
             } else {
-                arspTurret.remove(arspTurret.size() - 1);
+                arspTurret.remove(arspTurret.size() - 1);//removes the last added turret since it mu
             }
         }
     }
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         for (int i = 0; i < arspAnt.size(); i++) {
-            if (arspAnt.get(i).bFinished == true) {
+            if (arspAnt.get(i).bFinished == true) {//Checks for the end of the path
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
-                if(hud.nHP == 0){
+                if(hud.nHP == 0){//Checks if the hp is now 0
                    arspAnt.clear();
                     bGameOver = true;
                     }
-                if (arspAnt.size() == 0) {
+                if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
                     nextRound();
                 }
             }
@@ -227,10 +223,10 @@ public class PlayScreen implements Screen {
 
     public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
         for (int i = 0; i < arspTurret.size() - 1; i++) {
-            if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) {
+            if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) { //Checkes to see if the turret overlaps another
                 System.out.println("Overlaps");
                 return false;
-            } else if (arspTurret.get(arspTurret.size() - 1).bPlaceable == false) {
+            } else if (arspTurret.get(arspTurret.size() - 1).bPlaceable == false) { //Doesn't allow the turret to be placed if the turret is on the map
                 System.out.println("On map");
                 return false;
             }
@@ -239,18 +235,18 @@ public class PlayScreen implements Screen {
     }
 
     public void nextRound() {
-        hud.nextRound();
+        hud.nextRound(); //Starts the next round
         if (true) {
             int nLevel = hud.nLevel;
             int nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive, nPos;
 
             if (nLevel <= 15) { // For the first type of ant
-                nAntOne = 5 * nLevel;
+                nAntOne = 5 * nLevel; //Number of ants of this type to be spawned
                 System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
                     arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
-                    nPos++;
+                    nPos++;//Increases the position of the ant next in line
                 }
             }
 
@@ -274,7 +270,7 @@ public class PlayScreen implements Screen {
             }
             if (nLevel >= 15 && nLevel < 25) {
                 nAntFour = nLevel - 10;
-                System.out.println("Number of lvl 3 ants spawned: " + nAntFour);
+                System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
                 nPos = 0;
                 for (int i = 0; i < nAntFour; i++) {
                     arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
