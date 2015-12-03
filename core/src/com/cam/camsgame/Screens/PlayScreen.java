@@ -244,27 +244,33 @@ public class PlayScreen implements Screen {
             int nLevel = hud.nLevel;
             int nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive, nPos;
 
-            if (nLevel < 10) { // For the first type of ant
-                nAntOne = 5 * nLevel + 5;
+            if (nLevel <= 15) { // For the first type of ant
+                nAntOne = 5 * nLevel;
                 System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 1, 1, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
 
-            if (nLevel >= 5 && nLevel < 15) { //for the second type of ants
+            if (nLevel >= 5 && nLevel <= 20) { //for the second type of ants
                 nAntTwo = 2 * nLevel - 5;
                 System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
                 nPos = 0;
                 for (int i = 0; i < nAntTwo; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 1, 2, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
-            if (nLevel >= 10 && nLevel < 20) {
+            if (nLevel >= 10 && nLevel <= 25) {
                 nAntThree = nLevel;
+                System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
+                nPos = 0;
+                for (int i = 0; i < nAntThree; i++) {
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    nPos++;
+                }
             }
             if (nLevel >= 15 && nLevel < 25) {
                 nAntFour = nLevel - 10;
@@ -282,7 +288,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
