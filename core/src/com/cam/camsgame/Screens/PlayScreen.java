@@ -246,7 +246,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;//Increases the position of the ant next in line
                 }
             }
@@ -256,7 +256,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
                 nPos = 0;
                 for (int i = 0; i < nAntTwo; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
@@ -265,7 +265,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
@@ -274,7 +274,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
                 nPos = 0;
                 for (int i = 0; i < nAntFour; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
