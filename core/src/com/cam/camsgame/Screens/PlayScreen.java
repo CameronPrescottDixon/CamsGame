@@ -128,6 +128,7 @@ public class PlayScreen implements Screen {
         tlRender.setView(gamecam);
         hud.updateTime(dt);
         removeAnt();//checks if ants reach the end
+        targetAnts();//Sends the ant array to the turrets to shoot them
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
             onClick();//only passes it when theres a click
     }
@@ -226,7 +227,7 @@ public class PlayScreen implements Screen {
             if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) { //Checkes to see if the turret overlaps another
                 System.out.println("Overlaps");
                 return false;
-            } else if (arspTurret.get(arspTurret.size() - 1).bPlaceable == false) { //Doesn't allow the turret to be placed if the turret is on the map
+            } else if (arspTurret.get(arspTurret.size() - 1).checkBounds() == false) { //Doesn't allow the turret to be placed if the turret is on the map
                 System.out.println("On map");
                 return false;
             }
@@ -280,6 +281,12 @@ public class PlayScreen implements Screen {
             if (nLevel >= 20) {
                 nAntFive = nLevel - 19;
             }
+        }
+    }
+
+    public void targetAnts(){
+        for(int i =0; i<arspTurret.size();i++){
+            arspTurret.get(i).targetAnts(arspAnt);
         }
     }
 
