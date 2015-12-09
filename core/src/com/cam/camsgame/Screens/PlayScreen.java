@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.CamsGame;
+import com.cam.camsgame.Entities.Bullet;
 import com.cam.camsgame.Entities.Turret;
 import com.cam.camsgame.Scenes.SelectTurret;
 import com.cam.camsgame.Scenes.Hud;
@@ -40,6 +41,7 @@ public class PlayScreen implements Screen {
 
     //Ants + test money for hud
     private ArrayList<Ants> arspAnt;
+    int nID = 0;
     boolean bGameOver;
 
     //Music
@@ -55,6 +57,9 @@ public class PlayScreen implements Screen {
     private Sprite spSidePanel;
     private Sprite spTurSelect;
     private boolean bTurSelect;
+
+    //Bullets
+    private ArrayList<Bullet> arspBullets;
 
     public PlayScreen(CamsGame game) {
         this.game = game;
@@ -115,6 +120,9 @@ public class PlayScreen implements Screen {
         music.play();//play it
 
         vtouchPos = new Vector3();//fixes the errors with flipping the y co-ords on the x-axis
+
+        //Bullets
+        arspBullets = new ArrayList<Bullet>();
     }
 
     @Override
@@ -129,6 +137,7 @@ public class PlayScreen implements Screen {
         hud.updateTime(dt);
         removeAnt();//checks if ants reach the end
         targetAnts();//Sends the ant array to the turrets to shoot them
+        shoot();
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
             onClick();//only passes it when theres a click
     }
@@ -157,6 +166,7 @@ public class PlayScreen implements Screen {
             spTurSelect.draw(tlRender.getBatch());
         }
         for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
+        for(int i = 0; i<arspBullets.size();i++)arspBullets.get(i).draw(tlRender.getBatch());
         tlRender.getBatch().end();
     }
 
@@ -246,8 +256,9 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
                     nPos++;//Increases the position of the ant next in line
+                    nID++;
                 }
             }
 
@@ -256,8 +267,9 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
                 nPos = 0;
                 for (int i = 0; i < nAntTwo; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel,nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
+                    nID++;
                 }
             }
             if (nLevel >= 10 && nLevel <= 25) {
@@ -265,8 +277,9 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel,nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
+                    nID++;
                 }
             }
             if (nLevel >= 15 && nLevel < 25) {
@@ -274,8 +287,9 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
                 nPos = 0;
                 for (int i = 0; i < nAntFour; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel,nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
+                    nID++;
                 }
             }
             if (nLevel >= 20) {
@@ -284,9 +298,31 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void targetAnts(){
-        for(int i =0; i<arspTurret.size();i++){
-            arspTurret.get(i).targetAnts(arspAnt);
+    public void targetAnts() {
+        for (int i = 0; i < arspTurret.size(); i++) {
+            for (int j = 0; j < arspAnt.size(); j++) {
+                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200 && arspAnt.get(j).nHP > 0) {
+                    arspBullets.add(new Bullet(new Sprite(new Texture("Entities/ant.png")), arspAnt.get(j).nID));
+                    arspBullets.get(arspBullets.size() - 1).setPosition(arspTurret.get(i).getX(), arspTurret.get(i).getY());
+                    arspAnt.get(j).nHP-= arspTurret.get(i).nDamage;
+                }
+            }
+        }
+    }
+
+    public void shoot() {
+        for(int i = 0; i < arspBullets.size(); i++){
+           for(int j = 0; j<arspAnt.size(); j++){
+               if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
+                   System.out.println("hi");
+                   arspBullets.get(i).setX(arspAnt.get(j).getX());
+                   arspBullets.get(i).setY(arspAnt.get(j).getY());
+                  /* if(arspAnt.get(j).getBoundingRectangle().overlaps(arspBullets.get(i).getBoundingRectangle())){
+                       arspAnt.remove(j);
+                       arspBullets.remove(i);
+                  }*/
+               }
+           }
         }
     }
 

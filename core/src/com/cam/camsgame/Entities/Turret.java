@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 public class Turret extends Sprite {
     public int nBullVel, nRange, nDamage, nCost;
-    public ArrayList<Bullet> arspBullets;
     public TiledMapTileLayer collisionLayer;
 
     public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer) {
@@ -27,25 +26,6 @@ public class Turret extends Sprite {
     }
 
     public void update() {
-
-    }
-
-    public void targetAnts(ArrayList<Ants> arspAnts) {
-        float fX, fY;
-        for (int i = 0; i < arspAnts.size(); i++) {
-            fX = Math.abs(this.getX() - arspAnts.get(i).getX());
-            fY = Math.abs(this.getY() - arspAnts.get(i).getY());
-            if ((Math.pow(fX, 2) + Math.pow(fY, 2)) <= nRange) {
-               // shoot();
-            }
-        }
-    }
-
-
-    public void shoot(ArrayList<Ants> arspAnt, int i) {
-        arspBullets = new ArrayList<Bullet>();
-        arspBullets.add(new Bullet(new Sprite(new Texture("Entities/Bullet.png"))));
-        arspBullets.get(0).shoot((int) arspAnt.get(i).getX(), (int) arspAnt.get(i).getY(), (int) getX(), (int) getY(), arspAnt.get(i).nVelX, arspAnt.get(i).nVelY);
     }
 
     public boolean checkBounds() {
