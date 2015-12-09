@@ -316,7 +316,7 @@ public class PlayScreen implements Screen {
                if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
                    System.out.println("hi");
                    arspBullets.get(i).setX(arspAnt.get(j).getX());
-                   arspBullets.get(i).setY(arspAnt.get(j).getY());
+                  // arspBullets.get(i).setY(arspAnt.get(j).getY());
                   /* if(arspAnt.get(j).getBoundingRectangle().overlaps(arspBullets.get(i).getBoundingRectangle())){
                        arspAnt.remove(j);
                        arspBullets.remove(i);

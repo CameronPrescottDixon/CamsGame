@@ -19,6 +19,6 @@ public class Bullet extends Sprite{
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        setSize(10, 10);
+        setSize(20, 20);
     }
 }
