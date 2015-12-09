@@ -221,22 +221,22 @@ public class PlayScreen implements Screen {
             if (arspAnt.get(i).bFinished == true) {//Checks for the end of the path
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
+            }
                 if (hud.nHP == 0) {//Checks if the hp is now 0
                     arspAnt.clear();
                     bGameOver = true;
                 }
-                for(int j = 0; j < arspBullets.size(); j++) {
-                    if (arspAnt.get(i).getBoundingRectangle().overlaps(arspBullets.get(j).getBoundingRectangle())) {
-                        arspAnt.remove(i);
-                        arspBullets.remove(i);
-                    }
+            for(int j = 0; j < arspBullets.size(); j++) {
+                if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0) {
+                    arspAnt.remove(i);
+                    arspBullets.remove(j);
                 }
+            }
                 if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
                     nextRound();
                 }
             }
         }
-    }
 
     public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
         for (int i = 0; i < arspTurret.size() - 1; i++) {
@@ -307,10 +307,13 @@ public class PlayScreen implements Screen {
     public void targetAnts() { //targets the ants with each turret depending on if the ant is in range or not
         for (int i = 0; i < arspTurret.size(); i++) {
             for (int j = 0; j < arspAnt.size(); j++) {
-                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200 && arspAnt.get(j).nHP > 0) {
-                    arspBullets.add(new Bullet(new Sprite(new Texture("Entities/ant.png")), arspAnt.get(j).nID));
-                    arspBullets.get(arspBullets.size() - 1).setPosition(arspTurret.get(i).getX(), arspTurret.get(i).getY());
-                    arspAnt.get(j).nHP -= arspTurret.get(i).nDamage;
+                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {
+                    arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
+                    if(arspAnt.get(j).bDead != true) {
+                        arspBullets.add(new Bullet(new Sprite(new Texture("Entities/Bullet.png")), arspAnt.get(j).nID));
+                        arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2);
+                        arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                    }
                 }
             }
         }
@@ -319,12 +322,11 @@ public class PlayScreen implements Screen {
     public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
         for(int i = 0; i < arspBullets.size(); i++){
            for(int j = 0; j<arspAnt.size(); j++){
-               if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
-                   arspBullets.get(i).setX(arspAnt.get(j).getX());
+               if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ // http://stackoverflow.com/questions/25128545/java-enemy-follow-player for the following
                    float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
                    float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY()+ 10);
                    float angle = (float)Math.atan2(diffY, diffX);
-                   arspBullets.get(i).update((float)(arspBullets.get(i).nSpeed * Math.cos(angle)), (float)(arspBullets.get(i).nSpeed * Math.sin(angle)));
+                   arspBullets.get(i).update((float)(arspBullets.get(i).nSpeed * Math.cos(angle)), (float)(arspBullets.get(i).nSpeed * Math.sin(angle)), angle);
                    removeAnt();
                }
            }

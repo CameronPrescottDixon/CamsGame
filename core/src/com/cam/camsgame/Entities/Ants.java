@@ -11,7 +11,7 @@ import com.cam.camsgame.Screens.PlayScreen;
  */
 public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     public int nVelY = 0, nVelX, nSpeed, nDamage, nX, nID, nHP;
-    public boolean bFinished = false;
+    public boolean bFinished = false, bDead = false;
     private TiledMapTileLayer collisionLayer;
 
     public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage, int nHP, int nPos, int nLevel, int nID) {
@@ -92,5 +92,13 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     @Override
     public void rotate(float degrees) { //Simply rotates the ant based on the degree passed when the method is called
         super.rotate(degrees);
+    }
+
+
+public void lowerHP(int nDmg) {
+    nHP -= nDmg;
+    if(nHP == 0){
+        bDead = true;
+    }
     }
 }

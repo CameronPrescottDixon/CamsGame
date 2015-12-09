@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Bullet extends Sprite{
     public int nAntID, nSpeed = 10;
-    float nVelX, nVelY;
+    float nVelX, nVelY, fAngle;
 
     public Bullet(Sprite spBullet, int nAntID){
         super(spBullet);
         this.nAntID = nAntID;
-        update(this.nVelX, this.nVelY);
+        update(this.nVelX, this.nVelY, fAngle);
     }
 
     @Override
@@ -22,11 +22,16 @@ public class Bullet extends Sprite{
         super.draw(batch);
         setSize(20, 20);
     }
-    public void update(float nVelX, float nVelY){
+    public void update(float nVelX, float nVelY, float fAngle){
+        if(this.fAngle != fAngle){
+            rotate(fAngle);
+        }
         this.nVelX = nVelX;
         this.nVelY = nVelY;
+        this.fAngle = fAngle;
         setX(getX() + this.nVelX);
         setY(getY() + this.nVelY);
+
 
     }
 }
