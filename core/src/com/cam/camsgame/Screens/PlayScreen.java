@@ -298,7 +298,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void targetAnts() {
+    public void targetAnts() { //targets the ants with each turret depending on if the ant is in range or not
         for (int i = 0; i < arspTurret.size(); i++) {
             for (int j = 0; j < arspAnt.size(); j++) {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200 && arspAnt.get(j).nHP > 0) {
@@ -310,7 +310,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void shoot() {
+    public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
         for(int i = 0; i < arspBullets.size(); i++){
            for(int j = 0; j<arspAnt.size(); j++){
                if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
