@@ -310,7 +310,7 @@ public class PlayScreen implements Screen {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {
                     arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
                     if(arspAnt.get(j).bDead != true) {
-                        arspBullets.add(new Bullet(new Sprite(new Texture("Entities/Bullet.png")), arspAnt.get(j).nID));
+                        arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
                         arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2);
                         arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
                     }
