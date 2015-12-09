@@ -221,10 +221,16 @@ public class PlayScreen implements Screen {
             if (arspAnt.get(i).bFinished == true) {//Checks for the end of the path
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
-                if(hud.nHP == 0){//Checks if the hp is now 0
-                   arspAnt.clear();
+                if (hud.nHP == 0) {//Checks if the hp is now 0
+                    arspAnt.clear();
                     bGameOver = true;
+                }
+                for(int j = 0; j < arspBullets.size(); j++) {
+                    if (arspAnt.get(i).getBoundingRectangle().overlaps(arspBullets.get(j).getBoundingRectangle())) {
+                        arspAnt.remove(i);
+                        arspBullets.remove(i);
                     }
+                }
                 if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
                     nextRound();
                 }
@@ -304,7 +310,7 @@ public class PlayScreen implements Screen {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200 && arspAnt.get(j).nHP > 0) {
                     arspBullets.add(new Bullet(new Sprite(new Texture("Entities/ant.png")), arspAnt.get(j).nID));
                     arspBullets.get(arspBullets.size() - 1).setPosition(arspTurret.get(i).getX(), arspTurret.get(i).getY());
-                    arspAnt.get(j).nHP-= arspTurret.get(i).nDamage;
+                    arspAnt.get(j).nHP -= arspTurret.get(i).nDamage;
                 }
             }
         }
@@ -314,13 +320,12 @@ public class PlayScreen implements Screen {
         for(int i = 0; i < arspBullets.size(); i++){
            for(int j = 0; j<arspAnt.size(); j++){
                if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
-                   System.out.println("hi");
                    arspBullets.get(i).setX(arspAnt.get(j).getX());
-                  // arspBullets.get(i).setY(arspAnt.get(j).getY());
-                  /* if(arspAnt.get(j).getBoundingRectangle().overlaps(arspBullets.get(i).getBoundingRectangle())){
-                       arspAnt.remove(j);
-                       arspBullets.remove(i);
-                  }*/
+                   float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
+                   float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY()+ 10);
+                   float angle = (float)Math.atan2(diffY, diffX);
+                   arspBullets.get(i).update((float)(arspBullets.get(i).nSpeed * Math.cos(angle)), (float)(arspBullets.get(i).nSpeed * Math.sin(angle)));
+                   removeAnt();
                }
            }
         }

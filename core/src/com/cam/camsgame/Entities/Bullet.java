@@ -8,17 +8,25 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 
 public class Bullet extends Sprite{
-
-    public int nAntID;
+    public int nAntID, nSpeed = 10;
+    float nVelX, nVelY;
 
     public Bullet(Sprite spBullet, int nAntID){
         super(spBullet);
         this.nAntID = nAntID;
+        update(this.nVelX, this.nVelY);
     }
 
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
         setSize(20, 20);
+    }
+    public void update(float nVelX, float nVelY){
+        this.nVelX = nVelX;
+        this.nVelY = nVelY;
+        setX(getX() + this.nVelX);
+        setY(getY() + this.nVelY);
+
     }
 }
