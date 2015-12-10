@@ -138,16 +138,15 @@ public class PlayScreen implements Screen {
         hud.updateTime(dt);
         removeAnt();//checks if ants reach the end
         targetAnts(dt);//Sends the ant array to the turrets to shoot them
-        shoot();
+        if (arspBullets.size() > 0) {
+            shoot();
+        }
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
             onClick();//only passes it when theres a click
     }
 
-    float elapsedTime;
-
     @Override
     public void render(float dt) {
-        elapsedTime = Gdx.graphics.getDeltaTime();
         //Calls update to instantly update to the map
         update(dt); // Sends deltaTime to the update function to be sent to other methods that require it
         // renders the map
@@ -195,13 +194,13 @@ public class PlayScreen implements Screen {
     private void addTurret() { //Adds turret when clicked
         if (arspTurrs.get(nTurSelected).nCost <= hud.nMoney) {
             if (nTurSelected == 0) {//Adds the turret with the specific image, this also helps reduce total code when it's in a method
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topred.png")), (TiledMapTileLayer) tlMap.getLayers().get(0),2));
             } else if (nTurSelected == 1) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblue.png")), (TiledMapTileLayer) tlMap.getLayers().get(0),1));
             } else if (nTurSelected == 2) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png")), (TiledMapTileLayer) tlMap.getLayers().get(0),2));
             } else if (nTurSelected == 3) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0)));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0),4));
             }
             arspTurret.get(arspTurret.size() - 1).setSize(50, 50);
             arspTurret.get(arspTurret.size() - 1).setPosition(vtouchPos.x - arspTurret.get(arspTurret.size() - 1).getWidth() / 2,
@@ -223,11 +222,11 @@ public class PlayScreen implements Screen {
                 hud.loseHP(arspAnt.get(i).nDamage);
                 arspAnt.remove(i);
             }
-                if (hud.nHP == 0) {//Checks if the hp is now 0
+            if (hud.nHP == 0) {//Checks if the hp is now 0
                     arspAnt.clear();
                     bGameOver = true;
                 }
-                if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
+            if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
                     nextRound();
                 }
             }
@@ -304,12 +303,13 @@ public class PlayScreen implements Screen {
             for (int j = 0; j < arspAnt.size(); j++) {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {
                     if (arspAnt.get(j).bDead != true) { // Trying to make it so extra bullets don't get fired at the ants
-                        if (dt - arspTurret.get(i).fLastTimeShot > 1 || arspTurret.get(i).fLastTimeShot == 0) {
+                        if (dt - arspTurret.get(i).fLastTimeShot > arspTurret.get(i).nFireRate/100 || arspTurret.get(i).fLastTimeShot == 0) {
                             arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
                             arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
                             arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2);
                             arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
                             arspTurret.get(i).fLastTimeShot = dt;
+                            System.out.println(arspTurret.get(i).fLastTimeShot);
                         }
                     }
                 }
@@ -320,30 +320,20 @@ public class PlayScreen implements Screen {
     public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
             for (int i = 0; i < arspBullets.size(); i++) {
                 for (int j = 0; j < arspAnt.size(); j++) {
-                    if (arspBullets.size() > 0 && arspAnt.size() > 0) {
-                        if (arspBullets.get(i).nAntID == arspAnt.get(j).nID) { // http://stackoverflow.com/questions/25128545/java-enemy-follow-player for the following
+                    if (arspBullets.get(i).getBoundingRectangle().overlaps(arspAnt.get(j).getBoundingRectangle()) && arspAnt.size() > 0) {
+                        arspAnt.remove(j);
+                        arspBullets.remove(i);
+                        break;
+                    }
+                    else if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
                         float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
                         float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
                         float angle = (float) Math.atan2(diffY, diffX);
                         arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)), angle);
-                            checkAntsAndBullet();
+                        }
                     }
                 }
             }
-        }
-    }
-public void checkAntsAndBullet(){
-    if(arspAnt.size() > 0 && arspBullets.size() > 0){
-    for(int i = 0; i< arspAnt.size(); i++){
-    for(int j = 0; j < arspBullets.size(); j++) {
-        if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0) {
-            arspAnt.remove(i);
-            arspBullets.remove(j);
-                }
-            }
-        }
-    }
-}
 
     @Override
     public void resize(int width, int height) {
