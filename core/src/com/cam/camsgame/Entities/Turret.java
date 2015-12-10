@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Turret extends Sprite {
     public int nBullVel, nRange, nDamage, nCost;
     public TiledMapTileLayer collisionLayer;
+    public float fLastTimeShot;
 
     public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer) {
         super(spTurret);

@@ -43,6 +43,7 @@ public class PlayScreen implements Screen {
     private ArrayList<Ants> arspAnt;
     int nID = 0;
     boolean bGameOver;
+    float timeSinceCollision = 0;
 
     //Music
     private Music music;
@@ -136,7 +137,7 @@ public class PlayScreen implements Screen {
         tlRender.setView(gamecam);
         hud.updateTime(dt);
         removeAnt();//checks if ants reach the end
-        targetAnts();//Sends the ant array to the turrets to shoot them
+        targetAnts(dt);//Sends the ant array to the turrets to shoot them
         shoot();
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
             onClick();//only passes it when theres a click
@@ -226,12 +227,6 @@ public class PlayScreen implements Screen {
                     arspAnt.clear();
                     bGameOver = true;
                 }
-            for(int j = 0; j < arspBullets.size(); j++) {
-                if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0) {
-                    arspAnt.remove(i);
-                    arspBullets.remove(j);
-                }
-            }
                 if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
                     nextRound();
                 }
@@ -304,15 +299,18 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void targetAnts() { //targets the ants with each turret depending on if the ant is in range or not
+    public void targetAnts(float dt) { //targets the ants with each turret depending on if the ant is in range or not
         for (int i = 0; i < arspTurret.size(); i++) {
             for (int j = 0; j < arspAnt.size(); j++) {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {
-                    arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
-                    if(arspAnt.get(j).bDead != true) {
-                        arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
-                        arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2);
-                        arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                    if (arspAnt.get(j).bDead != true) { // Trying to make it so extra bullets don't get fired at the ants
+                        if (dt - arspTurret.get(i).fLastTimeShot > 1 || arspTurret.get(i).fLastTimeShot == 0) {
+                            arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
+                            arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
+                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2);
+                            arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                            arspTurret.get(i).fLastTimeShot = dt;
+                        }
                     }
                 }
             }
@@ -320,18 +318,32 @@ public class PlayScreen implements Screen {
     }
 
     public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
-        for(int i = 0; i < arspBullets.size(); i++){
-           for(int j = 0; j<arspAnt.size(); j++){
-               if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ // http://stackoverflow.com/questions/25128545/java-enemy-follow-player for the following
-                   float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
-                   float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY()+ 10);
-                   float angle = (float)Math.atan2(diffY, diffX);
-                   arspBullets.get(i).update((float)(arspBullets.get(i).nSpeed * Math.cos(angle)), (float)(arspBullets.get(i).nSpeed * Math.sin(angle)), angle);
-                   removeAnt();
-               }
-           }
+            for (int i = 0; i < arspBullets.size(); i++) {
+                for (int j = 0; j < arspAnt.size(); j++) {
+                    if (arspBullets.size() > 0 && arspAnt.size() > 0) {
+                    if (arspBullets.get(i).nAntID == arspAnt.get(j).nID) { // http://stackoverflow.com/questions/25128545/java-enemy-follow-player for the following
+                        checkAntsAndBullet();
+                        float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
+                        float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
+                        float angle = (float) Math.atan2(diffY, diffX);
+                        arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)), angle);
+                    }
+                }
+            }
         }
     }
+public void checkAntsAndBullet(){
+    if(arspAnt.size() > 0 && arspBullets.size() > 0){
+    for(int i = 0; i< arspAnt.size(); i++){
+    for(int j = 0; j < arspBullets.size(); j++) {
+        if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0) {
+            arspAnt.remove(i);
+            arspBullets.remove(j);
+                }
+            }
+        }
+    }
+}
 
     @Override
     public void resize(int width, int height) {
