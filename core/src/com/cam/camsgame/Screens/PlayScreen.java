@@ -321,12 +321,12 @@ public class PlayScreen implements Screen {
             for (int i = 0; i < arspBullets.size(); i++) {
                 for (int j = 0; j < arspAnt.size(); j++) {
                     if (arspBullets.size() > 0 && arspAnt.size() > 0) {
-                    if (arspBullets.get(i).nAntID == arspAnt.get(j).nID) { // http://stackoverflow.com/questions/25128545/java-enemy-follow-player for the following
-                        checkAntsAndBullet();
+                        if (arspBullets.get(i).nAntID == arspAnt.get(j).nID) { // http://stackoverflow.com/questions/25128545/java-enemy-follow-player for the following
                         float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
                         float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
                         float angle = (float) Math.atan2(diffY, diffX);
                         arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)), angle);
+                            checkAntsAndBullet();
                     }
                 }
             }
