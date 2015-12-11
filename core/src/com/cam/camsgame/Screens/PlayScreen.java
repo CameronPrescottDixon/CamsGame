@@ -261,7 +261,7 @@ public class PlayScreen implements Screen {
                 for (int i = 0; i < nAntOne; i++) {
                     arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
                     nPos++;//Increases the position of the ant next in line
-                    nID++;
+                    nID++;//ID of the ant, they can't ever be the same
                 }
             }
 
@@ -309,7 +309,7 @@ public class PlayScreen implements Screen {
                         if (dt - arspTurret.get(i).fLastTimeShot > arspTurret.get(i).nFireRate/100 || arspTurret.get(i).fLastTimeShot == 0) {
                             arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
                             arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
-                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2);
+                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
                             arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
                             arspTurret.get(i).fLastTimeShot = dt;
                             System.out.println(arspTurret.get(i).fLastTimeShot);
@@ -323,11 +323,11 @@ public class PlayScreen implements Screen {
     public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
             for (int i = 0; i < arspBullets.size(); i++) {
                 for (int j = 0; j < arspAnt.size(); j++) {
-                    if (arspBullets.get(i).getBoundingRectangle().overlaps(arspAnt.get(j).getBoundingRectangle()) && arspAnt.size() > 0) {
+                    if (arspBullets.get(i).getBoundingRectangle().overlaps(arspAnt.get(j).getBoundingRectangle()) && arspAnt.size() > 0) { //Looks for if the bullet hits the ant first
                         arspAnt.remove(j);
                         arspBullets.remove(i);
                         break;
-                    } else if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
+                    } else if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ //Moves the bullet to the ant with the same ID as the bullet
                         float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
                         float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
                         float angle = (float) Math.atan2(diffY, diffX);
