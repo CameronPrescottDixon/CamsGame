@@ -228,6 +228,9 @@ public class PlayScreen implements Screen {
                 }
             if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
                     nextRound();
+                if(arspBullets.size()>0){
+                    arspBullets.clear();
+                    }
                 }
             }
         }
@@ -301,7 +304,7 @@ public class PlayScreen implements Screen {
     public void targetAnts(float dt) { //targets the ants with each turret depending on if the ant is in range or not
         for (int i = 0; i < arspTurret.size(); i++) {
             for (int j = 0; j < arspAnt.size(); j++) {
-                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {
+                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {//Range between them
                     if (arspAnt.get(j).bDead != true) { // Trying to make it so extra bullets don't get fired at the ants
                         if (dt - arspTurret.get(i).fLastTimeShot > arspTurret.get(i).nFireRate/100 || arspTurret.get(i).fLastTimeShot == 0) {
                             arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
@@ -324,8 +327,7 @@ public class PlayScreen implements Screen {
                         arspAnt.remove(j);
                         arspBullets.remove(i);
                         break;
-                    }
-                    else if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
+                    } else if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){
                         float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
                         float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
                         float angle = (float) Math.atan2(diffY, diffX);
@@ -334,7 +336,6 @@ public class PlayScreen implements Screen {
                     }
                 }
             }
-
     @Override
     public void resize(int width, int height) {
         gameport.update(width, height);
