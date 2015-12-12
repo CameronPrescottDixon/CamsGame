@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by Cameron on 2015-11-27.
  */
 public class Turret extends Sprite {
-    public int  nRange, nDamage, nCost, nFireRate;
+    public int  nRange, nDamage, nFireRate;
     public TiledMapTileLayer collisionLayer;
     public float fLastTimeShot;
 

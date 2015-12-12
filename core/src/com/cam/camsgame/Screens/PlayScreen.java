@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.CamsGame;
@@ -43,7 +44,6 @@ public class PlayScreen implements Screen {
     private ArrayList<Ants> arspAnt;
     int nID = 0;
     boolean bGameOver;
-    float timeSinceCollision = 0;
 
     //Music
     private Music music;
@@ -137,7 +137,7 @@ public class PlayScreen implements Screen {
         tlRender.setView(gamecam);
         hud.updateTime(dt);
         removeAnt();//checks if ants reach the end
-        targetAnts(dt);//Sends the ant array to the turrets to shoot them
+        targetAnts();//Sends the ant array to the turrets to shoot them
         if (arspBullets.size() > 0) {
             shoot();
         }
@@ -217,24 +217,32 @@ public class PlayScreen implements Screen {
     }
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
-        for (int i = 0; i < arspAnt.size(); i++) {
-            if (arspAnt.get(i).bFinished == true) {//Checks for the end of the path
-                hud.loseHP(arspAnt.get(i).nDamage);
-                arspAnt.remove(i);
+        if (hud.nHP == 0) {//Checks if the hp is now 0
+            arspAnt.clear();
+            bGameOver = true;
+        }
+        if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
+            System.out.println("HI FROM THE NEXT ROUND FUNCTION");
+            nextRound();
+            if (arspBullets.size() > 0) {
+                arspBullets.clear();
             }
-            if (hud.nHP == 0) {//Checks if the hp is now 0
-                    arspAnt.clear();
-                    bGameOver = true;
+        } else {
+            for (int i = 0; i < arspAnt.size(); i++) {
+                if (arspAnt.get(i).bFinished == true) {//Checks for the end of the path
+                    hud.loseHP(arspAnt.get(i).nDamage);
+                    arspAnt.remove(i);
                 }
-            if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
-                    nextRound();
-                if(arspBullets.size()>0){
-                    arspBullets.clear();
+                for (int j = 0; j < arspBullets.size(); j++) {
+                    if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0) { //Looks for if the bullet hits the ant first
+                        hud.addMoney(arspAnt.get(i).nWorth);
+                        arspAnt.remove(i);
+                        arspBullets.remove(j);
                     }
                 }
             }
         }
-
+    }
     public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
         for (int i = 0; i < arspTurret.size() - 1; i++) {
             if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) { //Checkes to see if the turret overlaps another
@@ -253,13 +261,12 @@ public class PlayScreen implements Screen {
         if (true) {
             int nLevel = hud.nLevel;
             int nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive, nPos;
-
             if (nLevel <= 15) { // For the first type of ant
                 nAntOne = 5 * nLevel; //Number of ants of this type to be spawned
                 System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID,50)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
                     nPos++;//Increases the position of the ant next in line
                     nID++;//ID of the ant, they can't ever be the same
                 }
@@ -270,7 +277,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
                 nPos = 0;
                 for (int i = 0; i < nAntTwo; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel,nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel,nID, 75)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                     nID++;
                 }
@@ -280,7 +287,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel,nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel,nID, 150)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                     nID++;
                 }
@@ -290,7 +297,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
                 nPos = 0;
                 for (int i = 0; i < nAntFour; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel,nID)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel,nID,200)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                     nID++;
                 }
@@ -301,17 +308,17 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void targetAnts(float dt) { //targets the ants with each turret depending on if the ant is in range or not
+    public void targetAnts() { //targets the ants with each turret depending on if the ant is in range or not
         for (int i = 0; i < arspTurret.size(); i++) {
             for (int j = 0; j < arspAnt.size(); j++) {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {//Range between them
                     if (arspAnt.get(j).bDead != true) { // Trying to make it so extra bullets don't get fired at the ants
-                        if (dt - arspTurret.get(i).fLastTimeShot > arspTurret.get(i).nFireRate/100 || arspTurret.get(i).fLastTimeShot == 0) {
+                        if ( TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot > 1000000000 || arspTurret.get(i).fLastTimeShot == 0) {//this is why the turret isnt shooting
+                            arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
                             arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
                             arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
                             arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
                             arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
-                            arspTurret.get(i).fLastTimeShot = dt;
                             System.out.println(arspTurret.get(i).fLastTimeShot);
                         }
                     }
@@ -323,11 +330,7 @@ public class PlayScreen implements Screen {
     public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
             for (int i = 0; i < arspBullets.size(); i++) {
                 for (int j = 0; j < arspAnt.size(); j++) {
-                    if (arspBullets.get(i).getBoundingRectangle().overlaps(arspAnt.get(j).getBoundingRectangle()) && arspAnt.size() > 0) { //Looks for if the bullet hits the ant first
-                        arspAnt.remove(j);
-                        arspBullets.remove(i);
-                        break;
-                    } else if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ //Moves the bullet to the ant with the same ID as the bullet
+                    if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ //Moves the bullet to the ant with the same ID as the bullet
                         float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
                         float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
                         float angle = (float) Math.atan2(diffY, diffX);

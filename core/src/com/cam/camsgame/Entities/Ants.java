@@ -10,11 +10,11 @@ import com.cam.camsgame.Screens.PlayScreen;
  * Created by Cameron on 2015-11-11.
  */
 public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
-    public int nVelY = 0, nVelX, nSpeed, nDamage, nX, nID, nHP;
+    public int nVelY = 0, nVelX, nSpeed, nDamage, nX, nID, nHP, nWorth;
     public boolean bFinished = false, bDead = false;
     private TiledMapTileLayer collisionLayer;
 
-    public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage, int nHP, int nPos, int nLevel, int nID) {
+    public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage, int nHP, int nPos, int nLevel, int nID, int nWorth) {
         super(spAnt);
         nX = nPos * - 50;
         setPosition(nX, collisionLayer.getTileHeight() * 3 / 4); //x coord is based on the position it was spawned as
@@ -24,6 +24,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         this.nDamage = nDamage;
         this.nID = nID;
         this.nHP = nHP;
+        this.nWorth = nWorth;
         rotate(-90);//Sets the initial rotation so the ants don't move sideways
 
     }
