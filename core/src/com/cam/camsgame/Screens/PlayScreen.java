@@ -234,7 +234,7 @@ public class PlayScreen implements Screen {
                     arspAnt.remove(i);
                 }
                 for (int j = 0; j < arspBullets.size(); j++) {
-                    if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0) { //Looks for if the bullet hits the ant first
+                    if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0 && arspAnt.get(i).nID == arspBullets.get(j).nAntID) { //Looks for if the bullet hits the ant first
                         hud.addMoney(arspAnt.get(i).nWorth);
                         arspAnt.get(i).lowerHP(1);
                         if(arspAnt.get(i).nHP == 0) {
