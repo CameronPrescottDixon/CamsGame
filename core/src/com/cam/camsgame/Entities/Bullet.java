@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Bullet extends Sprite{
     public int nAntID, nSpeed = 10;
-    public float nVelX, nVelY, fAngle;
+    public float nVelX, nVelY, fAngle = 0;
 
     public Bullet(Sprite spBullet, int nAntID){
         super(spBullet);
