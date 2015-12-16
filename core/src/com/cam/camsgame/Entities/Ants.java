@@ -96,10 +96,11 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     }
 
 
-public void lowerHP(int nDmg) {
-    nHP -= nDmg;
-    if(nHP == 0){
+public void checkHP(int nDmg) {
+    int nHp = this.nHP;
+    nHp -= nDmg;
+    if(nHp == 0){
         bDead = true;
-    }
+        }
     }
 }

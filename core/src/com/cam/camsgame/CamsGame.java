@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cam.camsgame.Screens.Menu;
 import com.cam.camsgame.Screens.PlayScreen;
 
 public class CamsGame extends Game {
@@ -16,9 +17,13 @@ public class CamsGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		manager = new AssetManager();
+		manager.load("Music/Halo- Menu Music.mp3", Music.class);
 		manager.load("Music/LetTheBodiesHitTheFloor.mp3", Music.class);
 		manager.finishLoading(); // finish loading all the assets for now
-		setScreen(new PlayScreen(this));
+		setScreen(new Menu(this));
+		if(true) {
+			setScreen(new PlayScreen(this));
+		}
 	}
 
 	@Override

@@ -131,20 +131,6 @@ public class PlayScreen implements Screen {
 
     }
 
-    public void update(float dt) {
-        gamecam.update();
-        //Only renders what the gamecam can see
-        tlRender.setView(gamecam);
-        hud.updateTime(dt);
-        removeAnt();//checks if ants reach the end
-        targetAnts();//Sends the ant array to the turrets to shoot them
-        if (arspBullets.size() > 0) {
-            shoot();
-        }
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-            onClick();//only passes it when theres a click
-    }
-
     @Override
     public void render(float dt) {
         //Calls update to instantly update to the map
@@ -168,6 +154,20 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
         for(int i = 0; i<arspBullets.size();i++)arspBullets.get(i).draw(tlRender.getBatch());
         tlRender.getBatch().end();
+    }
+
+    public void update(float dt) {
+        gamecam.update();
+        //Only renders what the gamecam can see
+        tlRender.setView(gamecam);
+        hud.updateTime(dt);
+        removeAnt();//checks if ants reach the end
+        targetAnts();//Sends the ant array to the turrets to shoot them
+        if (arspBullets.size() > 0) {
+            bulletTracking();
+        }
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+            onClick();//only passes it when theres a click
     }
 
     public void onClick() { //Helps keep render function clean instead of packing all of this into it
@@ -215,6 +215,49 @@ public class PlayScreen implements Screen {
             }
         }
     }
+    public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
+        for (int i = 0; i < arspTurret.size() - 1; i++) {
+            if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) { //Checkes to see if the turret overlaps another
+                System.out.println("Overlaps");
+                return false;
+            } else if (arspTurret.get(arspTurret.size() - 1).checkBounds() == false) { //Doesn't allow the turret to be placed if the turret is on the map
+                System.out.println("On map");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void targetAnts() { //targets the ants with each turret depending on if the ant is in range or not
+        for (int i = 0; i < arspTurret.size(); i++) {
+            for (int j = 0; j < arspAnt.size(); j++) {
+                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {//Range between them;
+                    if (arspAnt.get(j).bDead != true) {
+                        if (TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot > 1000000000 || arspTurret.get(i).fLastTimeShot == 0) {//this is why the turret isnt shooting
+                            arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
+                            arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
+                            arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
+                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
+                            arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void bulletTracking() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
+            for (int i = 0; i < arspBullets.size(); i++) {
+                for (int j = 0; j < arspAnt.size(); j++) {
+                    if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ //Moves the bullet to the ant with the same ID as the bullet
+                        float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
+                        float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
+                        float angle = (float) Math.atan2(diffY, diffX);
+                        arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)));
+                        }
+                    }
+                }
+            }
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         if (hud.nHP == 0) {//Checks if the hp is now 0
@@ -229,34 +272,27 @@ public class PlayScreen implements Screen {
             }
         } else {
             for (int i = 0; i < arspAnt.size(); i++) {
-                if (arspAnt.get(i).bFinished == true) {//Checks for the end of the path
+                if (arspAnt.get(i).bFinished == true) {//Checks for if the ant reaches the end of the path
                     hud.loseHP(arspAnt.get(i).nDamage);
                     arspAnt.remove(i);
+                    break;
                 }
                 for (int j = 0; j < arspBullets.size(); j++) {
-                    if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0 && arspAnt.get(i).nID == arspBullets.get(j).nAntID) { //Looks for if the bullet hits the ant first
-                        hud.addMoney(arspAnt.get(i).nWorth);
-                        arspAnt.get(i).lowerHP(1);
-                        if(arspAnt.get(i).nHP == 0) {
-                            arspAnt.remove(i);
+                    if(i <= arspAnt.size() && j <= arspBullets.size()){
+                        if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0 && arspAnt.get(i).nID == arspBullets.get(j).nAntID) { //Looks for if the bullet hits the ant first
+                            hud.addMoney(arspAnt.get(i).nWorth);
+                            arspAnt.get(i).nHP -= 1;
+                            if (arspAnt.get(i).nHP == 0) {
+                                arspAnt.remove(i);
+                                arspBullets.remove(j);
+                                break;
+                            }
+                            arspBullets.remove(j);
                         }
-                        arspBullets.remove(j);
                     }
                 }
             }
         }
-    }
-    public boolean placeableTurret() { //Checks to see if the last placed turret is viable in it's location
-        for (int i = 0; i < arspTurret.size() - 1; i++) {
-            if (arspTurret.get(arspTurret.size() - 1).getBoundingRectangle().overlaps(arspTurret.get(i).getBoundingRectangle())) { //Checkes to see if the turret overlaps another
-                System.out.println("Overlaps");
-                return false;
-            } else if (arspTurret.get(arspTurret.size() - 1).checkBounds() == false) { //Doesn't allow the turret to be placed if the turret is on the map
-                System.out.println("On map");
-                return false;
-            }
-        }
-        return true;
     }
 
     public void nextRound() {
@@ -273,7 +309,6 @@ public class PlayScreen implements Screen {
                     nPos++;//Increases the position of the ant next in line
                 }
             }
-
             if (nLevel >= 5 && nLevel <= 20) { //for the second type of ants
                 nAntTwo = 2 * nLevel - 5;
                 System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
@@ -312,37 +347,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void targetAnts() { //targets the ants with each turret depending on if the ant is in range or not
-        for (int i = 0; i < arspTurret.size(); i++) {
-            for (int j = 0; j < arspAnt.size(); j++) {
-                if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {//Range between them
-                    if (arspAnt.get(j).bDead != true) { // Trying to make it so extra bullets don't get fired at the ants
-                        if ( TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot > 100000000 || arspTurret.get(i).fLastTimeShot == 0) {//this is why the turret isnt shooting
-                            arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
-                            arspAnt.get(j).lowerHP(arspTurret.get(i).nDamage);
-                            arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
-                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
-                            arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
-                            System.out.println(arspTurret.get(i).fLastTimeShot);
-                        }
-                    }
-                }
-            }
-        }
-    }
 
-    public void shoot() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
-            for (int i = 0; i < arspBullets.size(); i++) {
-                for (int j = 0; j < arspAnt.size(); j++) {
-                    if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ //Moves the bullet to the ant with the same ID as the bullet
-                        float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
-                        float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
-                        float angle = (float) Math.atan2(diffY, diffX);
-                        arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)), angle);
-                        }
-                    }
-                }
-            }
     @Override
     public void resize(int width, int height) {
         gameport.update(width, height);
