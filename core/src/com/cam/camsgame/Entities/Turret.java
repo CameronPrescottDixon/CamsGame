@@ -15,10 +15,11 @@ public class Turret extends Sprite {
     public TiledMapTileLayer collisionLayer;
     public float fLastTimeShot;
 
-    public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer, int nFireRate) {
+    public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer, int nFireRate, int nDmg) {
         super(spTurret);
         this.collisionLayer = collisionLayer; //Gets the layer from Playscreen
         this.nFireRate = nFireRate;
+        this.nDamage = nDmg;
     }
 
     @Override
