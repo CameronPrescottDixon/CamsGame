@@ -256,7 +256,8 @@ public class PlayScreen implements Screen {
                         float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
                         float angle = (float) Math.atan2(diffY, diffX);
                         arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)));
-                        }
+                        break;
+                    }
                     }
                 }
             }
@@ -305,15 +306,6 @@ public class PlayScreen implements Screen {
         hud.nextRound(); //Starts the next round
             int nLevel = hud.nLevel;
             int nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive, nPos;
-            if (nLevel <= 15) { // For the first type of ant
-                nAntOne = 5 * nLevel; //Number of ants of this type to be spawned
-                System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
-                nPos = 0;
-                for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID,50)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
-                    nPos++;//Increases the position of the ant next in line
-                }
-            }
             if (nLevel >= 5 && nLevel <= 20) { //for the second type of ants
                 nAntTwo = 2 * nLevel - 5;
                 System.out.println("Number of lvl 2 ants spawned: "+nAntTwo);
@@ -323,21 +315,31 @@ public class PlayScreen implements Screen {
                     nPos++;
                 }
             }
+        if (nLevel >= 15 ) {
+            nAntFour = nLevel - 10;
+            System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
+            nPos = 0;
+            for (int i = 0; i < nAntFour; i++) {
+                arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel,nID,200)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                nPos++;
+            }
+        }
+            if (nLevel <= 15) { // For the first type of ant
+                nAntOne = 5 * nLevel; //Number of ants of this type to be spawned
+                System.out.println("Number of lvl 1 ants spawned: "+nAntOne);
+                nPos = 0;
+                for (int i = 0; i < nAntOne; i++) {
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID,50)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
+                    nPos++;//Increases the position of the ant next in line
+                }
+            }
+
             if (nLevel >= 10 && nLevel <= 25) {
                 nAntThree = nLevel;
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel,nID, 150)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
-                    nPos++;
-                }
-            }
-            if (nLevel >= 15 ) {
-                nAntFour = nLevel - 10;
-                System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
-                nPos = 0;
-                for (int i = 0; i < nAntFour; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel,nID,200)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel, nID, 150)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
