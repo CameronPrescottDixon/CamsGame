@@ -27,37 +27,26 @@ import com.cam.camsgame.CamsGame;
  */
 public class Menu extends ApplicationAdapter implements Screen {
 
-    private static final float BUTTON_WIDTH = 300f;
-    private static final float BUTTON_HEIGHT = 30f;
-    public boolean bStart = false;
-    private Viewport vpHud;
-    SpriteBatch batch;
-    Texture tBack, tButton;
-    Stage stage;
-    TextureAtlas taButton;
-    BitmapFont fWhite, fBlack;
-    TextButton tbStart, tbExit;
-    TextButton.TextButtonStyle textButtonStyle;
-    Table table;
-    Skin skNewGame;
-    Label laTitle;
-    Label.LabelStyle headingstyle;
-    Music music;
-    int nChoi = 0;
+    private Texture tBack, tButton;
+    private TextureAtlas taButton;
+    private BitmapFont fWhite, fBlack;
+    private TextButton.TextButtonStyle textButtonStyle;
+    private Table table;
+    private Skin skNewGame;
+    private Label laTitle;
+    private Label.LabelStyle headingstyle;
+    private Music music;
+    private Stage stage;
     private CamsGame game;
+    private TextButton tbStart, tbExit;
+
     public Menu(CamsGame game) {
-this.game = game;
-    }
-
-    @Override
-    public void create() {
+        this.game = game;
+        stage = new Stage();
         //bulk of code came from https://www.youtube.com/watch?v=q2qoiTqGsh8
-        vpHud = new FitViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(vpHud, game.batch);
-
         //creates background music
         //http://www.norakomi.com/tutorial_mambow2_music.php
-        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Halo- Menu Music.mp3"));
+        music = CamsGame.manager.get("Music/Halo- Menu Music.mp3", Music.class);
         music.setLooping(true);
         music.setVolume(music.getVolume() * 1 / 6);
         music.play();
@@ -67,7 +56,7 @@ this.game = game;
         fWhite = new BitmapFont(Gdx.files.internal("Fonts/white.fnt"));
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
 
-        tBack = new Texture(Gdx.files.internal("Picnic.jpg"));
+        tBack = new Texture("Picnic.jpg");
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -89,24 +78,10 @@ this.game = game;
         //creates start game button
         tbStart = new TextButton("Start", textButtonStyle);
         tbStart.pad(10f);
-        tbStart.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        tbStart.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            game.setScreen(new PlayScreen(game));
-            }
-        });
 
         //creates exit game button
         tbExit = new TextButton("Exit", textButtonStyle);
         tbExit.pad(10f);
-        tbExit.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        tbExit.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
 
         //put everything into a table and onto the stage
         table = new Table();
@@ -118,17 +93,34 @@ this.game = game;
         table.row();
         table.add(tbExit);
         stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.batch.begin();
+        game.batch.draw(tBack, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.end();
+        stage.act();
+        stage.draw();
     }
 
     @Override
     public void show() {
-
+        tbStart.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new PlayScreen(game));
+            }
+        });
+        tbExit.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
     }
 
     @Override
@@ -138,6 +130,9 @@ this.game = game;
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        tBack.dispose();
+        taButton.dispose();
+        skNewGame.dispose();
     }
 }

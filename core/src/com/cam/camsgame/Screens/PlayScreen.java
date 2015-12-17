@@ -157,17 +157,19 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-        gamecam.update();
-        //Only renders what the gamecam can see
-        tlRender.setView(gamecam);
-        hud.updateTime(dt);
-        removeAnt();//checks if ants reach the end
-        targetAnts();//Sends the ant array to the turrets to shoot them
-        if (arspBullets.size() > 0) {
-            bulletTracking();
+        if (bGameOver != true) {
+            gamecam.update();
+            //Only renders what the gamecam can see
+            tlRender.setView(gamecam);
+            hud.updateTime(dt);
+            removeAnt();//checks if ants reach the end
+            targetAnts();//Sends the ant array to the turrets to shoot them
+            if (arspBullets.size() > 0) {
+                bulletTracking();
+            }
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+                onClick();//only passes it when theres a click
         }
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-            onClick();//only passes it when theres a click
     }
 
     public void onClick() { //Helps keep render function clean instead of packing all of this into it
@@ -296,8 +298,8 @@ public class PlayScreen implements Screen {
     }
 
     public void nextRound() {
+        if (bGameOver != true) {
         hud.nextRound(); //Starts the next round
-        if (true) {
             int nLevel = hud.nLevel;
             int nAntOne, nAntTwo, nAntThree, nAntFour, nAntFive, nPos;
             if (nLevel <= 15) { // For the first type of ant

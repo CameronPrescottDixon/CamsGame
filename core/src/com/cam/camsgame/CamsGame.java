@@ -13,6 +13,7 @@ public class CamsGame extends Game {
 	public SpriteBatch batch;
 	public static AssetManager manager;
 
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -21,9 +22,6 @@ public class CamsGame extends Game {
 		manager.load("Music/LetTheBodiesHitTheFloor.mp3", Music.class);
 		manager.finishLoading(); // finish loading all the assets for now
 		setScreen(new Menu(this));
-		if(true) {
-			setScreen(new PlayScreen(this));
-		}
 	}
 
 	@Override
