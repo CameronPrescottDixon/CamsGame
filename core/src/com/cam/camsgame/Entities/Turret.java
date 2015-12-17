@@ -25,13 +25,10 @@ public class Turret extends Sprite {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        update();
     }
 
-    public void update() {
-    }
 
-    public boolean checkBounds() {
+    public boolean checkBounds() { //Not fully working
         float fTileWidth = collisionLayer.getTileWidth(), fTileHeight = collisionLayer.getTileHeight();
         //Checks for the upwards direction works
         if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
