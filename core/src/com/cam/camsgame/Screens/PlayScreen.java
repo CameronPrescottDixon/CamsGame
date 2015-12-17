@@ -263,8 +263,11 @@ public class PlayScreen implements Screen {
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         if (hud.nHP == 0) {//Checks if the hp is now 0
-            arspAnt.clear();
             bGameOver = true;
+            arspAnt.clear();
+            arspBullets.clear();
+            arspTurret.clear();
+            game.setScreen( new Menu(game));
         }
         if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
             System.out.println("HI FROM THE NEXT ROUND FUNCTION");
@@ -329,7 +332,7 @@ public class PlayScreen implements Screen {
                     nPos++;
                 }
             }
-            if (nLevel >= 15 && nLevel < 25) {
+            if (nLevel >= 15 ) {
                 nAntFour = nLevel - 10;
                 System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
                 nPos = 0;

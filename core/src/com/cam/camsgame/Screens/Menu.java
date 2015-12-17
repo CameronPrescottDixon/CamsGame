@@ -113,6 +113,8 @@ public class Menu extends ApplicationAdapter implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new PlayScreen(game));
+                tbStart.remove();
+                tbExit.remove();
             }
         });
         tbExit.addListener(new ClickListener() {
