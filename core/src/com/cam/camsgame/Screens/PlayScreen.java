@@ -238,9 +238,10 @@ public class PlayScreen implements Screen {
                         if (TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot > 1000000000 || arspTurret.get(i).fLastTimeShot == 0) {//this is why the turret isnt shooting
                             arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
                             arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
-                            arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID));
+                            arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
                             arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
                             arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                            break;
                         }
                     }
                 }
@@ -249,18 +250,17 @@ public class PlayScreen implements Screen {
     }
 
     public void bulletTracking() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
-            for (int i = 0; i < arspBullets.size(); i++) {
-                for (int j = 0; j < arspAnt.size(); j++) {
-                    if(arspBullets.get(i).nAntID == arspAnt.get(j).nID){ //Moves the bullet to the ant with the same ID as the bullet
-                        float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
-                        float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
-                        float angle = (float) Math.atan2(diffY, diffX);
-                        arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)));
-                        break;
-                    }
-                    }
+        for (int i = 0; i < arspBullets.size(); i++) {
+            for (int j = 0; j < arspAnt.size(); j++) {
+                if (arspBullets.get(i).nAntID == arspAnt.get(j).nID) { //Moves the bullet to the ant with the same ID as the bullet
+                    float diffX = (arspAnt.get(j).getX() + 25) - (arspBullets.get(i).getX() + 10);
+                    float diffY = (arspAnt.get(j).getY() + 25) - (arspBullets.get(i).getY() + 10);
+                    float angle = (float) Math.atan2(diffY, diffX);
+                    arspBullets.get(i).update((float) (arspBullets.get(i).nSpeed * Math.cos(angle)), (float) (arspBullets.get(i).nSpeed * Math.sin(angle)));
                 }
             }
+        }
+    }
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         if (hud.nHP <= 0) {//Checks if the hp is now 0
@@ -287,8 +287,8 @@ public class PlayScreen implements Screen {
                     if(i <= arspAnt.size() && j <= arspBullets.size()){
                         if (arspBullets.get(j).getBoundingRectangle().overlaps(arspAnt.get(i).getBoundingRectangle()) && arspAnt.size() > 0 && arspAnt.get(i).nID == arspBullets.get(j).nAntID) { //Looks for if the bullet hits the ant first
                             hud.addMoney(arspAnt.get(i).nWorth);
-                            arspAnt.get(i).nHP -= 1;
-                            if (arspAnt.get(i).nHP == 0) {
+                            arspAnt.get(i).nHP -= arspBullets.get(j).nDmg;
+                            if (arspAnt.get(i).nHP <= 0) {
                                 arspAnt.remove(i);
                                 arspBullets.remove(j);
                                 break;

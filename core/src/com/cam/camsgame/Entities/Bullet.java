@@ -8,12 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 
 public class Bullet extends Sprite{
-    public int nAntID, nSpeed = 10;
+    public int nAntID, nSpeed = 10, nDmg;
     public float fVelX, fVelY;
 
-    public Bullet(Sprite spBullet, int nAntID){
+    public Bullet(Sprite spBullet, int nAntID, int nDmg){
         super(spBullet);
         this.nAntID = nAntID;
+        this.nDmg = nDmg;
     }
 
     @Override

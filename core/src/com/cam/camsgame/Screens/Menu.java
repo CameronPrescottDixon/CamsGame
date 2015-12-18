@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,6 +29,7 @@ import com.cam.camsgame.CamsGame;
 public class Menu extends ApplicationAdapter implements Screen {
 
     private Texture tBack, tButton;
+    private Sprite spBack;
     private TextureAtlas taButton;
     private BitmapFont fWhite, fBlack;
     private TextButton.TextButtonStyle textButtonStyle;
@@ -56,7 +58,8 @@ public class Menu extends ApplicationAdapter implements Screen {
         fWhite = new BitmapFont(Gdx.files.internal("Fonts/white.fnt"));
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
 
-        tBack = new Texture("Picnic.jpg");
+        spBack = new Sprite(new Texture("Picnic.jpg"));
+        spBack.setSize(1000, 1000);
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -101,7 +104,7 @@ public class Menu extends ApplicationAdapter implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-        game.batch.draw(tBack, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spBack.draw(game.batch);
         game.batch.end();
         stage.act();
         stage.draw();
