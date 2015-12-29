@@ -24,6 +24,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cam.camsgame.CamsGame;
 
+import java.awt.SystemColor;
+
 /**
  * Created by Cameron on 2015-12-15.
  */
@@ -102,7 +104,7 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float dt) {
-        if(game.getScreen() == this) {
+        if(game.getScreen() == this && tbStart.isDisabled() == true) {
             tbStart.setDisabled(false);
             tbExit.setDisabled(false);
             music.play();

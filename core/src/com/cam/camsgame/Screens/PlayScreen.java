@@ -124,7 +124,7 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {
     }
-    public void startGame() {
+    public void startGame() { //This stuff is needed to start the screens actions
         hud = new Hud(game.batch);
         music.play();
         bGameOver = false;
