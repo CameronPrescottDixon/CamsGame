@@ -1,5 +1,6 @@
 package com.cam.camsgame.Screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -62,114 +63,113 @@ public class PlayScreen implements Screen {
 
     //Bullets
     private ArrayList<Bullet> arspBullets;
-
     public PlayScreen(CamsGame game) {
-        this.game = game;
-        gamecam = new OrthographicCamera();
+            this.game = game;
+            gamecam = new OrthographicCamera();
 
-        //Create the viewport to keep a specific aspect ratio
-        gameport = new StretchViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, gamecam);
+            //Create the viewport to keep a specific aspect ratio
+            gameport = new StretchViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, gamecam);
 
-        //Create the hud
-        hud = new Hud(game.batch);
+            //Loads tiled map
+            mapLoader = new TmxMapLoader();
 
-        //Loads tiled map
-        mapLoader = new TmxMapLoader();
+            //Load tiled map
+            tlMap = mapLoader.load("Maps/Map.tmx");
+            tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
-        //Load tiled map
-        tlMap = mapLoader.load("Maps/Map.tmx");
-        tlRender = new OrthogonalTiledMapRenderer(tlMap);
-
-        //Ants
-        arspAnt = new ArrayList<Ants>();
-        bGameOver = false;
-        nextRound(); //Initializes the game, without this the rounds wouldn't start
-
-        //Turrets, an array is better for looking and listening for which is clicked
-        arspTurrs = new ArrayList<SelectTurret>();
-        arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/raidant.png"))));
-        arspTurrs.get(0).update(3, 300);
-        arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/raidfly.png"))));
-        arspTurrs.get(1).update(1, 400);
-        arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/RAIDBIG.png"))));
-        arspTurrs.get(2).update(-1, 600);
-        arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/RAIDMAX.png"))));
-        arspTurrs.get(3).update(-3, 900);
-
-        //Turrets
-        arspTurret = new ArrayList<Turret>();
-
-        //Side panel for the turrets to sit on instead of the map
-        spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
-        spSidePanel.setPosition(Gdx.graphics.getWidth() - 100, 0);
-        spSidePanel.setSize(100, 1000);
-
-        //Shows the selected turret by adding this red box behind it
-        spTurSelect = new Sprite(new Texture("red.png"));
-        spTurSelect.setSize(100, 120);
-        spTurSelect.setPosition(arspTurrs.get(0).getX(), arspTurrs.get(0).getY() - 10);
-        bTurSelect = false; //Makes it so the box isnt drawn before a turret is selected
+            //Ants
+            arspAnt = new ArrayList<Ants>();
 
 
-        //Set the gamecams position to half of the width and height of the map (the center of the map)
-        gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
+            //Turrets, an array is better for looking and listening for which is clicked
+            arspTurrs = new ArrayList<SelectTurret>();
+            arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/raidant.png"))));
+            arspTurrs.get(0).update(3, 300);
+            arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/raidfly.png"))));
+            arspTurrs.get(1).update(1, 400);
+            arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/RAIDBIG.png"))));
+            arspTurrs.get(2).update(-1, 600);
+            arspTurrs.add(new SelectTurret(new Sprite(new Texture("Entities/RAIDMAX.png"))));
+            arspTurrs.get(3).update(-3, 900);
 
-        //Get music
-        music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class); //This song is good
-        music.setLooping(true);//Loop it
-        //Makes the music volume lower so it's not destroying the users ears
-        music.setVolume(music.getVolume() * 1 / 10);
-        music.play();//play it
+            //Turrets
+            arspTurret = new ArrayList<Turret>();
 
-        vtouchPos = new Vector3();//fixes the errors with flipping the y co-ords on the x-axis
+            //Side panel for the turrets to sit on instead of the map
+            spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
+            spSidePanel.setPosition(Gdx.graphics.getWidth() - 100, 0);
+            spSidePanel.setSize(100, 1000);
 
-        //Bullets
-        arspBullets = new ArrayList<Bullet>();
+            //Shows the selected turret by adding this red box behind it
+            spTurSelect = new Sprite(new Texture("red.png"));
+            spTurSelect.setSize(100, 120);
+            spTurSelect.setPosition(arspTurrs.get(0).getX(), arspTurrs.get(0).getY() - 10);
+            bTurSelect = false; //Makes it so the box isnt drawn before a turret is selected
+
+
+            //Set the gamecams position to half of the width and height of the map (the center of the map)
+            gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
+
+            //Get music
+            music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class); //This song is good
+            music.setLooping(true);//Loop it
+            //Makes the music volume lower so it's not destroying the users ears
+            music.setVolume(music.getVolume() * 1 / 10);
+
+            vtouchPos = new Vector3();//fixes the errors with flipping the y co-ords on the x-axis
+
+            //Bullets
+            arspBullets = new ArrayList<Bullet>();
     }
-
     @Override
     public void show() {
+    }
+    public void startGame() {
+        hud = new Hud(game.batch);
+        music.play();
+        bGameOver = false;
+        nextRound(); //Initializes the game, without this the rounds wouldn't start
+        //Create the hud
 
     }
-
     @Override
     public void render(float dt) {
-        //Calls update to instantly update to the map
-        update(dt); // Sends deltaTime to the update function to be sent to other methods that require it
-        // renders the map
-        tlRender.render();
-        //Gets whats shown by our huds camera
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        //Draws the hud to the screen
-        hud.stage.draw();
-        //Draw ant
-        tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
-        for (int i = 0; i < arspAnt.size(); i++) {
-            arspAnt.get(i).draw(tlRender.getBatch());
+            //Calls update to instantly update to the map
+            update(dt); // Sends deltaTime to the update function to be sent to other methods that require it
+            // renders the map
+            tlRender.render();
+            //Gets whats shown by our huds camera
+            game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            //Draws the hud to the screen
+            hud.stage.draw();
+            //Draw ant
+            tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
+            for (int i = 0; i < arspAnt.size(); i++) {
+                arspAnt.get(i).draw(tlRender.getBatch());
+            }
+            for (int i = 0; i < arspTurret.size(); i++) arspTurret.get(i).draw(tlRender.getBatch());
+            spSidePanel.draw(tlRender.getBatch());
+            if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
+                spTurSelect.draw(tlRender.getBatch());
+            }
+            for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
+            for (int i = 0; i < arspBullets.size(); i++)
+                arspBullets.get(i).draw(tlRender.getBatch());
+            tlRender.getBatch().end();
         }
-        for (int i = 0; i < arspTurret.size(); i++) arspTurret.get(i).draw(tlRender.getBatch());
-        spSidePanel.draw(tlRender.getBatch());
-        if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
-            spTurSelect.draw(tlRender.getBatch());
-        }
-        for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
-        for (int i = 0; i < arspBullets.size(); i++) arspBullets.get(i).draw(tlRender.getBatch());
-        tlRender.getBatch().end();
-    }
-
     public void update(float dt) {
         if (bGameOver != true) {
+            targetAnts();//Sends the ant array to the turrets to shoot them
             gamecam.update();
             //Only renders what the gamecam can see
             tlRender.setView(gamecam);
             hud.updateTime(dt);
             removeAnt();//checks if ants reach the end
-            targetAnts();//Sends the ant array to the turrets to shoot them
+
             if (arspBullets.size() > 0) {
                 bulletTracking();
             }
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-                onClick();//only passes it when theres a click
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) onClick();//only passes it when theres a click
         }
     }
 
@@ -236,13 +236,15 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < arspTurret.size(); i++) {
             for (int j = 0; j < arspAnt.size(); j++) {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= 200) {//Range between them;
-                    if (arspAnt.get(j).bDead != true) {
-                        if (TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot > 1000000000 || arspTurret.get(i).fLastTimeShot == 0) {
+                    if (TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot > 1000000000 || arspTurret.get(i).fLastTimeShot == 0) {
+                        if (arspAnt.get(j).bDead != true) {
                             arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
                             arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
                             arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
+                            System.out.println(arspAnt.get(j).nID + " Shot by" + i +" turret and b dead = " +arspAnt.get(j).bDead);
                             arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
                             arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                            return;
                         }
                     }
                 }
@@ -265,11 +267,12 @@ public class PlayScreen implements Screen {
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         if (hud.nHP <= 0) {//Checks if the hp is now 0
+            ((Game) Gdx.app.getApplicationListener()).setScreen(game.menu);
             bGameOver = true;
             arspAnt.clear();
             arspBullets.clear();
             arspTurret.clear();
-            game.setScreen(new Menu(game));
+            music.stop();
         }
         if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
             System.out.println("HI FROM THE NEXT ROUND FUNCTION");
@@ -358,7 +361,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gameport.update(width, height);
+            gameport.update(width, height);
     }
 
     @Override
@@ -379,5 +382,9 @@ public class PlayScreen implements Screen {
         tlMap.dispose();
         tlRender.dispose();
         hud.dispose();
+        arspAnt.clear();
+        arspBullets.clear();
+        arspTurret.clear();
+        arspTurrs.clear();
     }
 }

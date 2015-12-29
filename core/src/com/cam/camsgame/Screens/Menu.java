@@ -1,6 +1,7 @@
 package com.cam.camsgame.Screens;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -101,6 +102,11 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float dt) {
+        if(game.getScreen() == this) {
+            tbStart.setDisabled(false);
+            tbExit.setDisabled(false);
+            music.play();
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
@@ -112,21 +118,28 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void show() {
-        tbStart.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new PlayScreen(game));
-                tbStart.remove();
-                tbExit.remove();
-            }
-        });
-        tbExit.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-    }
+            tbStart.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (tbStart.isDisabled() != true) {
+                        System.out.println(tbStart.isDisabled());
+                        game.playScreen.startGame();
+                        tbExit.setDisabled(true);
+                        tbStart.setDisabled(true);
+                        music.stop();
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(game.playScreen);
+                    }
+                }
+            });
+            tbExit.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (tbExit.isDisabled() != true) {
+                        Gdx.app.exit();
+                    }
+                }
+            });
+        }
 
     @Override
     public void hide() {
@@ -135,9 +148,5 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
-        tBack.dispose();
-        taButton.dispose();
-        skNewGame.dispose();
     }
 }
