@@ -125,12 +125,10 @@ public class PlayScreen implements Screen {
     public void show() {
     }
     public void startGame() { //This stuff is needed to start the screens actions
-        hud = new Hud(game.batch);
-        music.play();
+        hud = new Hud(game.batch);//This resets everything hud related if this is not the first game played
+        music.play();//Have this here so it doesn't play the music in the screen in the other one
         bGameOver = false;
         nextRound(); //Initializes the game, without this the rounds wouldn't start
-        //Create the hud
-
     }
     @Override
     public void render(float dt) {

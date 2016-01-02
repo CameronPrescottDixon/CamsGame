@@ -43,7 +43,7 @@ public class Menu extends ApplicationAdapter implements Screen {
     private Music music;
     private Stage stage;
     private CamsGame game;
-    private TextButton tbStart, tbExit;
+    private TextButton tbStart, tbExit, tbInstr;
 
     public Menu(CamsGame game) {
         this.game = game;
@@ -85,6 +85,9 @@ public class Menu extends ApplicationAdapter implements Screen {
         tbStart = new TextButton("Start", textButtonStyle);
         tbStart.pad(10f);
 
+        tbInstr = new TextButton("Instructions", textButtonStyle);
+        tbInstr.pad(10f);
+
         //creates exit game button
         tbExit = new TextButton("Exit", textButtonStyle);
         tbExit.pad(10f);
@@ -97,6 +100,8 @@ public class Menu extends ApplicationAdapter implements Screen {
         table.row();
         table.add(tbStart);
         table.row();
+        table.add(tbInstr);
+        table.row();
         table.add(tbExit);
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
@@ -105,7 +110,6 @@ public class Menu extends ApplicationAdapter implements Screen {
     @Override
     public void render(float dt) {
         if(game.getScreen() == this && tbStart.isDisabled() == true) {
-            tbStart.setDisabled(false);
             tbExit.setDisabled(false);
             music.play();
         }
@@ -123,16 +127,16 @@ public class Menu extends ApplicationAdapter implements Screen {
             tbStart.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (tbStart.isDisabled() != true) {
+                    if (tbExit.isDisabled() != true) {
                         System.out.println(tbStart.isDisabled());
                         game.playScreen.startGame();
                         tbExit.setDisabled(true);
-                        tbStart.setDisabled(true);
                         music.stop();
                         ((Game) Gdx.app.getApplicationListener()).setScreen(game.playScreen);
                     }
                 }
             });
+
             tbExit.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -141,7 +145,17 @@ public class Menu extends ApplicationAdapter implements Screen {
                     }
                 }
             });
-        }
+
+            tbInstr.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (tbExit.isDisabled() != true) {
+                    tbExit.setDisabled(true);
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.instructions);
+                }
+            }
+        });
+    }
 
     @Override
     public void hide() {

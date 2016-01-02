@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cam.camsgame.Screens.Instructions;
 import com.cam.camsgame.Screens.Menu;
 import com.cam.camsgame.Screens.PlayScreen;
 
@@ -15,6 +16,7 @@ public class CamsGame extends Game {
 	public static AssetManager manager;
 	public Menu menu;
 	public PlayScreen playScreen;
+	public Instructions instructions;
 
 
 	@Override
@@ -26,6 +28,7 @@ public class CamsGame extends Game {
 		manager.finishLoading(); // finish loading all the assets for now
 		playScreen = new PlayScreen(this);
 		menu = new Menu(this);
+		instructions = new Instructions(this);
 		setScreen(menu);
 	}
 
