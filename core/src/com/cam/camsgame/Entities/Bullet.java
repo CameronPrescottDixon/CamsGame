@@ -25,7 +25,6 @@ public class Bullet extends Sprite{
     public void update(float nVelX, float nVelY){
         this.fVelX = nVelX;
         this.fVelY = nVelY;
-
         setX(getX() + this.fVelX);
         setY(getY() + this.fVelY);
 

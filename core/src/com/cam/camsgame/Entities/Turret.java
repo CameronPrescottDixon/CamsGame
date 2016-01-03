@@ -11,15 +11,17 @@ import java.util.ArrayList;
  * Created by Cameron on 2015-11-27.
  */
 public class Turret extends Sprite {
-    public int  nRange, nDamage, nFireRate;
+    public int  nRange, nDamage, nFireRate, nTurretType;
     public TiledMapTileLayer collisionLayer;
     public float fLastTimeShot;
 
-    public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer, int nFireRate, int nDmg) {
+    public Turret(Sprite spTurret, TiledMapTileLayer collisionLayer, int nFireRate, int nDmg, int nTurretType, int nRange) {
         super(spTurret);
         this.collisionLayer = collisionLayer; //Gets the layer from Playscreen
         this.nFireRate = nFireRate;
         this.nDamage = nDmg;
+        this.nTurretType = nTurretType;
+        this.nRange = nRange;
     }
 
     @Override
