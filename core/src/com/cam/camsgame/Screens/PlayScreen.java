@@ -225,21 +225,20 @@ public class PlayScreen implements Screen {
                             }
                         } else if (arspTurret.get(nSelectedTurret).nTurretType == 1) {// Blue turret
                             if (arspTurret.get(j).nTurretType == 1) {
-                                arspTurret.get(j).nDamage += 0;
-                                arspTurret.get(j).nFireRate += 0;//Not sure how to format this right about now
-                                arspTurret.get(j).nRange += 0;
+                                arspTurret.get(j).nDamage += 2;
+                                arspTurret.get(j).nFireRate +=-50000000;//Not sure how to format this right about now
+                                arspTurret.get(j).nRange += 50;
                             }
                         } else if (arspTurret.get(nSelectedTurret).nTurretType == 2) {// Jug
                             if (arspTurret.get(j).nTurretType == 2) {
-                                arspTurret.get(j).nDamage += 0;
-                                arspTurret.get(j).nFireRate += 0;//Not sure how to format this right about now
-                                arspTurret.get(j).nRange += 0;
+                                arspTurret.get(j).nFireRate += -100000000;//Not sure how to format this right about now
+                                arspTurret.get(j).nRange += 75;
                             }
                         } else {// Black turret
                             if (arspTurret.get(j).nTurretType == 3) {
-                                arspTurret.get(j).nDamage += 0;
-                                arspTurret.get(j).nFireRate += 0;//Not sure how to format this right about now
-                                arspTurret.get(j).nRange += 0;
+                                arspTurret.get(j).nDamage += 1;
+                                arspTurret.get(j).nFireRate += -50000000;//Not sure how to format this right about now
+                                arspTurret.get(j).nRange += 100;
                             }
                         }
                     }

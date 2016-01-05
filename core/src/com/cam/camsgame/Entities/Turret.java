@@ -25,11 +25,18 @@ public class Turret extends Sprite {
         if(nTurretType == 0){
             this.nDamage += 1*nUpgraded;
             this.nRange += 100 * nUpgraded;
-            this.nFireRate += -50000000;
+            this.nFireRate += -50000000 * nUpgraded;
         }else if(nTurretType == 1){
-
+            this.nDamage += 2*nUpgraded;
+            this.nRange += 50 * nUpgraded;
+            this.nFireRate += -50000000 * nUpgraded;
         }else if(nTurretType == 2){
-
+            this.nRange += 75 * nUpgraded;
+            this.nFireRate += -100000000 * nUpgraded;
+        }else{
+            this.nDamage += 1*nUpgraded;
+            this.nRange += 100 * nUpgraded;
+            this.nFireRate += -50000000 * nUpgraded;
         }
     }
 
