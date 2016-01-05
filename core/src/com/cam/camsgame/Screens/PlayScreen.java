@@ -21,7 +21,6 @@ import com.cam.camsgame.Entities.Bullet;
 import com.cam.camsgame.Entities.Turret;
 import com.cam.camsgame.Scenes.SelectTurret;
 import com.cam.camsgame.Scenes.Hud;
-
 import java.util.ArrayList;
 
 /**
@@ -116,6 +115,8 @@ public class PlayScreen implements Screen {
         //Make the upgrade and sell buttons
         spSell = new Sprite(new Texture("sell.png"));
         spSell.setSize(100, 50);
+
+
         spUpgrade = new Sprite(new Texture("upgrade.png"));
         spUpgrade.setSize(100, 50);
 
@@ -214,7 +215,7 @@ public class PlayScreen implements Screen {
                     System.out.println(nSelectedTurret);
                     arspTurret.remove(nSelectedTurret);
                     bTurretSelected = false;
-                } else if (vtouchPos.y >= spUpgrade.getY() && vtouchPos.y < spUpgrade.getY() + spUpgrade.getHeight() && bTurretSelected == true && hud.nMoney >= 1000 && arUpgrades[nSelectedTurret] <= 4) {// Checks for the upgrade button
+                } else if (vtouchPos.y >= spUpgrade.getY() && vtouchPos.y < spUpgrade.getY() + spUpgrade.getHeight() && bTurretSelected == true && hud.nMoney >= 1000 && arUpgrades[arspTurret.get(nSelectedTurret).nTurretType] <= 4) {// Checks for the upgrade button
                     for (int j = 0; j < arspTurret.size(); j++) {
                         if (arspTurret.get(nSelectedTurret).nTurretType == 0) {// Red turret
                             if (arspTurret.get(j).nTurretType == 0) {
@@ -244,18 +245,21 @@ public class PlayScreen implements Screen {
                     }
                     hud.subtMoney(1000);
                     arUpgrades[arspTurret.get(nSelectedTurret).nTurretType]++;
+                    System.out.println("Upgraded " +arUpgrades[arspTurret.get(nSelectedTurret).nTurretType]+" Times");
                     bTurretSelected = false;
                 }
             } else if (vtouchPos.x < arspTurrs.get(i).getX()) { //looks for clicks off of the turret select panel
                 if (bTurSelect == true) {
                     addTurret();
                     bTurSelect = false;
+                    bTurretSelected = false;
                 } else {
                     for (int j = 0; j < arspTurret.size(); j++) {
                         if (vtouchPos.y >= arspTurret.get(j).getY() && vtouchPos.y < arspTurret.get(j).getY() + arspTurret.get(j).getHeight()) {
                             spSell.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 40);
-                            spUpgrade.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 75);
+                            spUpgrade.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 100);
                             bTurretSelected = true;
+                            bTurSelect = false;
                             nSelectedTurret = j;
                         }
                     }
@@ -308,19 +312,19 @@ public class PlayScreen implements Screen {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= arspTurret.get(i).nRange) {//Range between them;
                     if ((TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot) > (1000000000 + arspTurret.get(i).nFireRate) || arspTurret.get(i).fLastTimeShot == 0) {
                         if (arspAnt.get(j).bDead != true) {
-                            arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
-                            arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
-                            arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
-                            System.out.println(arspAnt.get(j).nID + " Shot by" + i + " turret and b dead = " + arspAnt.get(j).bDead);
-                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
-                            arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
-                            return;
+                                arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
+                                arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
+                                arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
+                                System.out.println(arspAnt.get(j).nID + " Shot by" + i + " turret and b dead = " + arspAnt.get(j).bDead);
+                                arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
+                                arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                                return;
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
     public void bulletTracking() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
         for (int i = 0; i < arspBullets.size(); i++) {
