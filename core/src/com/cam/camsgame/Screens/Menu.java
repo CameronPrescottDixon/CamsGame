@@ -104,7 +104,6 @@ public class Menu extends ApplicationAdapter implements Screen {
         table.row();
         table.add(tbExit);
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -112,6 +111,9 @@ public class Menu extends ApplicationAdapter implements Screen {
         if(game.getScreen() == this && tbStart.isDisabled() == true) {
             tbExit.setDisabled(false);
             music.play();
+        }
+        if(game.getScreen() == this){
+            Gdx.input.setInputProcessor(stage);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
