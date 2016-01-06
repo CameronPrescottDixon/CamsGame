@@ -21,6 +21,6 @@ public class SelectTurret extends Sprite {
     public void update(int nPos, int nCst){
         nCost = nCst;
         setSize(100,100);
-        setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() /2 + (nPos * 100));
+        setPosition(900,500 + (nPos * 100));
     }
 }

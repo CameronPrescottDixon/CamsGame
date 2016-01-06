@@ -103,12 +103,15 @@ public class PlayScreen implements Screen {
 
         //Side panel for the turrets to sit on instead of the map
         spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
-        spSidePanel.setPosition(Gdx.graphics.getWidth() - 100, 0);
-        spSidePanel.setSize(100, 1000);
+        System.out.println(Gdx.graphics.getWidth() +"Width");
+
+        spSidePanel.setSize(100,1000);
+        spSidePanel.setPosition(900, 0);
+
 
         //Shows the selected turret by adding this red box behind it
         spTurSelect = new Sprite(new Texture("red.png"));
-        spTurSelect.setSize(100, 120);
+        spTurSelect.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/10 + 20);
         spTurSelect.setPosition(arspTurrs.get(0).getX(), arspTurrs.get(0).getY() - 10);
         bTurSelect = false; //Makes it so the box isnt drawn before a turret is selected
 
@@ -164,14 +167,14 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         //Draw ant
         tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
-        for (int i = 0; i < arspAnt.size(); i++) {
-            arspAnt.get(i).draw(tlRender.getBatch());
-        }
-        for (int i = 0; i < arspTurret.size(); i++) arspTurret.get(i).draw(tlRender.getBatch());
         spSidePanel.draw(tlRender.getBatch());
         if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
             spTurSelect.draw(tlRender.getBatch());
         }
+        for (int i = 0; i < arspAnt.size(); i++) {
+            arspAnt.get(i).draw(tlRender.getBatch());
+        }
+        for (int i = 0; i < arspTurret.size(); i++) arspTurret.get(i).draw(tlRender.getBatch());
         for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
         for (int i = 0; i < arspBullets.size(); i++)
             arspBullets.get(i).draw(tlRender.getBatch());
@@ -207,7 +210,7 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 4; i++) {
             if (vtouchPos.x >= arspTurrs.get(0).getX()) { // looks for in the click is in the turret select portion of the screen
                 if (vtouchPos.y >= arspTurrs.get(i).getY() && vtouchPos.y < arspTurrs.get(i).getY() + arspTurrs.get(i).getHeight()) {// Using arrays schortened this code by 3/4!!!
-                    spTurSelect.setPosition(arspTurrs.get(i).getX(), arspTurrs.get(i).getY() - 10); // -10 because the red box is 120 pixels in height but the turrets are only 100
+                    spTurSelect.setPosition(arspTurrs.get(i).getX(), arspTurrs.get(i).getY() - 20); // -10 because the red box is 120 pixels in height but the turrets are only 100
                     nTurSelected = i;
                     bTurSelect = true;
                     break;

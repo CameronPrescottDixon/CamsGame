@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cam.camsgame.Screens.Instructions;
+import com.cam.camsgame.Screens.Maps;
 import com.cam.camsgame.Screens.Menu;
 import com.cam.camsgame.Screens.PlayScreen;
 
@@ -17,6 +18,7 @@ public class CamsGame extends Game {
 	public Menu menu;
 	public PlayScreen playScreen;
 	public Instructions instructions;
+	public Maps maps;
 
 
 	@Override
@@ -29,6 +31,7 @@ public class CamsGame extends Game {
 		playScreen = new PlayScreen(this);
 		menu = new Menu(this);
 		instructions = new Instructions(this);
+		maps = new Maps(this);
 		setScreen(menu);
 	}
 

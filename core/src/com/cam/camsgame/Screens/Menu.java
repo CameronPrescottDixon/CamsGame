@@ -43,7 +43,7 @@ public class Menu extends ApplicationAdapter implements Screen {
     private Music music;
     private Stage stage;
     private CamsGame game;
-    private TextButton tbStart, tbExit, tbInstr;
+    private TextButton tbStart, tbExit, tbInstr, tbMaps;
 
     public Menu(CamsGame game) {
         this.game = game;
@@ -62,7 +62,7 @@ public class Menu extends ApplicationAdapter implements Screen {
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
 
         spBack = new Sprite(new Texture("Picnic.jpg"));
-        spBack.setSize(1000, 1000);
+        spBack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -85,6 +85,9 @@ public class Menu extends ApplicationAdapter implements Screen {
         tbStart = new TextButton("Start", textButtonStyle);
         tbStart.pad(10f);
 
+        tbMaps = new TextButton("Maps + Music", textButtonStyle);
+        tbMaps.pad(10f);
+
         tbInstr = new TextButton("Instructions", textButtonStyle);
         tbInstr.pad(10f);
 
@@ -102,6 +105,8 @@ public class Menu extends ApplicationAdapter implements Screen {
         table.row();
         table.add(tbInstr);
         table.row();
+        table.add(tbMaps);
+        table.row();
         table.add(tbExit);
         stage.addActor(table);
     }
@@ -116,8 +121,6 @@ public class Menu extends ApplicationAdapter implements Screen {
             Gdx.input.setInputProcessor(stage);
             tbExit.setDisabled(false);
         }
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         spBack.draw(game.batch);
         game.batch.end();
@@ -155,6 +158,15 @@ public class Menu extends ApplicationAdapter implements Screen {
                 if (tbExit.isDisabled() != true) {
                     tbExit.setDisabled(true);
                     ((Game) Gdx.app.getApplicationListener()).setScreen(game.instructions);
+                }
+            }
+        });
+        tbMaps.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (tbExit.isDisabled() != true) {
+                    tbExit.setDisabled(true);
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.maps);
                 }
             }
         });
