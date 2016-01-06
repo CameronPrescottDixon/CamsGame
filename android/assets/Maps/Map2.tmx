@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="20" tileheight="20" nextobjectid="1">
+ <tileset firstgid="1" name="Colours" tilewidth="20" tileheight="20" tilecount="1081">
+  <image source="colours.png" width="947" height="467"/>
+  <tile id="80">
+   <properties>
+    <property name="Right" value=""/>
+   </properties>
+  </tile>
+  <tile id="127">
+   <properties>
+    <property name="Left" value=""/>
+   </properties>
+  </tile>
+  <tile id="174">
+   <properties>
+    <property name="Up" value=""/>
+   </properties>
+  </tile>
+  <tile id="221">
+   <properties>
+    <property name="Down" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt17ENgCAQRuFbkY2sYRicyFm0sCVBQe/n8ooXEqv7IiSQzSwTERFN7rjahdru9anDe+5Wbx3e+2J0Hhw4cKznKEEcUf4HDo1w4MCBAwcOHO3vK1WDOCLsq7/PlVo4tMKhFQ6tcGiFQyscWnnfz2fd45PAjF+8R4h6OgH6Inhr
+  </data>
+ </layer>
+</map>

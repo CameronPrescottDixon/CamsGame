@@ -30,7 +30,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
             setPosition(nX, collisionLayer.getTileHeight() * 3 / 4); //x coord is based on the position it was spawned as
         }else if (nMapSelected == 2){
             nX = nPos * -50;
-            setPosition(nX, collisionLayer.getTileHeight() * 21 / 4);
+            setPosition(nX, collisionLayer.getTileHeight() * 19);
         }else if (nMapSelected == 3){
 
 
