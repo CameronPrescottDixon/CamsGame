@@ -22,6 +22,11 @@
     <property name="Up" value=""/>
    </properties>
   </tile>
+  <tile id="176">
+   <properties>
+    <property name="End" value=""/>
+   </properties>
+  </tile>
   <tile id="221">
    <properties>
     <property name="Down" value=""/>
@@ -30,7 +35,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt17ENgCAQRmFmcSM3ssZhdCKt3EMKTShIjEByv+crXiho+MI1F0MIkYiIqHNbahVqSh0VDut35+3X2eKwnouIAweO3zlmJw4v/4HDPhw4cODAgQNH2WG9c7/dzxcHjruvz1VLOLTCoRUOrXBohUMrHFp5c1g3FMrvnxyjgKGHg6imE4Q4fk8=
+   eJzt17EJgDAQRuGsKC4klnEY40JauYcpIqQIiEa43/iKR9r7yDXnnXOeiIjo5dZYEGqI7Q8c1nPnbemtcVjvhceBA8fvHFMjjlb+A4d9OHDgwIEDB46yw/rmvnufzw04zr6+VzXh0AqHVji0wqEVDq1waNWaw7KxUB9bsq4cnYAjpLlrHERPOgAfL4Fa
   </data>
  </layer>
 </map>

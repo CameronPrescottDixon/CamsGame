@@ -72,6 +72,11 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     }
                     nVelX = 0;
                     nVelY = -nSpeed;
+                }else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+                        (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("End") == true) {// Checks if its at the end
+                    nVelY = 0;
+                    nVelX = 0;
+                    bFinished = true;
                 }
             } else if (nVelY < 0 || nVelY > 0) {//Checks if it's moving in the y direction or not so it increases efficienct by no looking for x direction related things
                 if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
