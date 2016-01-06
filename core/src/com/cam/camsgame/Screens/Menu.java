@@ -61,14 +61,14 @@ public class Menu extends ApplicationAdapter implements Screen {
         fWhite = new BitmapFont(Gdx.files.internal("Fonts/white.fnt"));
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
 
-        spBack = new Sprite(new Texture("Picnic.jpg"));
+        spBack = new Sprite(new Texture("Misc/Picnic.jpg"));
         spBack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
-        taButton = new TextureAtlas("MenuButton.pack");
+        taButton = new TextureAtlas("Misc/MenuButton.pack");
         skNewGame = new Skin(taButton);
-        tButton = new Texture(Gdx.files.internal("expences-button-png-hi.png"));
+        tButton = new Texture(Gdx.files.internal("Misc/expences-button-png-hi.png"));
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skNewGame.newDrawable("MenuButtonUp");
         textButtonStyle.down = skNewGame.newDrawable("MenuButtonDown");

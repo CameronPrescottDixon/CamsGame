@@ -102,7 +102,7 @@ public class PlayScreen implements Screen {
         arspTurret = new ArrayList<Turret>();
 
         //Side panel for the turrets to sit on instead of the map
-        spSidePanel = new Sprite(new Texture("SidePanel.jpg"));
+        spSidePanel = new Sprite(new Texture("Misc/SidePanel.jpg"));
         System.out.println(Gdx.graphics.getWidth() +"Width");
 
         spSidePanel.setSize(100,1000);
@@ -110,17 +110,17 @@ public class PlayScreen implements Screen {
 
 
         //Shows the selected turret by adding this red box behind it
-        spTurSelect = new Sprite(new Texture("red.png"));
+        spTurSelect = new Sprite(new Texture("Misc/red.png"));
         spTurSelect.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/10 + 20);
         spTurSelect.setPosition(arspTurrs.get(0).getX(), arspTurrs.get(0).getY() - 10);
         bTurSelect = false; //Makes it so the box isnt drawn before a turret is selected
 
         //Make the upgrade and sell buttons
-        spSell = new Sprite(new Texture("sell.png"));
+        spSell = new Sprite(new Texture("Misc/sell.png"));
         spSell.setSize(100, 50);
 
 
-        spUpgrade = new Sprite(new Texture("upgrade.png"));
+        spUpgrade = new Sprite(new Texture("Misc/upgrade.png"));
         spUpgrade.setSize(100, 50);
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)

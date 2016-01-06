@@ -46,9 +46,9 @@ public class Maps extends ApplicationAdapter implements Screen {
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
-        taButton = new TextureAtlas("MenuButton.pack");
+        taButton = new TextureAtlas("Misc/MenuButton.pack");
         skNewGame = new Skin(taButton);
-        tButton = new Texture(Gdx.files.internal("expences-button-png-hi.png"));
+        tButton = new Texture(Gdx.files.internal("Misc/expences-button-png-hi.png"));
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skNewGame.newDrawable("MenuButtonUp");
         textButtonStyle.down = skNewGame.newDrawable("MenuButtonDown");
