@@ -66,6 +66,8 @@ public class PlayScreen implements Screen {
 
     private int[] arUpgrades = new int[4];
 
+    private int nMapSelected = 2;
+
     //Bullets
     private ArrayList<Bullet> arspBullets;
 
@@ -80,7 +82,7 @@ public class PlayScreen implements Screen {
         mapLoader = new TmxMapLoader();
 
         //Load tiled map
-        tlMap = mapLoader.load("Maps/Map1.tmx");
+        tlMap = mapLoader.load("Maps/Map2.tmx");
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
@@ -159,8 +161,18 @@ public class PlayScreen implements Screen {
         String sNum = Integer.toString(nNum);
         String sMap = "Maps/Map" + sNum + ".tmx";
         boolean exists = Gdx.files.external(sMap).exists();
+        nMapSelected = nNum;
         if(exists == true) {
             tlMap = mapLoader.load(sMap);
+        }
+    }
+
+    public void changeMusic(int nNum){
+        String sNum = Integer.toString(nNum);
+        String sMusic = "Music/Music" + sNum + ".mp3";
+        boolean exists = Gdx.files.external(sMusic).exists();
+        if(exists == true) {
+            music = CamsGame.manager.get(sMusic, Music.class);
         }
     }
 
@@ -326,7 +338,7 @@ public class PlayScreen implements Screen {
                         if (arspAnt.get(j).bDead != true) {
                                 arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
                                 arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
-                                arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
+                                arspBullets.add(new Bullet(new Sprite(new Texture("Misc/Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
                                 arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
                                 arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
                                 return;
@@ -402,7 +414,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 2 ants spawned: " + nAntTwo);
                 nPos = 0;
                 for (int i = 0; i < nAntTwo; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel, nID, 75)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel, nID, 75, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
@@ -411,7 +423,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 4 ants spawned: " + nAntFour);
                 nPos = 0;
                 for (int i = 0; i < nAntFour; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel, nID, 200)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant4.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 4, 10, 5, nPos, nLevel, nID, 200, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
@@ -420,7 +432,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 1 ants spawned: " + nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID, 50)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID, 50, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
                     nPos++;//Increases the position of the ant next in line
                 }
             }
@@ -430,7 +442,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel, nID, 150)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel, nID, 150, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
