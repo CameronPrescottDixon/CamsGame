@@ -80,7 +80,7 @@ public class PlayScreen implements Screen {
         mapLoader = new TmxMapLoader();
 
         //Load tiled map
-        tlMap = mapLoader.load("Maps/Map.tmx");
+        tlMap = mapLoader.load("Maps/Map1.tmx");
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
@@ -155,6 +155,15 @@ public class PlayScreen implements Screen {
         nextRound(); //Initializes the game, without this the rounds wouldn't start
     }
 
+    public void changeMap(int nNum) {
+        String sNum = Integer.toString(nNum);
+        String sMap = "Maps/Map" + sNum + ".tmx";
+        boolean exists = Gdx.files.external(sMap).exists();
+        if(exists == true) {
+            tlMap = mapLoader.load(sMap);
+        }
+    }
+
     @Override
     public void render(float dt) {
         //Calls update to instantly update to the map
@@ -217,6 +226,7 @@ public class PlayScreen implements Screen {
                 } else if (vtouchPos.y >= spSell.getY() && vtouchPos.y < spSell.getY() + spSell.getHeight() && bTurretSelected == true) {//Checks for the sell button
                     System.out.println(nSelectedTurret);
                     arspTurret.remove(nSelectedTurret);
+
                     bTurretSelected = false;
                 } else if (vtouchPos.y >= spUpgrade.getY() && vtouchPos.y < spUpgrade.getY() + spUpgrade.getHeight() && bTurretSelected == true && hud.nMoney >= 1000 && arUpgrades[arspTurret.get(nSelectedTurret).nTurretType] <= 4) {// Checks for the upgrade button
                     for (int j = 0; j < arspTurret.size(); j++) {
@@ -317,7 +327,6 @@ public class PlayScreen implements Screen {
                                 arspAnt.get(j).checkHP(arspTurret.get(i).nDamage);
                                 arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
                                 arspBullets.add(new Bullet(new Sprite(new Texture("Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
-                                System.out.println(arspAnt.get(j).nID + " Shot by" + i + " turret and b dead = " + arspAnt.get(j).bDead);
                                 arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
                                 arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
                                 return;

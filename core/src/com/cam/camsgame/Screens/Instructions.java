@@ -35,7 +35,7 @@ public class Instructions extends ApplicationAdapter implements Screen {
 
     public Instructions(CamsGame game) {
         this.game = game;
-    stage = new Stage();
+        stage = new Stage();
         //used Bitmap Font Generator to make different fonts
         //http://www.angelcode.com/products/bmfont/
         fWhite = new BitmapFont(Gdx.files.internal("Fonts/white.fnt"));
