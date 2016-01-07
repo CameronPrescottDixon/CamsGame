@@ -42,6 +42,7 @@ public class PlayScreen implements Screen {
     private OrthogonalTiledMapRenderer tlRender;
 
     //Ants + test money for hud
+    private Texture txAnt1, txAnt2, txAnt3, txAnt4, txAnt5;
     private ArrayList<Ants> arspAnt;
     int nID = 0;
     boolean bGameOver;
@@ -70,6 +71,7 @@ public class PlayScreen implements Screen {
 
     //Bullets
     private ArrayList<Bullet> arspBullets;
+    private Texture txBullet;
 
     public PlayScreen(CamsGame game) {
         this.game = game;
@@ -82,12 +84,13 @@ public class PlayScreen implements Screen {
         mapLoader = new TmxMapLoader();
 
         //Load tiled map
-        tlMap = mapLoader.load("Maps/Map2.tmx");
+        tlMap = mapLoader.load("Maps/Map1.tmx");
         tlRender = new OrthogonalTiledMapRenderer(tlMap);
 
         //Ants
         arspAnt = new ArrayList<Ants>();
 
+        txBullet = new Texture("Entities/bullet.png");
 
         //Turrets, an array is better for looking and listening for which is clicked
         arspTurrs = new ArrayList<SelectTurret>();
@@ -105,7 +108,7 @@ public class PlayScreen implements Screen {
 
         //Side panel for the turrets to sit on instead of the map
         spSidePanel = new Sprite(new Texture("Misc/SidePanel.jpg"));
-        System.out.println(Gdx.graphics.getWidth() +"Width");
+        System.out.println(Gdx.graphics.getWidth() + "Width");
 
         spSidePanel.setSize(100,1000);
         spSidePanel.setPosition(900, 0);
@@ -150,7 +153,9 @@ public class PlayScreen implements Screen {
     public void show() {
     }
 
-    public void startGame() { //This stuff is needed to start the screens actions
+    public void startGame(int nNum1, int nNum) { //This stuff is needed to start the screens actions
+      changeMap(nNum1);
+       // changeMusic();
         hud = new Hud(game.batch);//This resets everything hud related if this is not the first game played
         music.play();//Have this here so it doesn't play the music in the screen in the other one
         bGameOver = false;
@@ -160,10 +165,14 @@ public class PlayScreen implements Screen {
     public void changeMap(int nNum) {
         String sNum = Integer.toString(nNum);
         String sMap = "Maps/Map" + sNum + ".tmx";
-        boolean exists = Gdx.files.external(sMap).exists();
+        boolean exists = Gdx.files.internal(sMap).exists();
         nMapSelected = nNum;
         if(exists == true) {
-            tlMap = mapLoader.load(sMap);
+           TiledMap tlMap1 = mapLoader.load(sMap);
+            tlRender.setMap(tlMap1);
+        }else{
+            System.out.println("nope " +sMap +" Not viable");
+            nMapSelected = 1;
         }
     }
 

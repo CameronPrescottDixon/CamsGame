@@ -6,12 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,11 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cam.camsgame.CamsGame;
-
-import java.awt.SystemColor;
 
 /**
  * Created by Cameron on 2015-12-15.
@@ -135,7 +128,7 @@ public class Menu extends ApplicationAdapter implements Screen {
                 public void clicked(InputEvent event, float x, float y) {
                     if (tbExit.isDisabled() != true) {
                         System.out.println(tbStart.isDisabled());
-                        game.playScreen.startGame();
+                        game.playScreen.startGame(game.maps.nNum1, game.maps.nNum);
                         tbExit.setDisabled(true);
                         music.stop();
                         ((Game) Gdx.app.getApplicationListener()).setScreen(game.playScreen);

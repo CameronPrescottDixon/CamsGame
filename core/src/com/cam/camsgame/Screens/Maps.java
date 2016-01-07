@@ -7,12 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.cam.camsgame.CamsGame;
@@ -21,25 +20,28 @@ import com.cam.camsgame.CamsGame;
  * Created by Cameron on 2016-01-05.
  */
 public class Maps extends ApplicationAdapter implements Screen {
-    private SpriteBatch batch;
     private Stage stage;
-    private Table table;
-    private Texture  tBack, tButton;
+    private Texture tBack, txMap, tButton;
     private BitmapFont fWhite, fBlack;
-    private TextButton tbMenu, tbMap, tbMusic, tbConfirm;
+    private TextButton tbMenu, tbMap, tbMusic;
     private TextButton.TextButtonStyle textButtonStyle;
     private TextureAtlas taButton;
     private Skin skNewGame;
-    private int nNum=0, nNum1 = 0;
+    public int nNum = 1, nNum1 = 3;
     private CamsGame game;
+    private Sprite spBack;
 
     public Maps(CamsGame game) {
-    this.game = game;
+        this.game = game;
         stage = new Stage();
         //used Bitmap Font Generator to make different fonts
         //http://www.angelcode.com/products/bmfont/
         fWhite = new BitmapFont(Gdx.files.internal("Fonts/white.fnt"));
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
+
+        spBack = new Sprite(new Texture("Misc/Picnic.jpg"));
+        spBack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spBack.setPosition(0, 0);
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -57,23 +59,22 @@ public class Maps extends ApplicationAdapter implements Screen {
         tbMenu.pad(10f);
         tbMenu.setPosition(0, 500);
 
-        tbConfirm = new TextButton("Confirm Choices", textButtonStyle);
-        tbConfirm.pad(10f);
-        tbConfirm.setPosition(250,0);
-
         tbMap = new TextButton("Change Maps", textButtonStyle);
         tbMap.pad(10f);
-        tbMap.setPosition(500, 0);
+        tbMap.setPosition(0, 0);
 
         tbMusic = new TextButton("Change Music", textButtonStyle);
         tbMusic.pad(10f);
-        tbMusic.setPosition(0, 0);
+        tbMusic.setPosition(500, 0);
 
         stage.addActor(tbMenu);
         stage.addActor(tbMap);
         stage.addActor(tbMusic);
-        stage.addActor(tbConfirm);
+
+        txMap = new Texture("Maps/Map1.png");
+
     }
+
     @Override
     public void show() {
         tbMap.addListener(new ClickListener() {
@@ -83,9 +84,14 @@ public class Maps extends ApplicationAdapter implements Screen {
                     if (nNum1 != 1) {
                         nNum1--;
                     } else {
-                        nNum1 = 3;
+                        nNum1 = 2;
                     }
-                    System.out.println(nNum);
+                    String sNum = Integer.toString(nNum1);
+                    String sMap = "Maps/Map" + sNum + ".png";
+                    if (Gdx.files.internal(sMap).exists() == true) {
+                        txMap = new Texture(sMap);
+                        System.out.println(nNum1);
+                    }
                 }
             }
         });
@@ -110,27 +116,22 @@ public class Maps extends ApplicationAdapter implements Screen {
                 }
             }
         });
-        tbConfirm.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (tbMap.isDisabled() != true) {
-                    game.playScreen.changeMap(nNum1);
-                    game.playScreen.changeMusic(nNum);
-                }
-            }
-        });
     }
 
     @Override
     public void render(float delta) {
-        if(game.getScreen() == this){
+        if (game.getScreen() == this) {
             Gdx.input.setInputProcessor(stage);
             tbMap.setDisabled(false);
-        }else{
+        } else {
             tbMap.setDisabled(true);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.getBatch().begin();
+        spBack.draw(stage.getBatch());
+        stage.getBatch().draw(txMap, 0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        stage.getBatch().end();
         stage.draw();
     }
 

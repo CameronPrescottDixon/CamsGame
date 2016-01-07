@@ -7,12 +7,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.cam.camsgame.CamsGame;
@@ -21,10 +19,8 @@ import com.cam.camsgame.CamsGame;
  * Created by Cameron on 2016-01-02.
  */
 public class Instructions extends ApplicationAdapter implements Screen {
-    private SpriteBatch batch;
     private Stage stage;
-    private Table table;
-    private Texture tInst1, tInst2, tInst3, tBack, tButton;
+    private Texture tInst1,tButton;
     private BitmapFont fWhite, fBlack;
     private TextButton tbMenu, tbNext, tbBack;
     private TextButton.TextButtonStyle textButtonStyle;
@@ -42,8 +38,6 @@ public class Instructions extends ApplicationAdapter implements Screen {
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
 
         tInst1 = new Texture(Gdx.files.internal("Misc/instp1.jpg"));
-        tInst2 = new Texture(Gdx.files.internal("Misc/instp2.jpg"));
-        tInst3 = new Texture(Gdx.files.internal("Misc/instp3.jpg"));
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -85,6 +79,11 @@ public class Instructions extends ApplicationAdapter implements Screen {
                     } else {
                         nNum = 3;
                     }
+                    String sNum = Integer.toString(nNum);
+                    String sInst = "Misc/instp" + sNum + ".jpg";
+                    if( Gdx.files.internal(sInst).exists() == true) {
+                        tInst1 = new Texture(sInst);
+                    }
                     System.out.println(nNum);
                 }
             }
@@ -97,6 +96,11 @@ public class Instructions extends ApplicationAdapter implements Screen {
                         nNum++;
                     } else {
                         nNum = 1;
+                    }
+                    String sNum = Integer.toString(nNum);
+                    String sInst = "Misc/instp" + sNum + ".jpg";
+                    if( Gdx.files.internal(sInst).exists() == true) {
+                        tInst1 = new Texture(sInst);
                     }
                     System.out.println(nNum);
                 }
@@ -117,22 +121,13 @@ public class Instructions extends ApplicationAdapter implements Screen {
         if(game.getScreen() == this){
             Gdx.input.setInputProcessor(stage);
             tbBack.setDisabled(false);
-            if(nNum==1){
-                tBack = tInst1;
-            }
-            if(nNum==2){
-                tBack = tInst2;
-            }
-            if(nNum==3){
-                tBack = tInst3;
-            }
         }else{
             tbBack.setDisabled(true);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
-        stage.getBatch().draw(tBack, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().draw(tInst1, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.getBatch().end();
         stage.act();
         stage.draw();

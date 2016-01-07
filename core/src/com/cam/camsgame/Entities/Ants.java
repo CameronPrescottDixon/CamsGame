@@ -3,8 +3,6 @@ package com.cam.camsgame.Entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.cam.camsgame.CamsGame;
-import com.cam.camsgame.Screens.PlayScreen;
 
 /**
  * Created by Cameron on 2015-11-11.
@@ -27,7 +25,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         this.nMapSelected = nMapSelected;
         if(nMapSelected == 1) {
             nX = nPos * -50;
-            setPosition(nX, collisionLayer.getTileHeight() * 3 / 4); //x coord is based on the position it was spawned as
+            setPosition(nX, collisionLayer.getTileHeight()); //x coord is based on the position it was spawned as
         }else if (nMapSelected == 2){
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight() * 19);

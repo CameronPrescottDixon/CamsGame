@@ -1,11 +1,9 @@
 package com.cam.camsgame.Entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-import java.util.ArrayList;
 
 /**
  * Created by Cameron on 2015-11-27.
