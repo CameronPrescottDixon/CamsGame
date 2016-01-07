@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
  */
 public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     public int nVelY = 0, nVelX, nSpeed, nDamage, nX, nID, nHP, nWorth, nMapSelected;
-    public boolean bFinished = false, bDead = false;
+    public boolean bFinished = false, bDead = false, bisTargeted = false;
     private TiledMapTileLayer collisionLayer;
 
     public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage, int nHP, int nPos, int nLevel, int nID, int nWorth, int nMapSelected) {
@@ -30,8 +30,8 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight() * 19);
         }else if (nMapSelected == 3){
-
-
+            nX = nPos * -50;
+            setPosition(nX, collisionLayer.getTileHeight() * 24);
         }else if (nMapSelected == 4){
 
 
@@ -107,14 +107,5 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     @Override
     public void rotate(float degrees) { //Simply rotates the ant based on the degree passed when the method is called
         super.rotate(degrees);
-    }
-
-
-public void checkHP(int nDmg) {
-    int nHp = this.nHP;
-    nHp -= nDmg;
-    if(nHp <= 0){
-        bDead = true;
-        }
     }
 }

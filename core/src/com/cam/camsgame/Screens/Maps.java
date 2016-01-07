@@ -27,7 +27,7 @@ public class Maps extends ApplicationAdapter implements Screen {
     private TextButton.TextButtonStyle textButtonStyle;
     private TextureAtlas taButton;
     private Skin skNewGame;
-    public int nNum = 1, nNum1 = 3;
+    public int nNum = 1, nNum1 = 1;
     private CamsGame game;
     private Sprite spBack;
 
@@ -84,7 +84,7 @@ public class Maps extends ApplicationAdapter implements Screen {
                     if (nNum1 != 1) {
                         nNum1--;
                     } else {
-                        nNum1 = 2;
+                        nNum1 = 3;
                     }
                     String sNum = Integer.toString(nNum1);
                     String sMap = "Maps/Map" + sNum + ".png";

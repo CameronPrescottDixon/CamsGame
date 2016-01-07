@@ -56,6 +56,7 @@ public class Menu extends ApplicationAdapter implements Screen {
 
         spBack = new Sprite(new Texture("Misc/Picnic.jpg"));
         spBack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spBack.setPosition(0,0);
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons

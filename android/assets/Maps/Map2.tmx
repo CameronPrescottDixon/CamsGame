@@ -22,6 +22,11 @@
     <property name="Up" value=""/>
    </properties>
   </tile>
+  <tile id="175">
+   <properties>
+    <property name="Blocked" value=""/>
+   </properties>
+  </tile>
   <tile id="176">
    <properties>
     <property name="End" value=""/>
@@ -35,7 +40,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt17ENgCAQRmFWNC5kLHEYcSGt3EMKCgqiUUzuF1/xQntfuOa8c84TERG93BoLQg2x/YHDeu68Lb01Duu98Dhw4PidY2rE0cp/4LAPBw4cOHDgwFF2WN/cd+/zuQFHOHF8aa9qwqEVDq1waIVDKxxa4dCqNYdlY6E+tmRdOToBR0hz1ziInnQAED+BWQ==
+   eJzt17ENgCAQRmFWNC5kLHEYcSGt3EMKCwqiEYh3nq94/f8FKPDOOU9ERNS4NRYUNcT2Aof07lw1Dul7kW7BIW/AgeMNx2TEYeU8cMiHAwcOHDhw/NmxXTik/9pPm407vnSvWrwt6R04cGgMh65w6AqHrnDoyppDsjFTH1uS7hydAkc4d9c4iEo6AEqPfa0=
   </data>
  </layer>
 </map>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="20" tileheight="20" nextobjectid="1">
+ <tileset firstgid="1" name="green" tilewidth="20" tileheight="20" tilecount="810">
+  <image source="green.jpg" width="600" height="554"/>
+  <tile id="332">
+   <properties>
+    <property name="Left" value=""/>
+   </properties>
+  </tile>
+  <tile id="333">
+   <properties>
+    <property name="Blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="334">
+   <properties>
+    <property name="End" value=""/>
+   </properties>
+  </tile>
+  <tile id="362">
+   <properties>
+    <property name="Up" value=""/>
+   </properties>
+  </tile>
+  <tile id="392">
+   <properties>
+    <property name="Down" value=""/>
+   </properties>
+  </tile>
+  <tile id="422">
+   <properties>
+    <property name="Right" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="811" name="idk" tilewidth="20" tileheight="20" tilecount="117">
+  <image source="images.jpg" width="271" height="186"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmTkSgzAMRWGS6yW5Aj0n4SS5ZgqHGQpbsrxoSX7xGo+x9ZAXDWy3ZdmAG+4L8MRrTTyVeHyJ7nFinb9eft3jUFyD2h6ec1eKLdcOD3jAAx7wSFBnPXd37YJ6xdKDm7vkkfOf7UGNP3JueMDjhNrH0trVq4c0JksPq2e487OVY8AZ+o8eM9ZVyW0P5vFeE9E9osxDjV/KRWnfePWQ7n/vHiPigodsfOn56s2D28tRPHrzCA8fwKONmu8hPUT3kP6X6fXwsi41PKg75FpD1faz8qDWzzW+2n7WHlx7bb+ZHhy5+sOTB1c/jfRomUOD2lh63pUGufisYonIB9mi9xI=
+  </data>
+ </layer>
+</map>
