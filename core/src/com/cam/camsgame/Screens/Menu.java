@@ -56,7 +56,7 @@ public class Menu extends ApplicationAdapter implements Screen {
 
         spBack = new Sprite(new Texture("Misc/Picnic.jpg"));
         spBack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        spBack.setPosition(0,0);
+        spBack.setPosition(0, 0);
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -107,11 +107,11 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float dt) {
-        if(game.getScreen() == this && tbStart.isDisabled() == true) {
+        if (game.getScreen() == this && tbStart.isDisabled() == true) {
             tbExit.setDisabled(false);
             music.play();
         }
-        if(game.getScreen() == this){
+        if (game.getScreen() == this) {
             Gdx.input.setInputProcessor(stage);
             tbExit.setDisabled(false);
         }
@@ -124,29 +124,29 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void show() {
-            tbStart.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (tbExit.isDisabled() != true) {
-                        System.out.println(tbStart.isDisabled());
-                        game.playScreen.startGame(game.maps.nNum1, game.maps.nNum);
-                        tbExit.setDisabled(true);
-                        music.stop();
-                        ((Game) Gdx.app.getApplicationListener()).setScreen(game.playScreen);
-                    }
+        tbStart.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (tbExit.isDisabled() != true) {
+                    System.out.println(tbStart.isDisabled());
+                    game.playScreen.startGame(game.maps.nNum1, game.maps.nNum);
+                    tbExit.setDisabled(true);
+                    music.stop();
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.playScreen);
                 }
-            });
+            }
+        });
 
-            tbExit.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (tbExit.isDisabled() != true) {
-                        Gdx.app.exit();
-                    }
+        tbExit.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (tbExit.isDisabled() != true) {
+                    Gdx.app.exit();
                 }
-            });
+            }
+        });
 
-            tbInstr.addListener(new ClickListener() {
+        tbInstr.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (tbExit.isDisabled() != true) {

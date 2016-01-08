@@ -21,7 +21,7 @@ import com.cam.camsgame.CamsGame;
  */
 public class Maps extends ApplicationAdapter implements Screen {
     private Stage stage;
-    private Texture tBack, txMap, tButton;
+    private Texture tBack, txMap, tButton, txMusic;
     private BitmapFont fWhite, fBlack;
     private TextButton tbMenu, tbMap, tbMusic;
     private TextButton.TextButtonStyle textButtonStyle;
@@ -72,6 +72,7 @@ public class Maps extends ApplicationAdapter implements Screen {
         stage.addActor(tbMusic);
 
         txMap = new Texture("Maps/Map1.png");
+        txMusic = new Texture("Music/Music1.jpg");
 
     }
 
@@ -102,7 +103,12 @@ public class Maps extends ApplicationAdapter implements Screen {
                     if (nNum != 1) {
                         nNum--;
                     } else {
-                        nNum = 3;
+                        nNum = 4;
+                    }
+                    String sNum1 = Integer.toString(nNum);
+                    String sMusic = "Music/Music" + sNum1 + ".jpg";
+                    if (Gdx.files.internal(sMusic).exists() == true) {
+                        txMusic = new Texture(sMusic);
                     }
                     System.out.println(nNum);
                 }
@@ -131,6 +137,8 @@ public class Maps extends ApplicationAdapter implements Screen {
         stage.getBatch().begin();
         spBack.draw(stage.getBatch());
         stage.getBatch().draw(txMap, 0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        stage.getBatch().draw(txMusic, 500, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+
         stage.getBatch().end();
         stage.draw();
     }

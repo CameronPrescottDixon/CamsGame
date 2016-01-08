@@ -21,6 +21,7 @@ import com.cam.camsgame.Entities.Bullet;
 import com.cam.camsgame.Entities.Turret;
 import com.cam.camsgame.Scenes.SelectTurret;
 import com.cam.camsgame.Scenes.Hud;
+
 import java.util.ArrayList;
 
 /**
@@ -110,13 +111,13 @@ public class PlayScreen implements Screen {
         spSidePanel = new Sprite(new Texture("Misc/SidePanel.jpg"));
         System.out.println(Gdx.graphics.getWidth() + "Width");
 
-        spSidePanel.setSize(100,1000);
+        spSidePanel.setSize(100, 1000);
         spSidePanel.setPosition(900, 0);
 
 
         //Shows the selected turret by adding this red box behind it
         spTurSelect = new Sprite(new Texture("Misc/red.png"));
-        spTurSelect.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/10 + 20);
+        spTurSelect.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 10 + 20);
         spTurSelect.setPosition(arspTurrs.get(0).getX(), arspTurrs.get(0).getY() - 10);
         bTurSelect = false; //Makes it so the box isnt drawn before a turret is selected
 
@@ -132,10 +133,10 @@ public class PlayScreen implements Screen {
         gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
 
         //Get music
-        music = CamsGame.manager.get("Music/LetTheBodiesHitTheFloor.mp3", Music.class); //This song is good
+       /* music = CamsGame.manager.get("Music/Music1.mp3", Music.class); //This song is good
         music.setLooping(true);//Loop it
         //Makes the music volume lower so it's not destroying the users ears
-        music.setVolume(music.getVolume() * 1 / 10);
+        music.setVolume(music.getVolume() * 1 / 10);*/
 
         vtouchPos = new Vector3();//fixes the errors with flipping the y co-ords on the x-axis
 
@@ -154,10 +155,10 @@ public class PlayScreen implements Screen {
     }
 
     public void startGame(int nNum1, int nNum) { //This stuff is needed to start the screens actions
-      changeMap(nNum1);
-       // changeMusic();
+        changeMap(nNum1);
+        changeMusic(nNum);
+        // changeMusic();
         hud = new Hud(game.batch);//This resets everything hud related if this is not the first game played
-        music.play();//Have this here so it doesn't play the music in the screen in the other one
         bGameOver = false;
         nextRound(); //Initializes the game, without this the rounds wouldn't start
     }
@@ -167,22 +168,28 @@ public class PlayScreen implements Screen {
         String sMap = "Maps/Map" + sNum + ".tmx";
         boolean exists = Gdx.files.internal(sMap).exists();
         nMapSelected = nNum;
-        if(exists == true) {
+        if (exists == true) {
             tlMap = mapLoader.load(sMap);
             tlRender.setMap(tlMap);
-        }else{
-            System.out.println("nope " +sMap +" Not viable");
+        } else {
+            System.out.println("nope " + sMap + " Not viable");
             nMapSelected = 1;
         }
     }
 
-    public void changeMusic(int nNum){
+    public void changeMusic(int nNum) {
         String sNum = Integer.toString(nNum);
         String sMusic = "Music/Music" + sNum + ".mp3";
+        System.out.println(sMusic);
         boolean exists = Gdx.files.external(sMusic).exists();
-        if(exists == true) {
+       // if (exists == true) {
+            System.out.println("HI");
             music = CamsGame.manager.get(sMusic, Music.class);
-        }
+            music.setLooping(true);//Loop it
+            //Makes the music volume lower so it's not destroying the users ears
+            music.setVolume(music.getVolume() * 1 / 10);
+            music.play();
+        //}
     }
 
     @Override
@@ -260,7 +267,7 @@ public class PlayScreen implements Screen {
                         } else if (arspTurret.get(nSelectedTurret).nTurretType == 1) {// Blue turret
                             if (arspTurret.get(j).nTurretType == 1) {
                                 arspTurret.get(j).nDamage += 2;
-                                arspTurret.get(j).nFireRate +=-50000000;//Not sure how to format this right about now
+                                arspTurret.get(j).nFireRate += -50000000;//Not sure how to format this right about now
                                 arspTurret.get(j).nRange += 50;
                             }
                         } else if (arspTurret.get(nSelectedTurret).nTurretType == 2) {// Jug
@@ -279,7 +286,7 @@ public class PlayScreen implements Screen {
                     arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).nCost += 500;
                     hud.subtMoney(5000);
                     arUpgrades[arspTurret.get(nSelectedTurret).nTurretType]++;
-                    System.out.println("Upgraded " +arUpgrades[arspTurret.get(nSelectedTurret).nTurretType]+" Times");
+                    System.out.println("Upgraded " + arUpgrades[arspTurret.get(nSelectedTurret).nTurretType] + " Times");
                     bTurretSelected = false;
                 }
             } else if (vtouchPos.x < arspTurrs.get(i).getX()) { //looks for clicks off of the turret select panel
@@ -345,19 +352,19 @@ public class PlayScreen implements Screen {
             for (int j = 0; j < arspAnt.size(); j++) {
                 if ((Math.abs(arspAnt.get(j).getX() - arspTurret.get(i).getX()) + Math.abs(arspAnt.get(j).getY() - arspTurret.get(i).getY())) <= arspTurret.get(i).nRange) {//Range between them;
                     if ((TimeUtils.nanoTime() - arspTurret.get(i).fLastTimeShot) > (1000000000 + arspTurret.get(i).nFireRate) || arspTurret.get(i).fLastTimeShot == 0) {
-                            if(arspAnt.get(j).bisTargeted != true) {
-                                arspAnt.get(j).bisTargeted = true;
-                                arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
-                                arspBullets.add(new Bullet(new Sprite(new Texture("Misc/Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
-                                arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
-                                arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
-                                return;
-                            }
-                            }
+                        if (arspAnt.get(j).bisTargeted != true) {
+                            arspAnt.get(j).bisTargeted = true;
+                            arspTurret.get(i).fLastTimeShot = TimeUtils.nanoTime();
+                            arspBullets.add(new Bullet(new Sprite(new Texture("Misc/Bullet.png")), arspAnt.get(j).nID, arspTurret.get(i).nDamage));
+                            arspBullets.get(arspBullets.size() - 1).setX(arspTurret.get(i).getX() + arspTurret.get(i).getWidth() / 2); //Sets the position of the bullet to the center
+                            arspBullets.get(arspBullets.size() - 1).setY(arspTurret.get(i).getY() + arspTurret.get(i).getHeight() / 2);
+                            return;
                         }
                     }
                 }
             }
+        }
+    }
 
     public void bulletTracking() { //Checking the ant ID to the bullet ID that it got from the ant to follow it
         for (int i = 0; i < arspBullets.size(); i++) {
@@ -426,7 +433,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 2 ants spawned: " + nAntTwo);
                 nPos = 0;
                 for (int i = 0; i < nAntTwo; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel, nID,25, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant2.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 6, 3, 2, nPos, nLevel, nID, 25, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
