@@ -27,8 +27,8 @@ public class CamsGame extends Game {
 		manager = new AssetManager();
 		manager.load("Music/Halo- Menu Music.mp3", Music.class);
 		manager.load("Music/Music1.mp3", Music.class);
-		manager.load("Music/Music3.mp3", Music.class);
 		manager.load("Music/Music2.mp3", Music.class);
+		manager.load("Music/Music3.mp3", Music.class);
 		manager.load("Music/Music4.mp3", Music.class);
 		manager.finishLoading(); // finish loading all the assets for now
 		playScreen = new PlayScreen(this);
