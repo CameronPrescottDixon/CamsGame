@@ -41,9 +41,12 @@
  <tileset firstgid="1082" name="lava" tilewidth="20" tileheight="20" tilecount="121">
   <image source="../AndroidStudioProjects/CamsGame4/android/assets/Maps/download.jpg" width="225" height="225"/>
  </tileset>
+ <tileset firstgid="1203" name="Winter" tilewidth="20" tileheight="20" tilecount="1025">
+  <image source="CCFB/Expanded-Snow-Tileset.png" width="833" height="511"/>
+ </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt2MlS1UAUxvG7yFMJCIIDooKIiAODsyCjDIKCekEUUMEBFEEZlFGR8YHgVfwv0gWLzskl4SYnVSx+VSy+pk5XOvRHGpxU6jEa0YRmtKAVbXiIR6hHg5LsZZTjCipwFZ3owlN0owfP8By9eIJ2dCjK3kI1alCLOrxCGv0YwGsM4g3eog8v8FJR1vYs3+E9PmAUY/iIT/iMIQxjRFHW9iy/Kp1Vytqe5Ty+YBwT7r6+YRLfMYVp/MBPJVnbntcwg1nMufv6hd9YwCKWsIwVJVnbnvOwij/46+7rH9axgU1sYRs7SrK2PRfjPEpwARdxCaUow26K36FIOmXfs7lHKnENVbiOG7jpxD+3zQnmykGue55OOvv3yG3cwV3cw308cOS1+SjAKRSiCKed7GXNLGf4+SzOHThPfp1AWut1FrOVNbME6SXSWq+zmK2smSVIL5HWep3FbGXNLEF6ibQ26t5rZvHqJdLdKa2NuveaWbx6iXR3Smuj7r1mFq9eIt2d0tqo+6GZxauXZPI3W0M/NLME6SXS2qj7oZklTC/R0A+Popdouj/C9BJN90eYXqLp/gjTSzTdH2F6iab7I0wv0XR/hOklmu6PML1Ew/2xJ5yNuP/XPqxNj7MR91xB9mF7hpn2RA3fGaRspj1Rw3cGKZtpT9TwnUHKJqknStkk9UQpm6SeKGWT1BOlbJJ6opRNUk+UsknqiVI2ST1Ryh73kuNeEmcvidOARQW2D/DrAuUK9rHlzi3tw68LaH+/TdavC2h/v03Wrwtof79N9j8cPvM2
+   eJztmEduwzAQRbmQAJ8gvd/WOY58BacnTi6S3nf5WnyECUCRMSlyGMziQQKEoTmex4KZN8YcgWMwnRhzCM7wfg4uwCW4AgtwDW7A3Io5AadN+ZhbcAfuQYccZuAJ78/gBbyCN/AOPsDnr5gH8NiUj1lpjVkFa+13PTbxvgW2wQ7YBXtgHxy0P2PWwUZbPsauHetR2pFYr1iPmHpzjOkA/ffUXqWuB8foBui/S68H5+mKGase9lriHGLWH8dwxTCPMdd5ivODebhi+BvSzw8JXqU4PyR4lWK/4jxLemXv/a6nDwle2Xu/6xlCaa9y3DFyeJXj7prDqxx315A1xlwlexWyvpiHZK9CYpiHZK9CYmrwKiRGvRquHcfNTWqvmMcsM6m9Yh619H18XtXS9/F5VUvf5797xbu4eqVe6X5Vr1e+e0ctXnWT4ftBLfsV/28pjsR6JcWRZb1iHlIcifHqLz3DsennsYxXdh8wtGc4Jv08pPevfDGsh/S+qC8mxitJew/zUK/UK/VKvVKvZHv1BZfCPmQ=
   </data>
  </layer>
 </map>
