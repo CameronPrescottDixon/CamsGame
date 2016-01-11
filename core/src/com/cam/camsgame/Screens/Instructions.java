@@ -20,13 +20,13 @@ import com.cam.camsgame.CamsGame;
  */
 public class Instructions extends ApplicationAdapter implements Screen {
     private Stage stage;
-    private Texture tInst1,tButton;
+    private Texture tInst1, tButton;
     private BitmapFont fWhite, fBlack;
     private TextButton tbMenu, tbNext, tbBack;
     private TextButton.TextButtonStyle textButtonStyle;
     private TextureAtlas taButton;
     private Skin skNewGame;
-    private int nNum=1;
+    private int nNum = 1;
     private CamsGame game;
 
     public Instructions(CamsGame game) {
@@ -70,7 +70,7 @@ public class Instructions extends ApplicationAdapter implements Screen {
 
     @Override
     public void show() {
-       tbBack.addListener(new ClickListener() {
+        tbBack.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (tbBack.isDisabled() != true) {
@@ -81,7 +81,7 @@ public class Instructions extends ApplicationAdapter implements Screen {
                     }
                     String sNum = Integer.toString(nNum);
                     String sInst = "Misc/instp" + sNum + ".jpg";
-                    if( Gdx.files.internal(sInst).exists() == true) {
+                    if (Gdx.files.internal(sInst).exists() == true) {
                         tInst1 = new Texture(sInst);
                     }
                     System.out.println(nNum);
@@ -99,7 +99,7 @@ public class Instructions extends ApplicationAdapter implements Screen {
                     }
                     String sNum = Integer.toString(nNum);
                     String sInst = "Misc/instp" + sNum + ".jpg";
-                    if( Gdx.files.internal(sInst).exists() == true) {
+                    if (Gdx.files.internal(sInst).exists() == true) {
                         tInst1 = new Texture(sInst);
                     }
                     System.out.println(nNum);
@@ -118,10 +118,10 @@ public class Instructions extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float delta) {
-        if(game.getScreen() == this){
+        if (game.getScreen() == this) {
             Gdx.input.setInputProcessor(stage);
             tbBack.setDisabled(false);
-        }else{
+        } else {
             tbBack.setDisabled(true);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

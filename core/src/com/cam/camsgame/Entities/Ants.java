@@ -23,16 +23,16 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         this.nWorth = nWorth;
         rotate(-90);//Sets the initial rotation so the ants don't move sideways
         this.nMapSelected = nMapSelected;
-        if(nMapSelected == 1) {
+        if (nMapSelected == 1) {
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight()); //x coord is based on the position it was spawned as
-        }else if (nMapSelected == 2){
+        } else if (nMapSelected == 2) {
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight() * 19);
-        }else if (nMapSelected == 3){
+        } else if (nMapSelected == 3) {
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight() * 24);
-        }else if (nMapSelected == 4){
+        } else if (nMapSelected == 4) {
 
 
         }
@@ -43,6 +43,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         update();
         super.draw(batch);
     }
+
     public void update() {
         float fTileWidth = collisionLayer.getTileWidth(), fTileHeight = collisionLayer.getTileHeight();
         //Moves the ant
@@ -70,7 +71,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
                     }
                     nVelX = 0;
                     nVelY = -nSpeed;
-                }else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
+                } else if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                         (int) ((getY() + getHeight() / 2) / fTileHeight)).getTile().getProperties().containsKey("End") == true) {// Checks if its at the end
                     nVelY = 0;
                     nVelX = 0;
@@ -104,6 +105,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
             }
         }
     }
+
     @Override
     public void rotate(float degrees) { //Simply rotates the ant based on the degree passed when the method is called
         super.rotate(degrees);

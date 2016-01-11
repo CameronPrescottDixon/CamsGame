@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
  * Created by Cameron on 2015-11-27.
  */
 public class Turret extends Sprite {
-    public int  nRange, nDamage, nFireRate, nTurretType;
+    public int nRange, nDamage, nFireRate, nTurretType;
     public TiledMapTileLayer collisionLayer;
     public float fLastTimeShot;
 
@@ -20,19 +20,19 @@ public class Turret extends Sprite {
         this.nDamage = nDmg;
         this.nTurretType = nTurretType;
         this.nRange = nRange;
-        if(nTurretType == 0){
-            this.nDamage += 1*nUpgraded;
+        if (nTurretType == 0) {
+            this.nDamage += 1 * nUpgraded;
             this.nRange += 100 * nUpgraded;
             this.nFireRate += -50000000 * nUpgraded;
-        }else if(nTurretType == 1){
-            this.nDamage += 2*nUpgraded;
+        } else if (nTurretType == 1) {
+            this.nDamage += 2 * nUpgraded;
             this.nRange += 50 * nUpgraded;
             this.nFireRate += -50000000 * nUpgraded;
-        }else if(nTurretType == 2){
+        } else if (nTurretType == 2) {
             this.nRange += 75 * nUpgraded;
             this.nFireRate += -100000000 * nUpgraded;
-        }else{
-            this.nDamage += 1*nUpgraded;
+        } else {
+            this.nDamage += 1 * nUpgraded;
             this.nRange += 100 * nUpgraded;
             this.nFireRate += -50000000 * nUpgraded;
         }

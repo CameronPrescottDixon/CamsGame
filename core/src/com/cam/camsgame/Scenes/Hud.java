@@ -15,12 +15,12 @@ import com.cam.camsgame.CamsGame;
 /**
  * Created by Cameron on 2015-11-04.
  */
-public class Hud implements Disposable{
+public class Hud implements Disposable {
     public Stage stage;
     private Viewport vpHud;
 
     private float fTime;
-    public int nWorldTime,nMoney,nLevel,nHP;
+    public int nWorldTime, nMoney, nLevel, nHP;
 
     Label lblCountUpLabel;
     Label lblMoneyAmount;
@@ -32,7 +32,7 @@ public class Hud implements Disposable{
     Label lblHP;
 
 
-    public Hud(SpriteBatch spriteBatch){ //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
+    public Hud(SpriteBatch spriteBatch) { //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
         nMoney = 3000;
         nHP = 100;
         nLevel = 0;
@@ -69,35 +69,41 @@ public class Hud implements Disposable{
         //Add the table to the stage after it's been created
         stage.addActor(table);
     }
-    public void updateTime(float dt){ //updates time
+
+    public void updateTime(float dt) { //updates time
         fTime += dt;
-        if(fTime >=1){//This makes the time only go up every second
+        if (fTime >= 1) {//This makes the time only go up every second
             nWorldTime++;
             lblCountUpLabel.setText(String.format("%02d", nWorldTime));
             fTime = 0;
         }
     }
-    public void addMoney(int money){//adds money
-        nMoney+=money;
+
+    public void addMoney(int money) {//adds money
+        nMoney += money;
         lblMoneyAmount.setText(String.format("%03d", nMoney));
     }
-    public void subtMoney(int money){//subtracts money
-        nMoney-=money;
-        if(nMoney>0){
+
+    public void subtMoney(int money) {//subtracts money
+        nMoney -= money;
+        if (nMoney > 0) {
             lblMoneyAmount.setText(String.format("%03d", nMoney));
 
-        }else if(nMoney==0){
+        } else if (nMoney == 0) {
             lblMoneyAmount.setText(String.format("%03d", 0));
         }
     }
-    public void nextRound(){
+
+    public void nextRound() {
         nLevel++;
         lblRoundNumber.setText(String.format("%01d", nLevel));
     }
-public void loseHP(int nLose){
-    nHP -= nLose;
-    lblHP.setText(String.format("%03d", nHP));
-}
+
+    public void loseHP(int nLose) {
+        nHP -= nLose;
+        lblHP.setText(String.format("%03d", nHP));
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
