@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="20" tileheight="20" nextobjectid="1">
  <tileset firstgid="1" name="Colours" tilewidth="20" tileheight="20" tilecount="1081">
-  <image source="../AndroidStudioProjects/CamsGame4/android/assets/Maps/colours.png" width="947" height="467"/>
+  <image source="colours.png" width="947" height="467"/>
   <tile id="33">
    <properties>
     <property name="End" value=""/>
@@ -39,10 +39,10 @@
   </tile>
  </tileset>
  <tileset firstgid="1082" name="lava" tilewidth="20" tileheight="20" tilecount="121">
-  <image source="../AndroidStudioProjects/CamsGame4/android/assets/Maps/download.jpg" width="225" height="225"/>
+  <image source="download.jpg" width="225" height="225"/>
  </tileset>
  <tileset firstgid="1203" name="Winter" tilewidth="20" tileheight="20" tilecount="1025">
-  <image source="CCFB/Expanded-Snow-Tileset.png" width="833" height="511"/>
+  <image source="Expanded-Snow-Tileset.png" width="833" height="511"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
