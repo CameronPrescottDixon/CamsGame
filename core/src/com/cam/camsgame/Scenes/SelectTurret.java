@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public class SelectTurret extends Sprite {
     public int nCost;
+
     public SelectTurret(Sprite spTurret) {
         super(spTurret);
     }
@@ -17,9 +18,9 @@ public class SelectTurret extends Sprite {
         super.draw(batch);
     }
 
-    public void update(int nPos, int nCst){
+    public void update(int nPos, int nCst) {
         nCost = nCst;
-        setSize(100,100);
-        setPosition(900,500 + (nPos * 100));
+        setSize(100, 100);
+        setPosition(900, 500 + (nPos * 100));
     }
 }

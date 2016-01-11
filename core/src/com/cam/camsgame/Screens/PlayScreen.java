@@ -181,15 +181,12 @@ public class PlayScreen implements Screen {
         String sNum = Integer.toString(nNum);
         String sMusic = "Music/Music" + sNum + ".mp3";
         System.out.println(sMusic);
-        boolean exists = Gdx.files.external(sMusic).exists();
-       // if (exists == true) {
-            System.out.println("HI");
-            music = CamsGame.manager.get(sMusic, Music.class);
-            music.setLooping(true);//Loop it
-            //Makes the music volume lower so it's not destroying the users ears
-            music.setVolume(music.getVolume() * 1 / 10);
-            music.play();
-        //}
+        System.out.println("HI");
+        music = CamsGame.manager.get(sMusic, Music.class);
+        music.setLooping(true);//Loop it
+        //Makes the music volume lower so it's not destroying the users ears
+        music.setVolume(music.getVolume() * 1 / 10);
+        music.play();
     }
 
     @Override
