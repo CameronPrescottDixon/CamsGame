@@ -85,7 +85,7 @@ public class Maps extends ApplicationAdapter implements Screen {
                     if (nNum1 != 1) {
                         nNum1--;
                     } else {
-                        nNum1 = 3;
+                        nNum1 = 4;
                     }
                     String sNum = Integer.toString(nNum1);
                     String sMap = "Maps/Map" + sNum + ".png";
