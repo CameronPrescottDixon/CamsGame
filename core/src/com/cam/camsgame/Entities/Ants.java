@@ -21,20 +21,25 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         this.nID = nID;
         this.nHP = nHP;
         this.nWorth = nWorth;
-        rotate(-90);//Sets the initial rotation so the ants don't move sideways
         this.nMapSelected = nMapSelected;
         if (nMapSelected == 1) {
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight()); //x coord is based on the position it was spawned as
+            rotate(-90);//Sets the initial rotation so the ants don't move sideways
         } else if (nMapSelected == 2) {
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight() * 19);
+            rotate(-90);//Sets the initial rotation so the ants don't move sideways
         } else if (nMapSelected == 3) {
             nX = nPos * -50;
             setPosition(nX, collisionLayer.getTileHeight() * 24);
+            rotate(-90);//Sets the initial rotation so the ants don't move sideways
         } else if (nMapSelected == 4) {
-
-
+            nX = (int) collisionLayer.getTileWidth()*36;
+            setPosition(nX, nPos * -50);
+            nVelY = nSpeed;
+            nVelX = 0;
+            //rotate();//Sets the initial rotation so the ants don't move sideways
         }
     }
 
@@ -49,7 +54,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
         //Moves the ant
         setX(getX() + nVelX);
         setY(getY() + nVelY);
-        if (getX() > 0) {
+        if (getX() > 0 && getY() > 0 && getY() < 1000 && getX() < 1000) {
             //Looks for collision for specific cells, it only looks for the cell directly in it's path to increase performance instead of looking for every cell on the map
             if (nVelX > 0 || nVelX < 0) { //Checks if it's moving in the x direction or not so it increases efficiency by no looking for y direction related things
                 // ant is moving right code found at https://www.youtube.com/watch?v=DOpqkaX9844&index=4&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCWylb

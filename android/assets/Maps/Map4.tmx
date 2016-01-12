@@ -43,10 +43,45 @@
  </tileset>
  <tileset firstgid="1203" name="Winter" tilewidth="20" tileheight="20" tilecount="1025">
   <image source="Expanded-Snow-Tileset.png" width="833" height="511"/>
+  <tile id="0">
+   <properties>
+    <property name="Down" value=""/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="End" value=""/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="Right" value=""/>
+   </properties>
+  </tile>
+  <tile id="82">
+   <properties>
+    <property name="Left" value=""/>
+   </properties>
+  </tile>
+  <tile id="123">
+   <properties>
+    <property name="Up" value=""/>
+   </properties>
+  </tile>
+  <tile id="982">
+   <properties>
+    <property name="Blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="983">
+   <properties>
+    <property name="Blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmEduwzAQRbmQAJ8gvd/WOY58BacnTi6S3nf5WnyECUCRMSlyGMziQQKEoTmex4KZN8YcgWMwnRhzCM7wfg4uwCW4AgtwDW7A3Io5AadN+ZhbcAfuQYccZuAJ78/gBbyCN/AOPsDnr5gH8NiUj1lpjVkFa+13PTbxvgW2wQ7YBXtgHxy0P2PWwUZbPsauHetR2pFYr1iPmHpzjOkA/ffUXqWuB8foBui/S68H5+mKGase9lriHGLWH8dwxTCPMdd5ivODebhi+BvSzw8JXqU4PyR4lWK/4jxLemXv/a6nDwle2Xu/6xlCaa9y3DFyeJXj7prDqxx315A1xlwlexWyvpiHZK9CYpiHZK9CYmrwKiRGvRquHcfNTWqvmMcsM6m9Yh619H18XtXS9/F5VUvf5797xbu4eqVe6X5Vr1e+e0ctXnWT4ftBLfsV/28pjsR6JcWRZb1iHlIcifHqLz3DsennsYxXdh8wtGc4Jv08pPevfDGsh/S+qC8mxitJew/zUK/UK/VKvVKvZHv1BZfCPmQ=
+   eJztmElOAzEQRXthSzkBQ5g5QO6ZXCccIczjAbgCkDCz40fNFwbR2HQ7dlnU4kmWWt9yxc+xVRNTVfvgAIx6NccYn4BTcAbOwQW4BFdg4mQOwZHJn7kBt+DOqeMe4wfwCJ7AM3gBr+DtW2YKZiZ/ZslW1TJYAXumZg3jdbABNsEW2AY7YNd+zayCvs2fcfdOvfrMjJ15fsLamthexd4PXx1zxj35+8E5mjLDj++LPOdcQ5fzxzmaMvwu/ZxzjqYMv5fu1Ui9+ndeDZzfqys5vYpRB++5nF6leGOk8CrF2zWFVyneriHu0k3JXv3lDEr2KiTDOiR7FZJhHZK9CsmoV7/v3bWpiXXXhzBYwP9VyvW7dcT2inOX0vdp2jvWUUrfx+dVKX0f9Uq9Uq/UK+lehbw75verdK9C3wnSveJapTjS1ivWIcWRrl5JcaStVzH7iF1hr6SNV5LqINL7V74M65DeF/VlWIf0vqgvo16pV+qVeqVeleHVO6upIuM=
   </data>
  </layer>
 </map>

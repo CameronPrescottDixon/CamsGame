@@ -20,6 +20,7 @@ public class Turret extends Sprite {
         this.nDamage = nDmg;
         this.nTurretType = nTurretType;
         this.nRange = nRange;
+        setSize(75,75);
         if (nTurretType == 0) {
             this.nDamage += 1 * nUpgraded;
             this.nRange += 100 * nUpgraded;

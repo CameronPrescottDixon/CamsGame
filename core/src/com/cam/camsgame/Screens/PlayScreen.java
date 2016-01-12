@@ -315,14 +315,10 @@ public class PlayScreen implements Screen {
             } else if (nTurSelected == 2) {
                 arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 50000000, 2, nTurSelected, 200, arUpgrades[nTurSelected]));
             } else if (nTurSelected == 3) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 100000000, 10, nTurSelected, 1000, arUpgrades[nTurSelected]));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 700000000, 5, nTurSelected, 1000, arUpgrades[nTurSelected]));
             }
-            arspTurret.get(arspTurret.size() - 1).setSize(50, 50);
             arspTurret.get(arspTurret.size() - 1).setPosition(vtouchPos.x - arspTurret.get(arspTurret.size() - 1).getWidth() / 2,
                     vtouchPos.y - arspTurret.get(arspTurret.size() - 1).getHeight() / 2);
-            tlRender.getBatch().begin();
-            arspTurret.get(arspTurret.size() - 1).draw(tlRender.getBatch());
-            tlRender.getBatch().end();
             if (placeableTurret() == true) {
                 hud.subtMoney(arspTurrs.get(nTurSelected).nCost);
             } else {
@@ -452,16 +448,16 @@ public class PlayScreen implements Screen {
                     nPos++;//Increases the position of the ant next in line
                 }
             }
-
-            if (nLevel >= 10 && nLevel <= 25) {
+            if (nLevel >= 10) {
                 nAntThree = nLevel;
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 10, nPos, nLevel, nID, 50, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 15, nPos, nLevel, nID, 50, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
+
             if (nLevel >= 20) {
                 nAntFive = nLevel - 19;
             }
