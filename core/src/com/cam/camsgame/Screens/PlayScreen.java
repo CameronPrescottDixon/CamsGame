@@ -376,7 +376,7 @@ public class PlayScreen implements Screen {
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         if (hud.nHP <= 0) {//Checks if the hp is now 0
-            ((Game) Gdx.app.getApplicationListener()).setScreen(game.menu);
+            ((Game) Gdx.app.getApplicationListener()).setScreen(game.gameover);
             bGameOver = true;
             arspAnt.clear();
             arspBullets.clear();

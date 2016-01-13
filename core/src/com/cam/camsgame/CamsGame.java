@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cam.camsgame.Screens.GameOver;
 import com.cam.camsgame.Screens.Instructions;
 import com.cam.camsgame.Screens.Maps;
 import com.cam.camsgame.Screens.Menu;
@@ -19,6 +20,7 @@ public class CamsGame extends Game {
     public PlayScreen playScreen;
     public Instructions instructions;
     public Maps maps;
+	public GameOver gameover;
 
 
     @Override
@@ -26,6 +28,7 @@ public class CamsGame extends Game {
         batch = new SpriteBatch();
         manager = new AssetManager();
         manager.load("Music/Halo- Menu Music.mp3", Music.class);
+		manager.load("Music/Gameover.mp3", Music.class);
         manager.load("Music/Music1.mp3", Music.class);
         manager.load("Music/Music2.mp3", Music.class);
         manager.load("Music/Music3.mp3", Music.class);
@@ -35,6 +38,7 @@ public class CamsGame extends Game {
         menu = new Menu(this);
         instructions = new Instructions(this);
         maps = new Maps(this);
+		gameover = new GameOver(this);
         setScreen(menu);
     }
 
