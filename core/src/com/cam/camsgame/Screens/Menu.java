@@ -54,9 +54,7 @@ public class Menu extends ApplicationAdapter implements Screen {
         fWhite = new BitmapFont(Gdx.files.internal("Fonts/white.fnt"));
         fBlack = new BitmapFont(Gdx.files.internal("Fonts/black.fnt"));
 
-        spBack = new Sprite(new Texture("Misc/Picnic.jpg"));
-        spBack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        spBack.setPosition(0, 0);
+        tBack = new Texture("Misc/Picnic.jpg");
 
         //menu button and pack comes from TheDeepDarkTaurock code
         //creates buttons
@@ -107,17 +105,16 @@ public class Menu extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float dt) {
-        if (game.getScreen() == this && tbStart.isDisabled() == true) {
-            tbExit.setDisabled(false);
-            music.play();
-        }
         if (game.getScreen() == this) {
             Gdx.input.setInputProcessor(stage);
             tbExit.setDisabled(false);
+            music.play();
+        }else{
+            tbExit.setDisabled(true);
         }
-        game.batch.begin();
-        spBack.draw(game.batch);
-        game.batch.end();
+        stage.getBatch().begin();
+        stage.getBatch().draw(tBack, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().end();
         stage.act();
         stage.draw();
     }

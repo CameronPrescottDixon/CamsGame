@@ -444,7 +444,7 @@ public class PlayScreen implements Screen {
                 System.out.println("Number of lvl 1 ants spawned: " + nAntOne);
                 nPos = 0;
                 for (int i = 0; i < nAntOne; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 3, 1, 1, nPos, nLevel, nID, 10, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 30, 100, 1, nPos, nLevel, nID, 10, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position|AntID
                     nPos++;//Increases the position of the ant next in line
                 }
             }
