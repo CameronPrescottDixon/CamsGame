@@ -45,7 +45,7 @@ public class Turret extends Sprite {
     }
 
 
-    public boolean checkBounds() { //Not fully working
+    public boolean checkBounds() {
         float fTileWidth = collisionLayer.getTileWidth(), fTileHeight = collisionLayer.getTileHeight();
         if (collisionLayer.getCell((int) ((getX() + getWidth() / 2) / fTileWidth),
                 (int) ((getY() + getHeight()) / fTileHeight)).getTile().getProperties().containsKey("Blocked") == true) {

@@ -15,12 +15,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.CamsGame;
+import com.cam.camsgame.Entities.Ants;
 import com.cam.camsgame.Entities.Bullet;
 import com.cam.camsgame.Entities.Turret;
-import com.cam.camsgame.Scenes.SelectTurret;
 import com.cam.camsgame.Scenes.Hud;
+import com.cam.camsgame.Scenes.SelectTurret;
 
 import java.util.ArrayList;
 
@@ -28,26 +28,21 @@ import java.util.ArrayList;
  * Created by Cameron on 2015-11-04.
  */
 public class PlayScreen implements Screen {
+    //Hud
+    public Hud hud;
+    int nID = 0;
+    boolean bGameOver;
     private CamsGame game;
-
     //Camera stuff
     private OrthographicCamera gamecam;
     private StretchViewport gameport; //https://www.youtube.com/watch?v=D7u5B2Oh9r0 <-- maintaining aspect ratios
-
-    //Hud
-    public Hud hud;
-
     //Tiled
     private TmxMapLoader mapLoader; //https://www.youtube.com/watch?v=P8jgD-V5jG8 <-- how the map is loaded
     private TiledMap tlMap;
     private OrthogonalTiledMapRenderer tlRender;
-
     //Ants + test money for hud
     private Texture txAnt1, txAnt2, txAnt3, txAnt4, txAnt5;
     private ArrayList<Ants> arspAnt;
-    int nID = 0;
-    boolean bGameOver;
-
     //Music
     private Music music;
 
