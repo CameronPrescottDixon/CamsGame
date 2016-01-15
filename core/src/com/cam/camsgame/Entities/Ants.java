@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
  */
 public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
     public int nVelY = 0, nVelX, nSpeed, nDamage, nX, nID, nHP, nWorth, nMapSelected;
-    public boolean bFinished = false, bDead = false, bisTargeted = false;
+    public boolean bFinished = false, bisTargeted = false;
     private TiledMapTileLayer collisionLayer;
 
     public Ants(Sprite spAnt, TiledMapTileLayer collisionLayer, int nSpeed, int nDamage, int nHP, int nPos, int nLevel, int nID, int nWorth, int nMapSelected) {
@@ -35,7 +35,7 @@ public class Ants extends Sprite {//https://www.youtube.com/watch?v=NsxNE9uk1ew
             setPosition(nX, collisionLayer.getTileHeight() * 24);
             rotate(-90);//Sets the initial rotation so the ants don't move sideways
         } else if (nMapSelected == 4) {
-            nX = (int) collisionLayer.getTileWidth()*36;
+            nX = (int) collisionLayer.getTileWidth() * 36;
             setPosition(nX, nPos * -50);
             nVelY = nSpeed;
             nVelX = 0;

@@ -40,8 +40,7 @@ public class PlayScreen implements Screen {
     private TmxMapLoader mapLoader; //https://www.youtube.com/watch?v=P8jgD-V5jG8 <-- how the map is loaded
     private TiledMap tlMap;
     private OrthogonalTiledMapRenderer tlRender;
-    //Ants + test money for hud
-    private Texture txAnt1, txAnt2, txAnt3, txAnt4, txAnt5;
+    //Ants
     private ArrayList<Ants> arspAnt;
     //Music
     private Music music;
@@ -68,6 +67,8 @@ public class PlayScreen implements Screen {
     //Bullets
     private ArrayList<Bullet> arspBullets;
     private Texture txBullet;
+
+    private Sprite spRangeIndc;
 
     public PlayScreen(CamsGame game) {
         this.game = game;
@@ -120,18 +121,13 @@ public class PlayScreen implements Screen {
         spSell = new Sprite(new Texture("Misc/sell.png"));
         spSell.setSize(100, 50);
 
+        spRangeIndc = new Sprite(new Texture("Misc/circle.png"));
 
         spUpgrade = new Sprite(new Texture("Misc/upgrade.png"));
         spUpgrade.setSize(100, 50);
 
         //Set the gamecams position to half of the width and height of the map (the center of the map)
         gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
-
-        //Get music
-       /* music = CamsGame.manager.get("Music/Music1.mp3", Music.class); //This song is good
-        music.setLooping(true);//Loop it
-        //Makes the music volume lower so it's not destroying the users ears
-        music.setVolume(music.getVolume() * 1 / 10);*/
 
         vtouchPos = new Vector3();//fixes the errors with flipping the y co-ords on the x-axis
 
@@ -152,7 +148,6 @@ public class PlayScreen implements Screen {
     public void startGame(int nNum1, int nNum) { //This stuff is needed to start the screens actions
         changeMap(nNum1);
         changeMusic(nNum);
-        // changeMusic();
         hud = new Hud(game.batch);//This resets everything hud related if this is not the first game played
         bGameOver = false;
         nextRound(); //Initializes the game, without this the rounds wouldn't start
@@ -211,6 +206,7 @@ public class PlayScreen implements Screen {
         if (bTurretSelected == true) {
             spSell.draw(tlRender.getBatch());
             spUpgrade.draw(tlRender.getBatch());
+            spRangeIndc.draw(tlRender.getBatch());
         }
         tlRender.getBatch().end();
     }
@@ -223,7 +219,6 @@ public class PlayScreen implements Screen {
             tlRender.setView(gamecam);
             hud.updateTime(dt);
             removeAnt();//checks if ants reach the end
-
             if (arspBullets.size() > 0) {
                 bulletTracking();
             }
@@ -294,6 +289,10 @@ public class PlayScreen implements Screen {
                             bTurretSelected = true;
                             bTurSelect = false;
                             nSelectedTurret = j;
+                            spRangeIndc.setSize(arspTurret.get(j).nRange,arspTurret.get(j).nRange);
+                            spRangeIndc.setPosition(arspTurret.get(j).getX() - (spRangeIndc.getWidth()/2-75/2),arspTurret.get(j).getY()-(spRangeIndc.getWidth()/2 - 75/2));
+                        }else{
+                            bTurretSelected = false;
                         }
                     }
                 }
@@ -371,7 +370,7 @@ public class PlayScreen implements Screen {
 
     public void removeAnt() { //Checks to see if the ant hits the end of the road
         if (hud.nHP <= 0) {//Checks if the hp is now 0
-            ((Game) Gdx.app.getApplicationListener()).setScreen(game.gameover);
+            game.setGameOver();
             bGameOver = true;
             arspAnt.clear();
             arspBullets.clear();

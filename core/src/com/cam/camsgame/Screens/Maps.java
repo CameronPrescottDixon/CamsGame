@@ -118,7 +118,8 @@ public class Maps extends ApplicationAdapter implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (tbMap.isDisabled() != true) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.menu);
+
+                    game.setMenu();
                 }
             }
         });

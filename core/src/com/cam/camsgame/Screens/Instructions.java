@@ -110,7 +110,7 @@ public class Instructions extends ApplicationAdapter implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (tbBack.isDisabled() != true) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.menu);
+                    game.setMenu();
                 }
             }
         });

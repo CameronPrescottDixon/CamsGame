@@ -16,11 +16,11 @@ public class CamsGame extends Game {
     public static final int V_HEIGHT = 1000;
     public SpriteBatch batch;
     public static AssetManager manager;
-    public Menu menu;
-    public PlayScreen playScreen;
-    public Instructions instructions;
-    public Maps maps;
-	public GameOver gameover;
+    public Menu scrMenu;
+    public PlayScreen scrPlayScreen;
+    public Instructions scrInstructions;
+    public Maps scrMaps;
+	public GameOver scrGameOver;
 
 
     @Override
@@ -34,14 +34,28 @@ public class CamsGame extends Game {
         manager.load("Music/Music3.mp3", Music.class);
         manager.load("Music/Music4.mp3", Music.class);
         manager.finishLoading(); // finish loading all the assets for now
-        playScreen = new PlayScreen(this);
-        menu = new Menu(this);
-        instructions = new Instructions(this);
-        maps = new Maps(this);
-		gameover = new GameOver(this);
-        setScreen(menu);
+        scrPlayScreen = new PlayScreen(this);
+        scrMenu = new Menu(this);
+        scrInstructions = new Instructions(this);
+        scrMaps = new Maps(this);
+		scrGameOver = new GameOver(this);
+        setScreen(scrMenu);
     }
-
+    public void setInstructions(){
+    setScreen(scrInstructions);
+    }
+    public void setMenu(){
+    setScreen(scrMenu);
+    }
+    public void setPlayscreen(){
+setScreen(scrPlayScreen);
+    }
+    public void setMaps(){
+setScreen(scrMaps);
+    }
+    public void setGameOver(){
+setScreen(scrGameOver);
+    }
     @Override
     public void render() {
         super.render();

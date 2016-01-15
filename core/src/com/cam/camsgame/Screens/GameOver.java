@@ -82,7 +82,7 @@ import com.cam.camsgame.CamsGame;
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (tbExit.isDisabled() != true) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.menu);
+                    game.setMenu();
                     music.stop();
                 }
             }

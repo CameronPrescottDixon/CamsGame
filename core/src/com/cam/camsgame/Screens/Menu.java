@@ -126,10 +126,10 @@ public class Menu extends ApplicationAdapter implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (tbExit.isDisabled() != true) {
                     System.out.println(tbStart.isDisabled());
-                    game.playScreen.startGame(game.maps.nNum1, game.maps.nNum);
+                    game.scrPlayScreen.startGame(game.scrMaps.nNum1, game.scrMaps.nNum);
                     tbExit.setDisabled(true);
                     music.stop();
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.playScreen);
+                    game.setPlayscreen();
                 }
             }
         });
@@ -148,7 +148,7 @@ public class Menu extends ApplicationAdapter implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (tbExit.isDisabled() != true) {
                     tbExit.setDisabled(true);
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.instructions);
+                    game.setInstructions();
                 }
             }
         });
@@ -157,7 +157,7 @@ public class Menu extends ApplicationAdapter implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (tbExit.isDisabled() != true) {
                     tbExit.setDisabled(true);
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(game.maps);
+                    game.setMaps();
                 }
             }
         });
