@@ -192,6 +192,11 @@ public class PlayScreen implements Screen {
         //Draw ant
         tlRender.getBatch().begin(); //Draw the sprites, must be in order to draw them one ontop of each other
         spSidePanel.draw(tlRender.getBatch());
+        if (bTurretSelected == true) {
+            spSell.draw(tlRender.getBatch());
+            spUpgrade.draw(tlRender.getBatch());
+            spRangeIndc.draw(tlRender.getBatch());
+        }
         if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
             spTurSelect.draw(tlRender.getBatch());
         }
@@ -202,12 +207,6 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 4; i++) arspTurrs.get(i).draw(tlRender.getBatch());
         for (int i = 0; i < arspBullets.size(); i++)
             arspBullets.get(i).draw(tlRender.getBatch());
-
-        if (bTurretSelected == true) {
-            spSell.draw(tlRender.getBatch());
-            spUpgrade.draw(tlRender.getBatch());
-            spRangeIndc.draw(tlRender.getBatch());
-        }
         tlRender.getBatch().end();
     }
 
@@ -284,15 +283,15 @@ public class PlayScreen implements Screen {
                 } else {
                     for (int j = 0; j < arspTurret.size(); j++) {
                         if (vtouchPos.y >= arspTurret.get(j).getY() && vtouchPos.y < arspTurret.get(j).getY() + arspTurret.get(j).getHeight()) {
-                            spSell.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 40);
-                            spUpgrade.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 100);
-                            bTurretSelected = true;
-                            bTurSelect = false;
-                            nSelectedTurret = j;
-                            spRangeIndc.setSize(arspTurret.get(j).nRange,arspTurret.get(j).nRange);
-                            spRangeIndc.setPosition(arspTurret.get(j).getX() - (spRangeIndc.getWidth()/2-75/2),arspTurret.get(j).getY()-(spRangeIndc.getWidth()/2 - 75/2));
-                        }else{
-                            bTurretSelected = false;
+                            if (vtouchPos.x >= arspTurret.get(j).getX() && vtouchPos.x < arspTurret.get(j).getX() + arspTurret.get(j).getWidth()) {
+                                spSell.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 40);
+                                spUpgrade.setPosition(arspTurrs.get(arspTurret.get(j).nTurretType).getX(), arspTurrs.get(arspTurret.get(j).nTurretType).getY() - 100);
+                                bTurretSelected = true;
+                                bTurSelect = false;
+                                nSelectedTurret = j;
+                                spRangeIndc.setSize(arspTurret.get(j).nRange, arspTurret.get(j).nRange);
+                                spRangeIndc.setPosition(arspTurret.get(j).getX() - (spRangeIndc.getWidth() / 2 - 75 / 2), arspTurret.get(j).getY() - (spRangeIndc.getWidth() / 2 - 75 / 2));
+                            }
                         }
                     }
                 }
@@ -309,7 +308,7 @@ public class PlayScreen implements Screen {
             } else if (nTurSelected == 2) {
                 arspTurret.add(new Turret(new Sprite(new Texture("Entities/jug_top.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 50000000, 2, nTurSelected, 200, arUpgrades[nTurSelected]));
             } else if (nTurSelected == 3) {
-                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 700000000, 5, nTurSelected, 1000, arUpgrades[nTurSelected]));
+                arspTurret.add(new Turret(new Sprite(new Texture("Entities/can_topblack.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 700000000, 5, nTurSelected, 600, arUpgrades[nTurSelected]));
             }
             arspTurret.get(arspTurret.size() - 1).setPosition(vtouchPos.x - arspTurret.get(arspTurret.size() - 1).getWidth() / 2,
                     vtouchPos.y - arspTurret.get(arspTurret.size() - 1).getHeight() / 2);
