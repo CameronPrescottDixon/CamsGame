@@ -16,11 +16,11 @@ public class CamsGame extends Game {
     public static final int V_HEIGHT = 1000;
     public SpriteBatch batch;
     public static AssetManager manager;
-    public Menu scrMenu;
+    private Menu scrMenu;
     public PlayScreen scrPlayScreen;
-    public Instructions scrInstructions;
+    private Instructions scrInstructions;
     public Maps scrMaps;
-	public GameOver scrGameOver;
+	private GameOver scrGameOver;
 
 
     @Override
