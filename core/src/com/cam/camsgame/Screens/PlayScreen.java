@@ -1,6 +1,4 @@
 package com.cam.camsgame.Screens;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -21,7 +19,6 @@ import com.cam.camsgame.Entities.Bullet;
 import com.cam.camsgame.Entities.Turret;
 import com.cam.camsgame.Scenes.Hud;
 import com.cam.camsgame.Scenes.SelectTurret;
-
 import java.util.ArrayList;
 
 /**

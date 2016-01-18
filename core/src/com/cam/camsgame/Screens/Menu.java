@@ -25,7 +25,6 @@ import com.cam.camsgame.CamsGame;
 public class Menu extends ApplicationAdapter implements Screen {
 
     private Texture tBack, tButton;
-    private Sprite spBack;
     private TextureAtlas taButton;
     private BitmapFont fWhite, fBlack;
     private TextButton.TextButtonStyle textButtonStyle;
