@@ -184,7 +184,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         if (bTurretSelected == true) {
         }
         spSidePanel.draw(tlRender.getBatch());
-
         for (int i = 0; i < arspAnt.size(); i++) {
             arspAnt.get(i).draw(tlRender.getBatch());
         }
@@ -193,22 +192,28 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         if (bTurSelect != false) {//makes it so the red box isnt drawn from the start even if none of the turrets are selected
             spTurSelect.draw(tlRender.getBatch());
         }
+        tlRender.getBatch().end();
+
+        game.batch.begin();
         if (bTurretSelected == true) {
-            if(game.getScreen() == this) {
+            spRangeIndc.draw(game.batch);
+            if (game.getScreen() == this) {
                 Gdx.input.setInputProcessor(turrInfo.stage);
             }
-            spRangeIndc.draw(tlRender.getBatch());
-            arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).draw(tlRender.getBatch());
+            arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).draw(game.batch);
             arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).setPosition(900, 800);
+        } else {
+            for (int i = 0; i < 4; i++) {
+                arspTurrs.get(i).draw(game.batch);
+            }
+        }
+        game.batch.end();
+        if (bTurretSelected == true) {
             turrInfo.giveVals(arspTurret.get(nSelectedTurret).nFireRate, arspTurret.get(nSelectedTurret).nDamage,
                     arspTurret.get(nSelectedTurret).nRange, arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).nCost, arUpgrades[arspTurret.get(nSelectedTurret).nTurretType]);
             turrInfo.stage.draw();
             turrInfo.stage.act();
         }
-        for (int i = 0; i < 4; i++) {
-            arspTurrs.get(i).draw(tlRender.getBatch());
-        }
-        tlRender.getBatch().end();
     }
 
     public void update(float dt) {
@@ -231,37 +236,38 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         vtouchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         //Basically this translates the co-ords I got by the input into world space throught the vector3 position set by input...
         gamecam.unproject(vtouchPos);//http://gamedev.stackexchange.com/questions/60787/libgdx-drawing-sprites-when-moving-orthographic-camera fixes the issues with touching + co-ords
-        for (int i = 0; i < 4; i++) {
-            if (vtouchPos.x >= arspTurrs.get(0).getX()) { // looks for in the click is in the turret select portion of the screen
+        if (vtouchPos.x >= arspTurrs.get(0).getX()) { // looks for in the click is in the turret select portion of the screen
+            for (int i = 0; i < 4; i++) {
                 if (vtouchPos.y >= arspTurrs.get(i).getY() && vtouchPos.y < arspTurrs.get(i).getY() + arspTurrs.get(i).getHeight() && bisSelectable == true) {// Using arrays schortened this code by 3/4!!!
                     spTurSelect.setPosition(arspTurrs.get(i).getX(), arspTurrs.get(i).getY()); // -10 because the red box is 120 pixels in height but the turrets are only 100
                     nTurSelected = i;
                     bTurSelect = true;
-                    break;
                 }
-            } else if (vtouchPos.x < spSidePanel.getX()) { //looks for clicks off of the turret select panel
-                if (bTurSelect == true) {
-                    addTurret();
-                    bTurSelect = false;
-                    bTurretSelected = false;
-                } else {
-                    for (int j = 0; j < arspTurret.size(); j++) {
-                        if (vtouchPos.y >= arspTurret.get(j).getY() && vtouchPos.y < arspTurret.get(j).getY() + arspTurret.get(j).getHeight()) {
-                            if (vtouchPos.x >= arspTurret.get(j).getX() && vtouchPos.x < arspTurret.get(j).getX() + arspTurret.get(j).getWidth()) {
-                                bTurretSelected = true;
-                                bTurSelect = false;
-                                bisSelectable = false;
-                                nSelectedTurret = j;
-                                spRangeIndc.setSize(arspTurret.get(j).nRange, arspTurret.get(j).nRange);
-                                spRangeIndc.setPosition(arspTurret.get(j).getX() - (spRangeIndc.getWidth() / 2 - 75 / 2), arspTurret.get(j).getY() - (spRangeIndc.getWidth() / 2 - 75 / 2));
-                            }
-                        } else {
-                            bTurretSelected = false;
+            }
+        } else if (vtouchPos.x < spSidePanel.getX()) { //looks for clicks off of the turret select panel
+            if (bTurSelect == true) {
+                addTurret();
+                bTurSelect = false;
+                bTurretSelected = false;
+            } else {
+                for (int j = 0; j < arspTurret.size(); j++) {
+                    if (vtouchPos.y >= arspTurret.get(j).getY() && vtouchPos.y < arspTurret.get(j).getY() + arspTurret.get(j).getHeight()) {
+                        if (vtouchPos.x >= arspTurret.get(j).getX() && vtouchPos.x < arspTurret.get(j).getX() + arspTurret.get(j).getWidth()) {
+                            bTurretSelected = true;
                             bTurSelect = false;
-                            bisSelectable = true;
-                            for (int q = 0; q < 4; q++) {
-                                arspTurrs.get(q).resetPos();
-                            }
+                            bisSelectable = false;
+                            nSelectedTurret = j;
+                            System.out.println(j + " Selected");
+                            spRangeIndc.setSize(arspTurret.get(j).nRange, arspTurret.get(j).nRange);
+                            spRangeIndc.setPosition(arspTurret.get(j).getX() - (spRangeIndc.getWidth() / 2 - 75 / 2), arspTurret.get(j).getY() - (spRangeIndc.getWidth() / 2 - 75 / 2));
+                            return;
+                        }
+                    } else {
+                        bTurretSelected = false;
+                        bTurSelect = false;
+                        bisSelectable = true;
+                        for (int q = 0; q < 4; q++) {
+                            arspTurrs.get(q).resetPos();
                         }
                     }
                 }
@@ -282,7 +288,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     }
 
     public void upgradeTurr() {
-        if (arUpgrades[arspTurret.get(nSelectedTurret).nTurretType] <= 3 && hud.nMoney >= 5000 && arspTurret.size()>0) {
+        if (arUpgrades[arspTurret.get(nSelectedTurret).nTurretType] <= 3 && hud.nMoney >= 5000 && arspTurret.size() > 0) {
             for (int j = 0; j < arspTurret.size(); j++) {
                 if (arspTurret.get(nSelectedTurret).nTurretType == 0) {// Red turret
                     if (arspTurret.get(j).nTurretType == 0) {
@@ -316,6 +322,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                 arspTurrs.get(q).resetPos();
             }
             bTurretSelected = false;
+            bisSelectable = true;
         }
     }
 
@@ -487,14 +494,18 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         turrInfo.tbSell.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                sellTurr();
-                System.out.println("HI");
+                if (bisSelectable == false) {
+                    sellTurr();
+                    System.out.println("HI");
+                }
             }
         });
         turrInfo.tbUpgrade.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                upgradeTurr();
+                if (bisSelectable == false) {
+                    upgradeTurr();
+                }
             }
         });
     }
