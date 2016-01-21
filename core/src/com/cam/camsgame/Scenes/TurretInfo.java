@@ -66,11 +66,9 @@ public class TurretInfo extends ApplicationAdapter implements Disposable{
 
         tbSell = new TextButton("Sell", textButtonStyle);
         tbSell.pad(10f);
-        tbSell.setPosition(927, 650);
 
         tbUpgrade = new TextButton("Upgrade", textButtonStyle);
         tbUpgrade.pad(10f);
-        tbUpgrade.setPosition(915, 600);
         vpTurrInfo = new StretchViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(vpTurrInfo, spriteBatch);
         Table table = new Table();
@@ -89,27 +87,27 @@ public class TurretInfo extends ApplicationAdapter implements Disposable{
         lblCost2 = new Label("Cost", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         lblUpgraded2 = new Label("Upgraded", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         //Give each label 1/3 of the width of the table
-        table.add(tbSell).width(50).height(50);
+        table.add(tbSell).width(50).height(50).padBottom(30);
         table.row();
-        table.add(tbUpgrade).height(50).width(75);
+        table.add(tbUpgrade).height(50).width(75).padBottom(30);
         table.row();
         table.add(lblDamage2);
         table.row();
-        table.add(lblDamage);
+        table.add(lblDamage).padBottom(30);
         table.row();
         table.add(lblRange2);
         table.row();
-        table.add(lblRange);
+        table.add(lblRange).padBottom(30);
         table.row();
         //add a row underneath the first row and give each label 1/3 of the width of the table
         table.row();
         table.add(lblFireRate2);
         table.row();
-        table.add(lblFireRate);
+        table.add(lblFireRate).padBottom(30);
         table.row();
         table.add(lblCost2);
         table.row();
-        table.add(lblCost);
+        table.add(lblCost).padBottom(30);
         table.row();
         table.add(lblUpgraded2);
         table.row();

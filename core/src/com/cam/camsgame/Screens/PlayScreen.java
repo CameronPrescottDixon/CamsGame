@@ -201,7 +201,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                 Gdx.input.setInputProcessor(turrInfo.stage);
             }
             arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).draw(game.batch);
-            arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).setPosition(900, 800);
+            arspTurrs.get(arspTurret.get(nSelectedTurret).nTurretType).setPosition(900, 750);
         } else {
             for (int i = 0; i < 4; i++) {
                 arspTurrs.get(i).draw(game.batch);
@@ -214,6 +214,27 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             turrInfo.stage.draw();
             turrInfo.stage.act();
         }
+    }
+
+    @Override
+    public void show() {
+        turrInfo.tbSell.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (bisSelectable == false) {
+                    sellTurr();
+                    System.out.println("HI");
+                }
+            }
+        });
+        turrInfo.tbUpgrade.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (bisSelectable == false) {
+                    upgradeTurr();
+                }
+            }
+        });
     }
 
     public void update(float dt) {
@@ -488,28 +509,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             nID = 0;
         }
     }
-
-    @Override
-    public void show() {
-        turrInfo.tbSell.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (bisSelectable == false) {
-                    sellTurr();
-                    System.out.println("HI");
-                }
-            }
-        });
-        turrInfo.tbUpgrade.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (bisSelectable == false) {
-                    upgradeTurr();
-                }
-            }
-        });
-    }
-
 
     @Override
     public void resize(int width, int height) {
