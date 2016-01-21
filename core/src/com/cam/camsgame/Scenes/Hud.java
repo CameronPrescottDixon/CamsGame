@@ -33,7 +33,7 @@ public class Hud implements Disposable {
 
 
     public Hud(SpriteBatch spriteBatch) { //Hud class, displays labels in a table and can add + subtract money, also increases time based on deltaTime
-        nMoney = 1000;
+        nMoney = 100000;
         nHP = 1000000;
         nLevel = 35;
         nWorldTime = 0;
