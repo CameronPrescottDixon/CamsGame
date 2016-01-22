@@ -419,7 +419,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             music.stop();
         }
         if (arspAnt.size() == 0) { //Checks if the ants array is at 0 to start a new round
-            System.out.println("HI FROM THE NEXT ROUND FUNCTION");
             nextRound();
             if (arspBullets.size() > 0) {
                 arspBullets.clear();
@@ -488,7 +487,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                 System.out.println("Number of lvl 3 ants spawned: " + nAntThree);
                 nPos = 0;
                 for (int i = 0; i < nAntThree; i++) {
-                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 2, 3, 15, nPos, nLevel, nID, 50, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant3.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 1, 3, 15, nPos, nLevel, nID, 50, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
                     nPos++;
                 }
             }
