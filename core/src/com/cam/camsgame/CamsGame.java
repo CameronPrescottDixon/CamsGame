@@ -20,7 +20,7 @@ public class CamsGame extends Game {
     public PlayScreen scrPlayScreen;
     private Instructions scrInstructions;
     public Maps scrMaps;
-	private GameOver scrGameOver;
+    private GameOver scrGameOver;
 
 
     @Override
@@ -28,7 +28,7 @@ public class CamsGame extends Game {
         batch = new SpriteBatch();
         manager = new AssetManager();
         manager.load("Music/Halo- Menu Music.mp3", Music.class);
-		manager.load("Music/Gameover.mp3", Music.class);
+        manager.load("Music/Gameover.mp3", Music.class);
         manager.load("Music/Music1.mp3", Music.class);
         manager.load("Music/Music2.mp3", Music.class);
         manager.load("Music/Music3.mp3", Music.class);
@@ -38,24 +38,30 @@ public class CamsGame extends Game {
         scrMenu = new Menu(this);
         scrInstructions = new Instructions(this);
         scrMaps = new Maps(this);
-		scrGameOver = new GameOver(this);
+        scrGameOver = new GameOver(this);
         setScreen(scrMenu);
     }
-    public void setInstructions(){
-    setScreen(scrInstructions);
+
+    public void setInstructions() {
+        setScreen(scrInstructions);
     }
-    public void setMenu(){
-    setScreen(scrMenu);
+
+    public void setMenu() {
+        setScreen(scrMenu);
     }
-    public void setPlayscreen(){
-setScreen(scrPlayScreen);
+
+    public void setPlayscreen() {
+        setScreen(scrPlayScreen);
     }
-    public void setMaps(){
-setScreen(scrMaps);
+
+    public void setMaps() {
+        setScreen(scrMaps);
     }
-    public void setGameOver(){
-setScreen(scrGameOver);
+
+    public void setGameOver() {
+        setScreen(scrGameOver);
     }
+
     @Override
     public void render() {
         super.render();
