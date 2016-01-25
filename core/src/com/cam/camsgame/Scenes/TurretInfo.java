@@ -114,7 +114,6 @@ public class TurretInfo extends ApplicationAdapter implements Disposable{
         table.add(lblUpgraded);
         table.padRight(15);
         stage.addActor(table);
-        stage.setDebugAll(true);
     }
 
     public void giveVals(int nFireRate, int nDamage, int nRange, int nCost, int nUpgraded) {
