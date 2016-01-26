@@ -33,7 +33,7 @@ public class Menu extends ApplicationAdapter implements Screen {
     private Music music;
     private Stage stage;
     private CamsGame game;
-    private TextButton tbStart, tbExit, tbInstr, tbMaps;
+    private TextButton tbStart, tbExit, tbInstr, tbMaps, tbLevel;
 
     public Menu(CamsGame game) {
         this.game = game;
@@ -77,6 +77,9 @@ public class Menu extends ApplicationAdapter implements Screen {
         tbMaps = new TextButton("Maps + Music", textButtonStyle);
         tbMaps.pad(10f);
 
+        tbLevel = new TextButton("Level", textButtonStyle);
+        tbLevel.pad(10f);
+
         tbInstr = new TextButton("Instructions", textButtonStyle);
         tbInstr.pad(10f);
 
@@ -93,6 +96,8 @@ public class Menu extends ApplicationAdapter implements Screen {
         table.add(tbStart);
         table.row();
         table.add(tbInstr);
+        table.row();
+        table.add(tbLevel);
         table.row();
         table.add(tbMaps);
         table.row();
@@ -155,6 +160,15 @@ public class Menu extends ApplicationAdapter implements Screen {
                 if (tbExit.isDisabled() != true) {
                     tbExit.setDisabled(true);
                     game.setMaps();
+                }
+            }
+        });
+        tbLevel.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (tbExit.isDisabled() != true) {
+                    tbExit.setDisabled(true);
+                    game.setLevel();
                 }
             }
         });

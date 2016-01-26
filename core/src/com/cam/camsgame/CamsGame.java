@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cam.camsgame.Screens.GameOver;
 import com.cam.camsgame.Screens.Instructions;
+import com.cam.camsgame.Screens.Level;
 import com.cam.camsgame.Screens.Maps;
 import com.cam.camsgame.Screens.Menu;
 import com.cam.camsgame.Screens.PlayScreen;
@@ -21,7 +22,8 @@ public class CamsGame extends Game {
     private Instructions scrInstructions;
     public Maps scrMaps;
     private GameOver scrGameOver;
-
+    private Level scrLevel;
+    private int nNum;
 
     @Override
     public void create() {
@@ -39,6 +41,7 @@ public class CamsGame extends Game {
         scrInstructions = new Instructions(this);
         scrMaps = new Maps(this);
         scrGameOver = new GameOver(this);
+        scrLevel = new Level(this);
         setScreen(scrMenu);
     }
 
@@ -56,6 +59,18 @@ public class CamsGame extends Game {
 
     public void setMaps() {
         setScreen(scrMaps);
+    }
+
+    public void setLevel() {
+        setScreen(scrLevel);
+    }
+
+    public int changeLevel(){
+        return this.nNum;
+    }
+
+    public void setLevel(int nNum){
+         this.nNum = nNum;
     }
 
     public void setGameOver() {

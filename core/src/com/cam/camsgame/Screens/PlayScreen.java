@@ -138,6 +138,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         changeMap(nNum1);
         changeMusic(nNum);
         hud = new Hud(game.batch);//This resets everything hud related if this is not the first game played
+        changeLevel(game.changeLevel());
         bGameOver = false;
         nextRound(); //Initializes the game, without this the rounds wouldn't start
     }
@@ -494,6 +495,12 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
             if (nLevel >= 20) {
                 nAntFive = nLevel - 19;
+                System.out.println("Number of lvl 5 ants spawned: " + nAntFive);
+                nPos = 0;
+                for (int i = 0; i < nAntFive; i++) {
+                    arspAnt.add(new Ants(new Sprite(new Texture("Entities/ant5.png")), (TiledMapTileLayer) tlMap.getLayers().get(0), 1, 90, 100, nPos, nLevel, nID, 50, nMapSelected)); //Sptire|TileCollisionLayer|Speed|Damage|HP|Position
+                    nPos++;
+                }
             }
             for (int i = 0; i < arspAnt.size(); i++) {
                 arspAnt.get(i).nID = nID;
@@ -519,6 +526,12 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    public void changeLevel(int nNum){
+        System.out.println(nNum);
+        hud.nLevel=nNum;
+        hud.nMoney=nNum*800;
     }
 
     @Override
