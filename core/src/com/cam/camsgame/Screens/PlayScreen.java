@@ -74,7 +74,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         this.game = game;
         gamecam = new OrthographicCamera();
 
-        turrInfo = new TurretInfo(game.batch, this);
+        turrInfo = new TurretInfo(game.batch);
 
         //Create the viewport to keep a specific aspect ratio
         gameport = new StretchViewport(CamsGame.V_WIDTH, CamsGame.V_HEIGHT, gamecam);

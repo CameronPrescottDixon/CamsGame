@@ -40,7 +40,7 @@ public class TurretInfo extends ApplicationAdapter implements Disposable{
     private TextureAtlas taButton;
     private Skin skNewGame;
 
-    public TurretInfo(SpriteBatch spriteBatch, final PlayScreen playScreen) {
+    public TurretInfo(SpriteBatch spriteBatch) {
         nDamage = 0;
         nRange = 0;
         nFireRate = 0;
